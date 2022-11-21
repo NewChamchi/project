@@ -2,14 +2,16 @@ import { atom } from "recoil";
 
 export const categoryListState = atom({
     key: "categoryListState",
-    default: [
-        { name: "게임", icon: "🎮" },
-        { name: "담배", icon: "🚬" },
-        { name: "술", icon: "🍺" },
-        { name: "운동", icon: "🎾" },
-        { name: "책", icon: "📕" },
-        { name: "기타", icon: "💬" },
-    ],
+    default: {
+        game: "🎮",
+        tobacco: "🚬",
+        alcohol: "🍺",
+        // { name: "담배" "🚬" },
+        // { name: "술", icon: "🍺" },
+        // { name: "운동", icon: "🎾" },
+        // { name: "책", icon: "📕" },
+        // { name: "기타", icon: "💬" },
+    },
 });
 
 export const categoryNowState = atom({

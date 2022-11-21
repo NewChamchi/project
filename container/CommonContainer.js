@@ -5,7 +5,7 @@ export const replaceItemAtIndex = (arr, index, newValue) => {
 };
 
 export const nowDate = () => {
-    return new Date();
+    return Date.now();
 };
 
 export const categoryNameToIcon = (name) => {

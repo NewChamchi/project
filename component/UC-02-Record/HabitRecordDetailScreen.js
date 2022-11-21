@@ -56,11 +56,11 @@ const HabitRecordDetailScreen = (props) => {
                 <Text style={{ fontSize: 25, paddingBottom: 10 }}>
                     확인 기간 : {habitRecordItem["checkPeriod"]}일
                 </Text>
-                {/* <Text style={{ fontSize: 25, paddingBottom: 10 }}>
-                    습관 진행 시간 : {proceedTime}
-                </Text> */}
                 <Text style={{ fontSize: 25, paddingBottom: 10 }}>
-                    습관 진행 시간 : {habitRecordItem["startTime"].toString()}
+                    습관 진행 시간 : {proceedTime}
+                </Text>
+                <Text style={{ fontSize: 25, paddingBottom: 10 }}>
+                    {/* 습관 진행 시간 : {habitRecordItem["startTime"].toString()} */}
                 </Text>
             </View>
             <View

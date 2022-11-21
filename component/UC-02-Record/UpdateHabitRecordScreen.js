@@ -16,6 +16,7 @@ import SelectList from "react-native-dropdown-select-list";
 const UpdateHabitRecordScreen = (props) => {
     const {
         item,
+        id,
         updateScreen,
         setUpdateScreen,
         habitName,

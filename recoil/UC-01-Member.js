@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 
-export const userNowState = atom({
-    key: "userNowState",
+export const userInfoState = atom({
+    key: "userInfoState",
     default: {
         email: "123123123",
         name: "aasdasd",

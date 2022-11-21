@@ -30,6 +30,9 @@ import CreatePostContainer from "../container/UC-03-Board/CreatePostContainer";
 import PostContainer from "../container/UC-03-Board/PostContainer";
 import UpdatePostContainer from "../container/UC-03-Board/UpdatePostContainer";
 import HabitPictureContainer from "../container/UC-02-Record/HabitPictureContainer";
+import UserMainContainer from "../container/UC-01-Member/UserMainContainer";
+import UpdateUserContainer from "../container/UC-01-Member/UpdateUserContainer";
+import UserAllInfoContainer from "../container/UC-01-Member/UserAllInfoContainer";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -159,12 +162,28 @@ const GroupStack = () => {
 const MemberStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName="MemberManage"
+            initialRouteName="UserMain"
             screenOptions={{
                 headerStyle: { backgroundColor: "#42f44b" },
                 headerTintColor: "#fff",
             }}
-        />
+        >
+            <Stack.Screen
+                name="UserMain"
+                component={UserMainContainer}
+                options={{ title: "메인 화면" }}
+            />
+            <Stack.Screen
+                name="UpdateUser"
+                component={UpdateUserContainer}
+                options={{ title: "나의 정보 수정" }}
+            />
+            <Stack.Screen
+                name="UserAllInfo"
+                component={UserAllInfoContainer}
+                options={{ title: "모든 유저 정보" }}
+            />
+        </Stack.Navigator>
     );
 };
 

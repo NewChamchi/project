@@ -15,112 +15,124 @@ import {
 } from "react-native";
 
 //import React Native chart Kit for different kind of Chart
-import { LineChart, ProgressChart } from "react-native-chart-kit";
+import { LineChart, PieChart } from "react-native-chart-kit";
+const chartConfig = {
+    backgroundGradientFrom: "#1E2923",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#08130D",
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false, // optional
+    barRadius: 200,
+};
 
-// const MyBezierLineChart = () => {
-//     return (
-//         <>
-//             <LineChart
-//                 data={{
-//                     labels: [],
-//                     datasets: [
-//                         {
-//                             data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-//                         },
-//                     ],
-//                 }}
-//                 width={Dimensions.get("window").width - 16} // from react-native
-//                 height={220}
-//                 yAxisLabel={"Rs"}
-//                 chartConfig={{
-//                     backgroundColor: "#1cc910",
-//                     backgroundGradientFrom: "#eff3ff",
-//                     backgroundGradientTo: "#efefef",
-//                     decimalPlaces: 2, // optional, defaults to 2dp
-//                     color: (opacity = 255) => `rgba(0, 0, 0, ${opacity})`,
-//                     style: {
-//                         borderRadius: 16,
-//                     },
-//                 }}
-//                 bezier
-//                 style={{
-//                     marginVertical: 8,
-//                     borderRadius: 16,
-//                 }}
-//             />
-//         </>
-//     );
-// };
-
-const MyLineChart = () => {
+const data = [
+    {
+        name: "3일 이하",
+        count: 21500000,
+        color: "tomato",
+        legendFontColor: "#7F7F7F",
+        legendFontSize: 15,
+    },
+    {
+        name: "일주일 이하",
+        count: 2800000,
+        color: "green",
+        legendFontColor: "#7F7F7F",
+        legendFontSize: 15,
+    },
+    {
+        name: "한 달 이하",
+        count: 527612,
+        color: "yellow",
+        legendFontColor: "#7F7F7F",
+        legendFontSize: 15,
+    },
+    {
+        name: "3개월 이하",
+        count: 8538000,
+        color: "gray",
+        legendFontColor: "#7F7F7F",
+        legendFontSize: 15,
+    },
+    {
+        name: "1년 이하",
+        count: 11920000,
+        color: "blue",
+        legendFontColor: "#7F7F7F",
+        legendFontSize: 15,
+    },
+];
+const LineChartComponent = () => {
     return (
-        <>
-            <Text style={styles.header}>차트1</Text>
+        <View>
+            <Text>Bezier Line Chart</Text>
             <LineChart
                 data={{
                     labels: [
-                        "January",
-                        "February",
-                        "March",
-                        "April",
-                        "May",
-                        "June",
+                        "1주",
+                        "2주",
+                        "3주",
+                        "4주",
+                        "5주",
+                        "6주",
+                        "7주",
+                        "8주",
+                        "9주",
+                        "10주",
                     ],
                     datasets: [
                         {
-                            data: [20, 45, 28, 80, 99, 43],
-                            strokeWidth: 2,
+                            data: [
+                                Math.random() * 10000,
+                                Math.random() * 10000,
+                                Math.random() * 10000,
+                                Math.random() * 10000,
+                                Math.random() * 10000,
+                                Math.random() * 10000,
+                                Math.random() * 10000,
+                                Math.random() * 10000,
+                                Math.random() * 10000,
+                                Math.random() * 10000,
+                                Math.random() * 10000,
+                                Math.random() * 10000,
+                            ],
                         },
                     ],
                 }}
-                width={Dimensions.get("window").width - 16}
+                width={Dimensions.get("window").width} // from react-native
                 height={220}
+                yAxisLabel=""
+                yAxisSuffix="명"
+                yAxisInterval={1} // optional, defaults to 1
                 chartConfig={{
-                    backgroundColor: "#1cc910",
-                    backgroundGradientFrom: "#eff3ff",
-                    backgroundGradientTo: "#efefef",
-                    decimalPlaces: 2,
-                    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                    backgroundColor: "#e26a00",
+                    backgroundGradientFrom: "#fb8c00",
+                    backgroundGradientTo: "#ffa726",
+                    decimalPlaces: 2, // optional, defaults to 2dp
+                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                    labelColor: (opacity = 1) =>
+                        `rgba(255, 255, 255, ${opacity})`,
                     style: {
                         borderRadius: 16,
                     },
+                    propsForDots: {
+                        r: "6",
+                        strokeWidth: "2",
+                        stroke: "#ffa726",
+                    },
                 }}
+                bezier
                 style={{
                     marginVertical: 8,
                     borderRadius: 16,
                 }}
             />
-        </>
+        </View>
     );
 };
-
-const MyProgressChart = () => {
-    return (
-        <>
-            <Text style={styles.header}>차트3</Text>
-            <ProgressChart
-                data={[0.4, 0.6, 0.8]}
-                width={Dimensions.get("window").width - 16}
-                height={220}
-                chartConfig={{
-                    backgroundColor: "#1cc910",
-                    backgroundGradientFrom: "#eff3ff",
-                    backgroundGradientTo: "#efefef",
-                    decimalPlaces: 2,
-                    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                    style: {
-                        borderRadius: 16,
-                    },
-                }}
-                style={{
-                    marginVertical: 8,
-                    borderRadius: 16,
-                }}
-            />
-        </>
-    );
-};
-
 const CreateHabitRecordScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -177,16 +189,20 @@ const CreateHabitRecordScreen = ({ navigation }) => {
             </View>
             <View style={{ flex: 15, backgroundColor: "white" }}>
                 <ScrollView>
-                    <Text style={styles.header}>차트1</Text>
                     <View style={styles.container}>
                         <View>
-                            {/*Example of Bezier LineChart*/}
-                            {/* <MyBezierLineChart /> */}
-                            {/*Example of LineChart*/}
-                            <MyLineChart />
-                            {/*Example of Progress Chart*/}
-                            <MyProgressChart />
-                            {/*Example of Bar Chart*/}
+                            <LineChartComponent />
+                            <PieChart
+                                data={data}
+                                width={Dimensions.get("window").width}
+                                height={220}
+                                chartConfig={chartConfig}
+                                accessor={"count"}
+                                backgroundColor={"transparent"}
+                                paddingLeft={"15"}
+                                center={[0, 0]}
+                                absolute
+                            />
                         </View>
                     </View>
                 </ScrollView>
@@ -198,8 +214,9 @@ const CreateHabitRecordScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        height: 1000,
         backgroundColor: "white",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
         textAlign: "center",
         padding: 10,

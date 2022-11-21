@@ -23,23 +23,37 @@ const HabitRecordBox = (props) => {
         setHabitCheckBox,
         setDetailScreen,
         setPictureScreen,
+        categoryList,
+        deleteAlert,
     } = props;
     return (
         <View style={styles.box}>
-            <UpdateHabitRecordContianer item={item} />
+            <UpdateHabitRecordContianer item={item} id={id} />
             <View
                 style={{
                     flex: 2,
                     flexDirection: "row",
-                    justifyContent: "flex-start",
+                    justifyContent: "center",
                 }}
             >
                 <Text style={{ fontSize: 20, margin: 10 }}>
-                    {item["category"]}
+                    {categoryList[item["category"]]}
                 </Text>
-                <Text style={{ fontSize: 20, margin: 10 }}>{item["name"]}</Text>
+                <Text
+                    style={{ fontSize: 20, margin: 10, width: 250 }}
+                    ellipsizeMode="tail"
+                    numberOfLines={1}
+                >
+                    {item["name"]}
+                </Text>
             </View>
-            <View style={{ flexDirection: "row" }}>
+            <View
+                style={{
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                    width: 300,
+                }}
+            >
                 <TouchableOpacity
                     style={{ margin: 5 }}
                     onPress={() => setHabitCheckBox(!habitCheckBox)}
@@ -64,15 +78,18 @@ const HabitRecordBox = (props) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{ margin: 5 }}
+                    onPress={setDetailScreen}
+                >
+                    <MaterialCommunityIcons name="content-paste" size={25} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={{ margin: 5 }}
                     onPress={() => setUpdateScreen(!updateScreen)}
                 >
                     <MaterialCommunityIcons name="pencil-box" size={25} />
                 </TouchableOpacity>
-                <TouchableOpacity
-                    style={{ margin: 5 }}
-                    onPress={setDetailScreen}
-                >
-                    <MaterialCommunityIcons name="content-paste" size={25} />
+                <TouchableOpacity style={{ margin: 5 }} onPress={deleteAlert}>
+                    <MaterialCommunityIcons name="delete" size={25} />
                 </TouchableOpacity>
             </View>
         </View>
@@ -82,14 +99,14 @@ const HabitRecordBox = (props) => {
 const styles = StyleSheet.create({
     box: {
         flex: 1,
-        height: 80,
+        height: 90,
         backgroundColor: "#DDDDDD",
         margin: 6,
         paddingHorizontal: 10,
         borderRadius: 10,
         alignItems: "center",
-        justifyContent: "space-around",
-        flexDirection: "row",
+        justifyContent: "space-between",
+        flexDirection: "column",
     },
 });
 export default HabitRecordBox;

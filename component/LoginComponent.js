@@ -2,7 +2,9 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 
-export default function LoginComponent() {
+const LoginComponent = (props) => {
+    const { navigation, email, setEmail, password, setPassword, sendLoginApi } =
+        props;
     return (
         <View style={styles.screen}>
             <View style={{ flex: 1.5 }}></View>
@@ -28,10 +30,13 @@ export default function LoginComponent() {
                     </View>
                     <View style={styles.buttonBox}>
                         <View style={styles.button}>
-                            <Button title="로그인" />
+                            <Button title="로그인" onPress={sendLoginApi} />
                         </View>
                         <View style={styles.button}>
-                            <Button title="회원가입" />
+                            <Button
+                                title="회원가입"
+                                onPress={() => navigation.navigate("SignUp")}
+                            />
                         </View>
                     </View>
                 </View>
@@ -39,7 +44,7 @@ export default function LoginComponent() {
             <View style={{ flex: 1.5 }}></View>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     screen: {
@@ -68,3 +73,5 @@ const styles = StyleSheet.create({
         width: "30%",
     },
 });
+
+export default LoginComponent;

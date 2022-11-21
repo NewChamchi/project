@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { signUp } from "../api/user";
-import SignUpComponent from "../component/SignUpComponent";
+import { login } from "../api/user";
+import LoginComponent from "../component/LoginComponent";
 
-const SignUpContainer = ({ navigation }) => {
+const LoginContainer = ({ navigation }) => {
     const [email, setEmail] = useState("");
-    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
 
-    const sendSignUpApi = () => {
-        signUp({
+    const sendLoginApi = () => {
+        login({
             email: email,
-            name: name,
             password: password,
         })
             .then((response) => {
@@ -20,17 +18,16 @@ const SignUpContainer = ({ navigation }) => {
                 console.log(error.response);
             });
     };
+
     const propDatas = {
         navigation,
         email,
         setEmail,
-        name,
-        setName,
         password,
         setPassword,
-        sendSignUpApi,
+        sendLoginApi,
     };
-    return <SignUpComponent {...propDatas} />;
+    return <LoginComponent {...propDatas} />;
 };
 
-export default SignUpContainer;
+export default LoginContainer;

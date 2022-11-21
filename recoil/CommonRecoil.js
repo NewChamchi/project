@@ -18,3 +18,8 @@ export const categoryNowState = atom({
     key: "categoryNowState",
     default: { name: "게임", icon: "🎮" },
 });
+
+export const userNowState = atom({
+    key: "userNowState",
+    default: { name: "", email: "" },
+});

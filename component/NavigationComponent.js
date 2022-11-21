@@ -33,6 +33,10 @@ import HabitPictureContainer from "../container/UC-02-Record/HabitPictureContain
 import UserMainContainer from "../container/UC-01-Member/UserMainContainer";
 import UpdateUserContainer from "../container/UC-01-Member/UpdateUserContainer";
 import UserAllInfoContainer from "../container/UC-01-Member/UserAllInfoContainer";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { userNowState } from "../recoil/CommonRecoil";
+import LoginContainer from "../container/LoginContainer";
+import SignUpContainer from "../container/SignUpContainer";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,7 +46,7 @@ const RecordStack = () => {
         <Stack.Navigator
             initialRouteName="HabitRecord"
             screenOptions={{
-                headerStyle: { backgroundColor: "#42f44b" },
+                headerStyle: { backgroundColor: "skyblue" },
                 headerTintColor: "#fff",
             }}
         >
@@ -75,7 +79,7 @@ const StatisticStack = () => {
         <Stack.Navigator
             initialRouteName="HabitStatistics"
             screenOptions={{
-                headerStyle: { backgroundColor: "#42f44b" },
+                headerStyle: { backgroundColor: "skyblue" },
                 headerTintColor: "#fff",
             }}
         >
@@ -93,7 +97,7 @@ const BoardStack = () => {
         <Stack.Navigator
             initialRouteName="Board"
             screenOptions={{
-                headerStyle: { backgroundColor: "#42f44b" },
+                headerStyle: { backgroundColor: "skyblue" },
                 headerTintColor: "#fff",
             }}
         >
@@ -126,7 +130,7 @@ const GroupStack = () => {
         <Stack.Navigator
             initialRouteName="GroupList"
             screenOptions={{
-                headerStyle: { backgroundColor: "#42f44b" },
+                headerStyle: { backgroundColor: "skyblue" },
                 headerTintColor: "#fff",
             }}
         >
@@ -164,7 +168,7 @@ const MemberStack = () => {
         <Stack.Navigator
             initialRouteName="UserMain"
             screenOptions={{
-                headerStyle: { backgroundColor: "#42f44b" },
+                headerStyle: { backgroundColor: "skyblue" },
                 headerTintColor: "#fff",
             }}
         >
@@ -187,13 +191,37 @@ const MemberStack = () => {
     );
 };
 
-const App = () => {
+const LoginStack = () => {
     return (
+        <Stack.Navigator
+            initialRouteName="Login"
+            screenOptions={{
+                headerStyle: { backgroundColor: "skyblue" },
+                headerTintColor: "#fff",
+            }}
+        >
+            <Stack.Screen
+                name="Login"
+                component={LoginContainer}
+                options={{ title: "로그인" }}
+            />
+            <Stack.Screen
+                name="SignUp"
+                component={SignUpContainer}
+                options={{ title: "회원 가입" }}
+            />
+        </Stack.Navigator>
+    );
+};
+
+const App = () => {
+    const userNow = useRecoilState(userNowState);
+    return userNow.email ? (
         <NavigationContainer>
             <Tab.Navigator
                 initialRouteName="Feed"
                 tabBarOptions={{
-                    activeTintColor: "#42f44b",
+                    activeTintColor: "skyblue",
                 }}
             >
                 <Tab.Screen
@@ -267,6 +295,10 @@ const App = () => {
                     }}
                 />
             </Tab.Navigator>
+        </NavigationContainer>
+    ) : (
+        <NavigationContainer>
+            <LoginStack />
         </NavigationContainer>
     );
 };

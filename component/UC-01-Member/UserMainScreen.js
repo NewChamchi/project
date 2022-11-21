@@ -7,9 +7,35 @@ import {
     SafeAreaView,
     Alert,
 } from "react-native";
+const LogoutAlert = (sendLogoutApi) => {
+    Alert.alert("로그아웃", "정말 로그아웃 하시겠습니까?", [
+        {
+            text: "예",
+            onPress: { sendLogoutApi },
+        },
+        {
+            text: "아니오",
+            onPress: () => {},
+            style: "cancel",
+        },
+    ]);
+};
 
+const WithdrawAlert = (sendWithdrawApi) => {
+    Alert.alert("회원탈퇴", "정말 회원 탈퇴 하시겠습니까?", [
+        {
+            text: "예",
+            onPress: { sendWithdrawApi },
+        },
+        {
+            text: "아니오",
+            onPress: () => {},
+            style: "cancel",
+        },
+    ]);
+};
 const UserMainScreen = (props) => {
-    const { navigation } = props;
+    const { navigation, sendLogoutApi, sendWithdrawApi } = props;
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -65,7 +91,7 @@ const UserMainScreen = (props) => {
                 >
                     <TouchableOpacity
                         style={styles.button}
-                        // onPress={() => }
+                        onPress={() => LogoutAlert(sendLogoutApi)}
                     >
                         <Text>로그아웃</Text>
                     </TouchableOpacity>
@@ -79,7 +105,7 @@ const UserMainScreen = (props) => {
                 >
                     <TouchableOpacity
                         style={styles.button}
-                        // onPress={() => }
+                        onPress={() => WithdrawAlert(sendWithdrawApi)}
                     >
                         <Text>회원 탈퇴</Text>
                     </TouchableOpacity>

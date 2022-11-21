@@ -10,12 +10,13 @@ import {
     useRecoilState,
     useRecoilValue,
 } from "recoil";
+import { userNowState } from "./recoil/CommonRecoil";
 
 export default function App() {
     return (
-        // <LoginComponent />
         <RecoilRoot>
             <NavigationComponent />
+            {/* 이메일이 나중에는 토큰으로 대체되어야함 */}
         </RecoilRoot>
     );
 }

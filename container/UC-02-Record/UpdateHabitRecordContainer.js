@@ -37,13 +37,11 @@ const UpdateHabitRecordContianer = (props) => {
     const updateItem = useCallback(async () => {
         try {
             const body = {
-                email: userInfo.email,
-                habitId: id,
-                habitName: habitName,
-                reduceUnit: reduceUnit,
-                checkPeriod: checkPeriod,
+                name: habitName,
+                amount: amount,
+                period: period,
             };
-            const { data } = updateHabit(body);
+            const { data } = updateHabit(id, body);
             console.log("수정 성공");
             setHabitRecordList(data.contents);
         } catch (e) {

@@ -1,34 +1,35 @@
 import client from "./client";
 
-export const inquiryHabitList = (body) =>
-client.post("/api/record/inquiryHabitList", body);
+export const registerHabit = (categoryId, memberId, body) =>
+    client.post(
+        `/api/categories/${categoryId}/members/${memberId}/habits`,
+        body
+    );
 
-export const inquiryHabitDetail  = (body) =>
-client.post("/api/record/inquiryHabitDetail", body);
+export const memberHabitInquiry = (memberId) =>
+    client.get(`/api/members/${memberId}/habits`);
 
-export const inquiryHabitStatistics = (body) =>
-client.post("/api/record/inquiryHabitStatistics", body);
+export const updateHabit = (habitId, body) =>
+    client.put(`/api/habits/${habitId}`, body);
 
-export const createHabit = (body) =>
-client.post("/api/record/createHabit", body);
+export const checkHabit = (habitId, body) =>
+    client.put(`/api/check/success/habits/${habitId}`, body);
 
-export const updateHabit = (body) =>
-client.put("/api/record/updateHabit", body);
+export const judgeCheck = (habitId, body) =>
+    client.put(`/api/check/judge/habits/${habitId}`, body);
 
-export const deleteHabit = (body) =>
-client.delete("/api/record/deleteHabit", body);
+export const deleteHabit = (habitId) => client.delete(`/api/habits/${habitId}`);
 
-export const resetStartTime = (body) =>
-client.put("/api/record/updateHabit", body);
+export const registerCategory = (
+    body // { name: "담배"}
+) => client.post(`/api/categories`, body);
 
-export const createAccessPicture = (body) =>
-client.post("api/record/createAccessPicture");
+export const inquiryCategoryAll = () => client.get(`/api/categories/`);
 
-export const updateAccessPicture = (body) =>
-client.put("/api/record/updateAccessPicture", body);
+export const updateCategory = (
+    habitCategoryId,
+    body // { name: "돈 저축하기"}
+) => client.put(`/api/categories/${habitCategoryId}`, body);
 
-export const deleteAccessPicture = (body) =>
-client.delete("/api/record/deleteAccessPicture");
-
-export const checkAccessPicture = (body) =>
-client.post("/api/record/checkAccessPicture");
+export const deleteCategory = (habitCategoryId) =>
+    client.delete(`/api/categories/${habitCategoryId}`);

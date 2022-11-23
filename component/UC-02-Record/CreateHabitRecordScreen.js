@@ -23,12 +23,12 @@ const CreateHabitRecordScreen = (props) => {
         setHabitCategory,
         habitCategoryList,
         addItem,
-        reduceUnit,
-        reduceUnitList,
-        checkPeriod,
-        checkPeriodList,
-        setReduceUnit,
-        setCheckPeriod,
+        amount,
+        setAmount,
+        amountList,
+        period,
+        setPeriod,
+        periodList,
     } = props;
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -67,11 +67,11 @@ const CreateHabitRecordScreen = (props) => {
                         alignItems: "center",
                     }}
                 >
-                    <Text style={{ fontSize: 25 }}>단축 단위</Text>
+                    <Text style={{ fontSize: 25 }}>정량 단위</Text>
                     <SelectList
                         boxStyles={styles.input}
-                        setSelected={(newPeriod) => setReduceUnit(newPeriod)}
-                        data={reduceUnitList}
+                        setSelected={(newAmount) => setAmount(newAmount)}
+                        data={amountList}
                     />
                 </View>
                 <View
@@ -83,8 +83,8 @@ const CreateHabitRecordScreen = (props) => {
                     <Text style={{ fontSize: 25 }}>확인 기간</Text>
                     <SelectList
                         boxStyles={styles.input}
-                        setSelected={(newPeriod) => setCheckPeriod(newPeriod)}
-                        data={checkPeriodList}
+                        setSelected={(newPeriod) => setPeriod(newPeriod)}
+                        data={periodList}
                     />
                 </View>
             </View>

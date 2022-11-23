@@ -10,7 +10,16 @@ export const updateScreenState = atom({
     default: false,
 });
 
+export const samplePictureScreenState = atom({
+    key: "samplePictureScreenState",
+    default: false,
+});
 export const habitRecordItemState = atom({
     key: "habitRecordItemState",
+    default: {},
+});
+
+export const habitImageState = atom({
+    key: "habitImageState",
     default: {},
 });

@@ -37,6 +37,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { userNowState } from "../recoil/CommonRecoil";
 import LoginContainer from "../container/LoginContainer";
 import SignUpContainer from "../container/SignUpContainer";
+import HabitPictureSampleContainer from "../container/UC-02-Record/HabitPictureSampleContainer";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -216,7 +217,7 @@ const LoginStack = () => {
 
 const App = () => {
     const userNow = useRecoilState(userNowState);
-    return userNow.email ? (
+    return !userNow.email ? (
         <NavigationContainer>
             <Tab.Navigator
                 initialRouteName="Feed"

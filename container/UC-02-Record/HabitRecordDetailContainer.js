@@ -91,7 +91,7 @@ const HabitRecordDetailContainer = (props) => {
 
     useEffect(() => {
         const tmpId = setInterval(() => {
-            const tmpTime = nowDate() - habitRecordItem.startTime;
+            const tmpTime = nowDate() - tmpDate;
             setSecond(parseInt(tmpTime / 1000) % 60);
             setMinute(parseInt(tmpTime / (1000 * 60)) % 60);
             setHour(parseInt(tmpTime / (1000 * 60 * 60)) % 24);

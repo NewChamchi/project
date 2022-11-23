@@ -76,7 +76,7 @@ const UpdateHabitRecordScreen = (props) => {
                                 alignItems: "center",
                             }}
                         >
-                            <Text style={{ fontSize: 25 }}>단축 단위</Text>
+                            <Text style={{ fontSize: 25 }}>정량 단위</Text>
                             <SelectList
                                 boxStyles={styles.input}
                                 setSelected={(newPeriod) =>

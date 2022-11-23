@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useCallback, useEffect, useState } from "react";
 import { TouchableOpacity, StyleSheet, View, Text, Alert } from "react-native";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { deleteHabit } from "../../api/record";
+import { deleteHabit, memberHabitInquiry } from "../../api/record";
 import HabitRecordBox from "../../component/UC-02-Record/HabitRecordBox";
 import { categoryListState } from "../../recoil/CommonRecoil";
 import { userInfoState } from "../../recoil/UC-01-Member";
@@ -36,18 +36,23 @@ const HabitRecordBoxContainer = (props) => {
         navigation.navigate("HabitPicture");
     };
 
+    const getHabitList = async () => {
+        try {
+            const { data } = await memberHabitInquiry(userInfo.email);
+            setHabitRecordList(data);
+        } catch (e) {
+            setHabitRecordList([]);
+        }
+    };
+
     const deleteAlert = () =>
         Alert.alert("습관 삭제", "정말 삭제하시겠습니까?", [
             {
                 text: "네",
                 onPress: async () => {
                     try {
-                        const body = {
-                            email: userInfo.email,
-                            habitId: id,
-                        };
-                        const { data } = await deleteHabit(body);
-                        setHabitRecordList(data.contents);
+                        const { data } = await deleteHabit(id);
+                        getHabitList();
                         console.log("삭제 성공");
                     } catch (e) {
                         console.log("삭제 실패");

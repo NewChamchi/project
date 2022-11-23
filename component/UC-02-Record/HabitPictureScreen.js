@@ -1,7 +1,7 @@
 // React Native Bottom Navigation
 // https://aboutreact.com/react-native-bottom-navigation/
 
-import * as React from "react";
+import React from "react";
 import {
     StyleSheet,
     Text,
@@ -12,9 +12,11 @@ import {
     Button,
 } from "react-native";
 import { Camera, CameraType } from "expo-camera";
+import HabitPictureSampleContainer from "../../container/UC-02-Record/HabitPictureSampleContainer";
 
 const HabitPictureScreen = (props) => {
     const {
+        navigation,
         type,
         setType,
         permission,
@@ -25,6 +27,10 @@ const HabitPictureScreen = (props) => {
         setCaptureVisible,
         toggleCameraType,
         pickImage,
+        snapPicture,
+        myCameraRef,
+        samplePictureScreen,
+        setSamplePictureScreen,
     } = props;
 
     // if (!permission) {
@@ -49,7 +55,11 @@ const HabitPictureScreen = (props) => {
             {captureVisible ? (
                 <>
                     <View style={styles.cameraContainer}>
-                        <Camera style={styles.camera} type={type}>
+                        <Camera
+                            style={styles.camera}
+                            type={type}
+                            ref={myCameraRef}
+                        >
                             <View style={styles.cameraButtonContainer}>
                                 <TouchableOpacity
                                     style={styles.cameraButton}
@@ -65,12 +75,19 @@ const HabitPictureScreen = (props) => {
                                 >
                                     <Text style={styles.text}>out</Text>
                                 </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.cameraButton}
+                                    onPress={snapPicture}
+                                >
+                                    <Text style={styles.text}>snap</Text>
+                                </TouchableOpacity>
                             </View>
                         </Camera>
                     </View>
                 </>
             ) : (
                 <>
+                    <HabitPictureSampleContainer />
                     <View style={{ flex: 1 }}>
                         <View
                             style={{
@@ -100,28 +117,39 @@ const HabitPictureScreen = (props) => {
                                 <Text>샘플 사진 찍기</Text>
                             </TouchableOpacity>
                         </View>
-                    </View>
-                    <View style={{ flex: 2, alignItems: "center" }}>
-                        <Text
+                        <View
                             style={{
-                                fontSize: 25,
-                                textAlign: "center",
-                                paddingBottom: 30,
+                                alignItems: "center",
+                                justifyContent: "flex-start",
                             }}
                         >
-                            나의 샘플 사진
-                        </Text>
-
-                        {image && (
-                            <Image
-                                source={{ uri: image }}
-                                style={{
-                                    width: 300,
-                                    height: 200,
-                                    alignItems: "center",
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={() => {
+                                    setCaptureVisible(!captureVisible);
                                 }}
-                            />
-                        )}
+                            >
+                                <Text>사진 인증하기</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View
+                            style={{
+                                alignItems: "center",
+                                justifyContent: "flex-start",
+                            }}
+                        >
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={() => {
+                                    setSamplePictureScreen(
+                                        !samplePictureScreen
+                                    );
+                                    console.log(samplePictureScreen);
+                                }}
+                            >
+                                <Text>샘플 사진 보기</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </>
             )}

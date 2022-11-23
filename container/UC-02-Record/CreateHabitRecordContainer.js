@@ -16,10 +16,10 @@ const CreateHabitRecordContainer = ({ navigation }) => {
     const [habitName, setHabitName] = useState("");
     const [habitCategory, setHabitCategory] = useState("game");
     const [habitCategoryList] = useState(["game", "tobacco", "alcohol"]);
-    const [reduceUnit, setReduceUnit] = useState(1);
-    const [reduceUnitList] = useState([1, 2, 3, 4, 5, 6, 7]);
-    const [checkPeriod, setCheckPeriod] = useState(1);
-    const [checkPeriodList] = useState([1, 2, 3, 4, 5, 6, 7]);
+    const [amount, setAmount] = useState(1);
+    const [amountList] = useState([1, 2, 3, 4, 5, 6, 7]);
+    const [period, setPeriod] = useState(1);
+    const [periodList] = useState([1, 2, 3, 4, 5, 6, 7]);
     // const addItem = (oldHabitRecordList) => {
     //     setHabitRecordList((oldHabitRecordList) => [
     //         ...oldHabitRecordList,
@@ -37,19 +37,28 @@ const CreateHabitRecordContainer = ({ navigation }) => {
     //     console.log(habitRecordList);
     // };
 
+    const getHabitList = async () => {
+        try {
+            const { data } = await memberHabitInquiry(userInfo.email);
+            setHabitRecordList(data);
+        } catch (e) {
+            setHabitRecordList([]);
+        }
+    };
+
     const addItem = useCallback(async () => {
         try {
             const body = {
-                email: userInfo.email,
-                category: habitCategory,
-                habitName: habitName,
-                reduceUnit: reduceUnit,
-                checkPeriod: checkPeriod,
-                startTime: nowDate(),
+                name: habitName,
+                amount: amount,
+                period: period,
             };
-            const { data } = await createHabit(body);
+
+            // 상의 필요
+            // const { data } = await registerHabit(habitCategory, userInfo.email, body);
             console.log("생성 성공");
             setHabitRecordList(data.contents);
+            getHabitList();
         } catch (e) {
             console.log("생성 실패");
         }
@@ -65,12 +74,12 @@ const CreateHabitRecordContainer = ({ navigation }) => {
         setHabitCategory,
         habitCategoryList,
         addItem,
-        reduceUnit,
-        reduceUnitList,
-        checkPeriod,
-        checkPeriodList,
-        setReduceUnit,
-        setCheckPeriod,
+        amount,
+        setAmount,
+        amountList,
+        period,
+        setPeriod,
+        periodList,
     };
     return <CreateHabitRecordScreen {...propDatas} />;
 };

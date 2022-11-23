@@ -10,11 +10,7 @@ import {
     SafeAreaView,
     ScrollView,
 } from "react-native";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import UpdateHabitRecordScreen from "./UpdateHabitRecordScreen";
-import { habitRecordListState } from "../../recoil/UC-02-Record";
 import HabitRecordBoxContainer from "../../container/UC-02-Record/HabitRecordBoxContainer";
-import UpdateHabitRecordContianer from "../../container/UC-02-Record/UpdateHabitRecordContainer";
 
 const HabitRecordScreen = (props) => {
     const { navigation, habitRecordList, setHabitRecordList } = props;

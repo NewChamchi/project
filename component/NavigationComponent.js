@@ -222,7 +222,7 @@ const LoginStack = () => {
 
 const App = () => {
     const userNow = useRecoilState(userNowState);
-    return !userNow.email ? (
+    return userNow.email ? (
         <NavigationContainer>
             <Tab.Navigator
                 initialRouteName="Feed"

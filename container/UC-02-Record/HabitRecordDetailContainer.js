@@ -90,6 +90,7 @@ const HabitRecordDetailContainer = (props) => {
     // }, [habitRecordItem]);
 
     useEffect(() => {
+        const tmpDate = Date.parse("2022-11-17T09:30:59.000+00:00");
         const tmpId = setInterval(() => {
             const tmpTime = nowDate() - tmpDate;
             setSecond(parseInt(tmpTime / 1000) % 60);

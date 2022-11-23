@@ -47,6 +47,7 @@ const HabitRecordContainer = ({ navigation }) => {
             }
         };
         // getHabitList();
+
         // test
         setHabitRecordList(testData);
     }, [habitRecordList]);

@@ -34,6 +34,16 @@ const UpdateHabitRecordContianer = (props) => {
 
     //     setHabitRecordList(newList);
     // };
+
+    const getHabitList = async () => {
+        try {
+            const { data } = await memberHabitInquiry(userInfo.email);
+            setHabitRecordList(data);
+        } catch (e) {
+            setHabitRecordList([]);
+        }
+    };
+
     const updateItem = useCallback(async () => {
         try {
             const body = {
@@ -43,7 +53,7 @@ const UpdateHabitRecordContianer = (props) => {
             };
             const { data } = updateHabit(id, body);
             console.log("수정 성공");
-            setHabitRecordList(data.contents);
+            getHabitList();
         } catch (e) {
             console.log("수정 실패");
         }

@@ -25,6 +25,7 @@ const HabitRecordBox = (props) => {
         setPictureScreen,
         categoryList,
         deleteAlert,
+        sendCheckHabitApi,
     } = props;
     return (
         <View style={styles.box}>
@@ -56,9 +57,12 @@ const HabitRecordBox = (props) => {
             >
                 <TouchableOpacity
                     style={{ margin: 5 }}
-                    onPress={() => setHabitCheckBox(!habitCheckBox)}
+                    onPress={() => {
+                        // sendCheckHabitApi(id);
+                        setHabitCheckBox(!habitCheckBox);
+                    }}
                 >
-                    {habitCheckBox ? (
+                    {habitCheckBox ? ( // item.check
                         <MaterialCommunityIcons
                             name="checkbox-marked"
                             size={25}

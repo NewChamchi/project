@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useCallback, useEffect, useState } from "react";
 import { TouchableOpacity, StyleSheet, View, Text, Alert } from "react-native";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { deleteHabit, memberHabitInquiry } from "../../api/record";
+import { checkHabit, deleteHabit, memberHabitInquiry } from "../../api/record";
 import HabitRecordBox from "../../component/UC-02-Record/HabitRecordBox";
 import { categoryListState } from "../../recoil/CommonRecoil";
 import { userInfoState } from "../../recoil/UC-01-Member";
@@ -24,6 +24,9 @@ const HabitRecordBoxContainer = (props) => {
     const setHabitRecordItem = useSetRecoilState(habitRecordItemState);
     const userInfo = useRecoilValue(userInfoState);
     const categoryList = useRecoilValue(categoryListState);
+    // const [habitCheckBox, setHabitCheckBox] = useState(item.check);
+
+    // test
     const [habitCheckBox, setHabitCheckBox] = useState(false);
 
     const setDetailScreen = () => {
@@ -43,6 +46,17 @@ const HabitRecordBoxContainer = (props) => {
         } catch (e) {
             setHabitRecordList([]);
         }
+    };
+
+    const sendCheckHabitApi = () => {
+        checkHabit(id)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error.response);
+            });
+        getHabitList();
     };
 
     const deleteAlert = () =>
@@ -79,6 +93,7 @@ const HabitRecordBoxContainer = (props) => {
         setPictureScreen,
         categoryList,
         deleteAlert,
+        sendCheckHabitApi,
     };
     return <HabitRecordBox {...propDatas} />;
 };

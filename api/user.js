@@ -17,6 +17,6 @@ export const updateUserInfo = (content, updateInfo) =>
 
 export const warnUser = (email) => client.get(`/api/admin/warn/${email}`);
 
-export const userSelfInfo = (body) => client.post("/api/user/info", body);
+export const userSelfInfo = () => client.get("/api/user/info");
 
-export const userAllInfo = (body) => client.post("/api/admin/user/info", body);
+export const userAllInfo = () => client.get("/api/admin/user/info");

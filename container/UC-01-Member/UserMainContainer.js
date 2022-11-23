@@ -13,7 +13,7 @@ const UserMainContainer = ({ navigation }) => {
             });
     };
 
-    sendWithdrawApi = () => {
+    const sendWithdrawApi = () => {
         withdrawMember()
             .then((response) => {
                 console.log(response);

@@ -1,22 +1,11 @@
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
-import LoginComponent from "./component/LoginComponent";
+import React, { useEffect } from "react";
 import NavigationComponent from "./component/NavigationComponent";
-import {
-    RecoilRoot,
-    atom,
-    selector,
-    useRecoilState,
-    useRecoilValue,
-} from "recoil";
-import { userNowState } from "./recoil/CommonRecoil";
-
+import { RecoilRoot } from "recoil";
 export default function App() {
     return (
         <RecoilRoot>
             <NavigationComponent />
-            {/* 이메일이 나중에는 토큰으로 대체되어야함 */}
         </RecoilRoot>
     );
 }

@@ -6,12 +6,14 @@ import {
 } from "../../recoil/UC-02-Record";
 
 const HabitPictureSampleContainer = (props) => {
+    const { navigation } = props;
     const image = useRecoilValue(habitImageState);
     const setImage = useSetRecoilState(habitImageState);
-    const samplePictureScreen = useRecoilState(samplePictureScreenState);
+    const samplePictureScreen = useRecoilValue(samplePictureScreenState);
     const setSamplePictureScreen = useSetRecoilState(samplePictureScreenState);
 
     const propDatas = {
+        navigation,
         image,
         setImage,
         samplePictureScreen,

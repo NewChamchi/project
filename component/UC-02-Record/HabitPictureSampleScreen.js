@@ -9,41 +9,29 @@ import {
 } from "react-native";
 
 const HabitPictureSampleScreen = (props) => {
-    const { image, setImage, samplePictureScreen, setSamplePictureScreen } =
-        props;
+    const {
+        navigation,
+        image,
+        setImage,
+        samplePictureScreen,
+        setSamplePictureScreen,
+    } = props;
 
     return (
-        <Modal
-            animationType="silde"
-            transparent={true}
-            visible={samplePictureScreen}
-            onRequestClose={() => {
-                setUpdateScreen(!samplePictureScreen);
-            }}
+        <SafeAreaView
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
-            <SafeAreaView style={{ flex: 1 }}>
-                <View style={{ flex: 6 }}>
-                    {image.uri && (
-                        <Image
-                            source={image.uri}
-                            style={{
-                                alignItems: "center",
-                            }}
-                        />
-                    )}
-                </View>
-                <View style={{ flex: 1 }}>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => {
-                            setSamplePictureScreen(!samplePictureScreen);
-                        }}
-                    >
-                        <Text>확인</Text>
-                    </TouchableOpacity>
-                </View>
-            </SafeAreaView>
-        </Modal>
+            {true && (
+                <Image
+                    source={{ uri: image }}
+                    style={{
+                        width: "90%",
+                        height: "90%",
+                        resizeMode: "center",
+                    }}
+                />
+            )}
+        </SafeAreaView>
     );
 };
 

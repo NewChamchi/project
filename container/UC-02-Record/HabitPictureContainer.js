@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import HabitPictureScreen from "../../component/UC-02-Record/HabitPictureScreen";
 import * as ImagePicker from "expo-image-picker";
 import { Camera, CameraType } from "expo-camera";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 import {
     habitImageState,
     samplePictureScreenState,
@@ -12,11 +12,11 @@ const HabitPictureContainer = (props) => {
     const { navigation } = props;
     const [type, setType] = useState(CameraType.back);
     const [permission, requestPermission] = Camera.useCameraPermissions();
-    const image = useRecoilState(habitImageState);
+    const image = useRecoilValue(habitImageState);
     const setImage = useSetRecoilState(habitImageState);
     const [captureVisible, setCaptureVisible] = useState(false);
     const myCameraRef = useRef();
-    const samplePictureScreen = useRecoilState(samplePictureScreenState);
+    const samplePictureScreen = useRecoilValue(samplePictureScreenState);
     const setSamplePictureScreen = useSetRecoilState(samplePictureScreenState);
 
     const toggleCameraType = () => {
@@ -28,8 +28,7 @@ const HabitPictureContainer = (props) => {
         // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 3],
+            allowsEditing: false,
             quality: 1,
         });
 

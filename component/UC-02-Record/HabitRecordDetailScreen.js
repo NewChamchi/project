@@ -51,10 +51,10 @@ const HabitRecordDetailScreen = (props) => {
                     습관 대분류 : {habitRecordItem["category"]}
                 </Text>
                 <Text style={{ fontSize: 25, paddingBottom: 10 }}>
-                    단축 단위 : {habitRecordItem["reduceUnit"]}
+                    정량 단위 : {habitRecordItem["amount"]}
                 </Text>
                 <Text style={{ fontSize: 25, paddingBottom: 10 }}>
-                    확인 기간 : {habitRecordItem["checkPeriod"]}일
+                    확인 기간 : {habitRecordItem["period"]}
                 </Text>
                 <Text style={{ fontSize: 25, paddingBottom: 10 }}>
                     습관 진행 시간 : {proceedTime}

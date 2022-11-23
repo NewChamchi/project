@@ -71,6 +71,11 @@ const RecordStack = () => {
                 component={HabitPictureContainer}
                 options={{ title: "샘플 사진 관리" }}
             />
+            <Stack.Screen
+                name="HabitPictureSample"
+                component={HabitPictureSampleContainer}
+                options={{ title: "나의 샘플 사진" }}
+            />
         </Stack.Navigator>
     );
 };

@@ -87,7 +87,6 @@ const HabitPictureScreen = (props) => {
                 </>
             ) : (
                 <>
-                    <HabitPictureSampleContainer />
                     <View style={{ flex: 1 }}>
                         <View
                             style={{
@@ -141,10 +140,7 @@ const HabitPictureScreen = (props) => {
                             <TouchableOpacity
                                 style={styles.button}
                                 onPress={() => {
-                                    setSamplePictureScreen(
-                                        !samplePictureScreen
-                                    );
-                                    console.log(samplePictureScreen);
+                                    navigation.navigate("HabitPictureSample");
                                 }}
                             >
                                 <Text>샘플 사진 보기</Text>

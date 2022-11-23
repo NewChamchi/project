@@ -7,3 +7,8 @@ export const userInfoState = atom({
         name: "aasdasd",
     },
 });
+
+export const userInfoListState = atom({
+    key: "userInfoListState",
+    default: [],
+});

@@ -16,8 +16,12 @@ const LoginComponent = (props) => {
                             justifyContent: "space-between",
                         }}
                     >
-                        <Text>아이디 : </Text>
-                        <TextInput style={styles.input} />
+                        <Text>이메일 : </Text>
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={(newEmail) => setEmail(newEmail)}
+                            value={email}
+                        />
                     </View>
                     <View
                         style={{
@@ -26,7 +30,13 @@ const LoginComponent = (props) => {
                         }}
                     >
                         <Text>비밀번호 : </Text>
-                        <TextInput style={styles.input} />
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={(newPassword) =>
+                                setPassword(newPassword)
+                            }
+                            value={password}
+                        />
                     </View>
                     <View style={styles.buttonBox}>
                         <View style={styles.button}>

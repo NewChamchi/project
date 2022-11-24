@@ -6,14 +6,14 @@ export const login = (body) => client.post("/api/login", body); // 추가
 
 export const logout = (
     body // 추가
-) => client.post("/api/logout", body);
+) => client.get("/api/logout");
 
-export const withdrawMember = (
-    email // 추가
-) => client.get(`/api/user/withdrawal/${email}`);
+export const withdrawMember = () =>
+    // 추가
+    client.delete(`/api/user/withdrawal`);
 
 export const updateUserInfo = (content, updateInfo) =>
-    client.get(`/api/user/update/${content}/${updateInfo}`);
+    client.put(`/api/user/update/${content}/${updateInfo}`);
 
 export const warnUser = (email) => client.get(`/api/admin/warn/${email}`);
 

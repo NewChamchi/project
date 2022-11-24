@@ -14,7 +14,14 @@ import SelectList from "react-native-dropdown-select-list";
 import SearchBar from "react-native-dynamic-search-bar";
 import GroupBox from "./GroupBox";
 
-const GroupListScreen = ({ navigation }) => {
+const GroupListScreen = (props) => {
+    const {
+        navigation,
+        groupListByCategory,
+        setGroupListByCategory,
+        getGroupListByCategory,
+        categoryList,
+    } = props;
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 3 }}>
@@ -37,48 +44,25 @@ const GroupListScreen = ({ navigation }) => {
                             backgroundColor: "#DFDFDF",
                         }}
                     >
-                        <TouchableOpacity style={{ justifyContent: "center" }}>
-                            <Text
-                                style={{ fontSize: 20, paddingHorizontal: 15 }}
-                            >
-                                게임
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{ justifyContent: "center" }}>
-                            <Text
-                                style={{ fontSize: 20, paddingHorizontal: 15 }}
-                            >
-                                담배
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{ justifyContent: "center" }}>
-                            <Text
-                                style={{ fontSize: 20, paddingHorizontal: 15 }}
-                            >
-                                술
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{ justifyContent: "center" }}>
-                            <Text
-                                style={{ fontSize: 20, paddingHorizontal: 15 }}
-                            >
-                                운동
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{ justifyContent: "center" }}>
-                            <Text
-                                style={{ fontSize: 20, paddingHorizontal: 15 }}
-                            >
-                                책
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{ justifyContent: "center" }}>
-                            <Text
-                                style={{ fontSize: 20, paddingHorizontal: 15 }}
-                            >
-                                기타
-                            </Text>
-                        </TouchableOpacity>
+                        {categoryList
+                            ? categoryList.map((item) => (
+                                  <TouchableOpacity
+                                      style={{ justifyContent: "center" }}
+                                      onPress={() => {
+                                          setCategoryNow(item);
+                                      }}
+                                  >
+                                      <Text
+                                          style={{
+                                              fontSize: 20,
+                                              paddingHorizontal: 15,
+                                          }}
+                                      >
+                                          {item.name}
+                                      </Text>
+                                  </TouchableOpacity>
+                              ))
+                            : false}
                     </ScrollView>
                 </View>
                 <View
@@ -101,12 +85,7 @@ const GroupListScreen = ({ navigation }) => {
                 </View>
                 <View style={{ flex: 11 }}>
                     <ScrollView>
-                        <GroupBox navigation={navigation} />
-                        <GroupBox navigation={navigation} />
-                        <GroupBox navigation={navigation} />
-                        <GroupBox navigation={navigation} />
-                        <GroupBox navigation={navigation} />
-                        <GroupBox navigation={navigation} />
+                        {/* 여기에 그룹리스트 맵핑에서 넣어야함 */}
                     </ScrollView>
                 </View>
                 <View style={{ flex: 2, alignItems: "center" }}>

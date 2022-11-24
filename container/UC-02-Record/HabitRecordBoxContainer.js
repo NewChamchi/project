@@ -7,7 +7,7 @@ import { TouchableOpacity, StyleSheet, View, Text, Alert } from "react-native";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { checkHabit, deleteHabit, memberHabitInquiry } from "../../api/record";
 import HabitRecordBox from "../../component/UC-02-Record/HabitRecordBox";
-import { categoryListState } from "../../recoil/CommonRecoil";
+import { categoryListIconState } from "../../recoil/CommonRecoil";
 import { userInfoState } from "../../recoil/UC-01-Member";
 import {
     boxIndexState,
@@ -23,7 +23,7 @@ const HabitRecordBoxContainer = (props) => {
     const setHabitRecordList = useSetRecoilState(habitRecordListState);
     const setHabitRecordItem = useSetRecoilState(habitRecordItemState);
     const userInfo = useRecoilValue(userInfoState);
-    const categoryList = useRecoilValue(categoryListState);
+    const categoryList = useRecoilValue(categoryListIconState);
     // const [habitCheckBox, setHabitCheckBox] = useState(item.check);
 
     // test

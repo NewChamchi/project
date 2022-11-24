@@ -1,31 +1,41 @@
 import client from "./client";
 
-export const inquiryGroupList = (body) =>
-client.post("api/group/inquiryGroupList", body);
+export const inquiryGroupList = (groupType) =>
+    client.get(`/api/group/get-type/${groupType}`);
 
-export const inquiryGroup = (body) =>
-client.post("api/group/inquiryGroup", body);
+export const inquiryGroup = (groupName, adminNickName) =>
+    client.get(`/api/group/get-group/${groupName}/${adminNickName}`);
 
-export const inquiryGroupMember = (body) =>
-client.post("api/group/inquiryGroup", body);
+export const createGroup = (
+    body // groupName, groupType, nickName
+) => client.post(`/api/group/new`, body);
 
-export const createGroup = (body) =>
-client.post("api/group/createGroup", body);
+export const applyGroup = (body) => client.post(`/api/group/apply`, body);
+// 나중에 문서 확인 필요(문서 확인하면 지우기)
+
+export const permissionApplyGroup = (body) =>
+    client.post(`/api/group/admin/handle-application`, body);
+// 나중에 문서 확인 필요(문서 확인하면 지우기)
 
 export const updateGroup = (body) =>
-client.put("api/group/updateGroup", body);
+    client.put(`/api/group/admin/update-group`, body);
+// 나중에 문서 확인 필요(문서 확인하면 지우기)
 
-export const deleteGroup = (body) =>
-client.delete("api/group/deleteGroup", body);
+export const deleteGroup = () => client.delete(`/api/group/admin/delete-group`);
+// 나중에 문서 확인 필요(문서 확인하면 지우기)
 
-export const applyJoinGroup = (body) =>
-client.post("api/group/applyJoinGroup", body);
+export const inquiryGroupChat = () => client.get(`/api/group`);
+// 나중에 문서 확인 필요(문서 확인하면 지우기)
 
-export const accessJoinGroup = (body) =>
-client.put("api/group/accessJoinGroup", body);
+export const writeGroupChat = (body) => client.post(`/api/group`, body);
+// 나중에 문서 확인 필요(문서 확인하면 지우기)
 
-export const warningMember = (body) =>
-client.put("api/group/warningMember", body)
+export const inquiryGroupMemberList = () =>
+    client.get(`/api/group/user/get-group-members`);
+// 나중에 문서 확인 필요(문서 확인하면 지우기)
 
-export const inquiryChatRoom = (body) =>
-client.post("api/group/inquiryChatRoom", body);
+export const withdrawGroup = () => client.delete(`/api/group/user/withdrawal`);
+// 나중에 문서 확인 필요(문서 확인하면 지우기)
+
+export const warnGroupMember = () => client.put(`/api/grou/warn`);
+// 나중에 문서 확인 필요(문서 확인하면 지우기)

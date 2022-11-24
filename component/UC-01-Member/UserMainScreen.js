@@ -7,36 +7,40 @@ import {
     SafeAreaView,
     Alert,
 } from "react-native";
-const LogoutAlert = (sendLogoutApi) => {
-    Alert.alert("로그아웃", "정말 로그아웃 하시겠습니까?", [
-        {
-            text: "예",
-            onPress: { sendLogoutApi },
-        },
-        {
-            text: "아니오",
-            onPress: () => {},
-            style: "cancel",
-        },
-    ]);
-};
 
-const WithdrawAlert = (sendWithdrawApi) => {
-    Alert.alert("회원탈퇴", "정말 회원 탈퇴 하시겠습니까?", [
-        {
-            text: "예",
-            onPress: { sendWithdrawApi },
-        },
-        {
-            text: "아니오",
-            onPress: () => {},
-            style: "cancel",
-        },
-    ]);
-};
 const UserMainScreen = (props) => {
-    const { navigation, sendLogoutApi, sendWithdrawApi } = props;
+    const { navigation, sendLogoutApi, sendWithdrawApi, name, email } = props;
+    const LogoutAlert = (sendLogoutApi) => {
+        Alert.alert("로그아웃", "정말 로그아웃 하시겠습니까?", [
+            {
+                text: "예",
+                onPress: () => {
+                    sendLogoutApi();
+                },
+            },
+            {
+                text: "아니오",
+                onPress: () => {},
+                style: "cancel",
+            },
+        ]);
+    };
 
+    const WithdrawAlert = (sendWithdrawApi) => {
+        Alert.alert("회원탈퇴", "정말 회원 탈퇴 하시겠습니까?", [
+            {
+                text: "예",
+                onPress: () => {
+                    sendWithdrawApi();
+                },
+            },
+            {
+                text: "아니오",
+                onPress: () => {},
+                style: "cancel",
+            },
+        ]);
+    };
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View
@@ -54,7 +58,7 @@ const UserMainScreen = (props) => {
                         fontSize: 25,
                     }}
                 >
-                    이름 : {/*이름 변수*/}
+                    이름 : {name}
                 </Text>
                 <Text
                     style={{
@@ -64,7 +68,7 @@ const UserMainScreen = (props) => {
                         fontSize: 25,
                     }}
                 >
-                    이메일 : {/*이메일 변수*/}
+                    이메일 : {email}
                 </Text>
             </View>
             <View style={{ flex: 4, justifyContent: "flex-start" }}>

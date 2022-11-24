@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import BoardScreen from "../../component/UC-03-Board/BoardScreen";
-import { categoryListState, categoryNowState } from "../../recoil/CommonRecoil";
+import {
+    categoryListIconState,
+    categoryNowState,
+} from "../../recoil/CommonRecoil";
 import { postListState } from "../../recoil/UC-03-Board";
 
 const BoardContainer = ({ navigation }) => {
-    const categoryList = useRecoilValue(categoryListState);
+    const categoryList = useRecoilValue(categoryListIconState);
     const categoryNow = useRecoilValue(categoryNowState);
     const setCategoryNow = useSetRecoilState(categoryNowState);
     const postList = useRecoilValue(postListState);

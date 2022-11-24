@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { inquiryCategoryAll } from "../api/record";
+import { categoryListState } from "../recoil/CommonRecoil";
 
 export const replaceItemAtIndex = (arr, index, newValue) => {
     return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
@@ -29,4 +32,15 @@ export const categoryNameToIcon = (name) => {
             return "💬";
             break;
     }
+};
+
+export const getCategoryList = () => {
+    const categoryList = useRecoilValue(categoryListState);
+    const setCategoryList = useSetRecoilState(categoryListState);
+    const { data } = inquiryCategoryAll()
+        .then((response) => {
+            console.log(response);
+            setCategoryList(data.contents);
+        })
+        .catch((error) => console.log(error));
 };

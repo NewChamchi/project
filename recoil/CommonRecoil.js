@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 
-export const categoryListState = atom({
-    key: "categoryListState",
+export const categoryListIconState = atom({
+    key: "categoryListIconState",
     default: {
         game: "🎮",
         tobacco: "🚬",
@@ -14,12 +14,12 @@ export const categoryListState = atom({
     },
 });
 
+export const categoryListState = atom({
+    key: "categoryListState",
+    default: [],
+});
+
 export const categoryNowState = atom({
     key: "categoryNowState",
     default: { name: "게임", icon: "🎮" },
-});
-
-export const userNowState = atom({
-    key: "userNowState",
-    default: { name: "", email: "" },
 });

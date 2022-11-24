@@ -16,15 +16,17 @@ const UserAllInfoContainer = ({ navigation }) => {
             try {
                 const { data } = await userAllInfo();
                 setUserInfoList(data);
+                console.log(data);
             } catch (e) {
+                console.log(e);
                 setUserInfoList([]);
             }
         };
-        // getUserAllList();
+        getUserAllList();
         // test
-        setUserInfoList(testData);
-        console.log(testData);
-    });
+        // setUserInfoList(testData);
+        // console.log(testData);
+    }, [userInfoList]);
     const propDatas = {
         navigation,
         userInfoList,

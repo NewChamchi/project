@@ -12,7 +12,7 @@ import { ScrollView } from "react-native-web";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const UpdateUserScreen = (props) => {
-    const { navigation, email, setEmail, name, setName } = props;
+    const { navigation, name, setName, password, setPassword } = props;
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -39,7 +39,9 @@ const UpdateUserScreen = (props) => {
                     onChangeText={(newName) => setName(newName)}
                     value={name}
                 ></TextInput>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => sendUpdateUserApi("name", name)}
+                >
                     <MaterialCommunityIcons name="swap-horizontal" size={30} />
                 </TouchableOpacity>
             </View>
@@ -52,7 +54,7 @@ const UpdateUserScreen = (props) => {
                 }}
             >
                 <Text style={{ fontSize: 15, paddingRight: 10 }}>
-                    이메일 변경 :{" "}
+                    비밀번호 변경 :{" "}
                 </Text>
                 <TextInput
                     style={{
@@ -62,11 +64,12 @@ const UpdateUserScreen = (props) => {
                         paddingLeft: 10,
                         marginRight: 10,
                     }}
-                    onChangeText={(newEmail) => setEmail(newEmail)}
-                    value={email}
-                    keyboardType="email-address"
+                    onChangeText={(newPassword) => setPassword(newPassword)}
+                    value={password}
                 ></TextInput>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => sendUpdateUserApi("password", password)}
+                >
                     <MaterialCommunityIcons name="swap-horizontal" size={30} />
                 </TouchableOpacity>
             </View>

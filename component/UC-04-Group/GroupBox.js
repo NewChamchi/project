@@ -10,7 +10,8 @@ import {
     SafeAreaView,
 } from "react-native";
 
-const GroupBox = ({ navigation }) => {
+const GroupBox = (props) => {
+    const { item, id } = props;
     return (
         <TouchableOpacity onPress={() => navigation.navigate("Group")}>
             <View
@@ -32,7 +33,7 @@ const GroupBox = ({ navigation }) => {
                 >
                     <Text style={{ fontSize: 20, margin: 10 }}>🎮</Text>
                     <Text style={{ fontSize: 20, margin: 10 }}>
-                        롤 끊을 사람 모집!
+                        {item.name}
                     </Text>
                 </View>
                 <View
@@ -42,7 +43,7 @@ const GroupBox = ({ navigation }) => {
                     }}
                 >
                     <Text style={{ fontSize: 15, margin: 10 }}>
-                        방장 아무개 | 인원 수 : 150 / 200
+                        {/* {방장 이름 들어가야함} */}
                     </Text>
                 </View>
             </View>

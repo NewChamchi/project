@@ -21,6 +21,8 @@ const GroupListScreen = (props) => {
         setGroupListByCategory,
         getGroupListByCategory,
         categoryList,
+        categoryNow,
+        setCategoryNow,
     } = props;
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -85,7 +87,11 @@ const GroupListScreen = (props) => {
                 </View>
                 <View style={{ flex: 11 }}>
                     <ScrollView>
-                        {/* 여기에 그룹리스트 맵핑에서 넣어야함 */}
+                        {categoryList
+                            ? categoryList.map((item) => {
+                                  <GroupBox item={item} id={item.id} />;
+                              })
+                            : false}
                     </ScrollView>
                 </View>
                 <View style={{ flex: 2, alignItems: "center" }}>

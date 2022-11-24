@@ -4,7 +4,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { inquiryCategoryAll } from "../api/record";
 import { login } from "../api/user";
 import LoginComponent from "../component/LoginComponent";
-import { categoryListState } from "../recoil/CommonRecoil";
+import { categoryListState, categoryNowState } from "../recoil/CommonRecoil";
 import { userInfoState } from "../recoil/UC-01-Member";
 import { getCategoryList } from "./CommonContainer";
 
@@ -15,6 +15,7 @@ const LoginContainer = ({ navigation }) => {
     const setUserInfo = useSetRecoilState(userInfoState);
     const categoryList = useRecoilValue(categoryListState);
     const setCategoryList = useSetRecoilState(categoryListState);
+    const setCategoryNow = useSetRecoilState(categoryNowState);
 
     const sendLoginApi = () => {
         const body = {
@@ -27,6 +28,7 @@ const LoginContainer = ({ navigation }) => {
                 console.log(body);
                 setUserInfo(body);
                 getCategoryList();
+                setCategoryNow(categoryList[0]);
             })
             .catch((error) => {
                 console.log(error);

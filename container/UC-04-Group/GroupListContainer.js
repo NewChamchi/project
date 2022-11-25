@@ -25,7 +25,7 @@ const GroupListContainer = ({ navigation }) => {
 
     useEffect(() => {
         getGroupListByCategory(categoryNow.name);
-    }, [categoryNow]);
+    }, []);
     const propDatas = {
         navigation,
         groupListByCategory,

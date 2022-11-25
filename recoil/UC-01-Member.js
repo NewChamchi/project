@@ -5,6 +5,7 @@ export const userInfoState = atom({
     default: {
         email: "",
         name: "",
+        id: "",
     },
 });
 

@@ -11,9 +11,14 @@ import {
 } from "react-native";
 
 const GroupBox = (props) => {
-    const { item, id } = props;
+    const { item, id, groupNow, setGroupNow } = props;
     return (
-        <TouchableOpacity onPress={() => navigation.navigate("Group")}>
+        <TouchableOpacity
+            onPress={() => {
+                setGroupNow(item);
+                navigation.navigate("Group");
+            }}
+        >
             <View
                 style={{
                     height: 100,

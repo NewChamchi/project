@@ -22,11 +22,15 @@ const LoginContainer = ({ navigation }) => {
             email: email,
             password: password,
         };
-        login(body)
+        const { data } = login(body)
             .then((response) => {
                 axios.defaults.headers["Cookies"] = response.headers.Cookies;
                 console.log(body);
-                setUserInfo(body);
+                setUserInfo({
+                    email: email,
+                    password: password,
+                    memberId: data.id,
+                });
                 getCategoryList();
                 setCategoryNow(categoryList[0]);
             })

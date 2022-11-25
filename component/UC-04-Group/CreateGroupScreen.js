@@ -11,7 +11,14 @@ import {
     TextInput,
 } from "react-native";
 
-const CreateGroupScreen = ({ navigation }) => {
+const CreateGroupScreen = (props) => {
+    const {
+        navigation,
+        categoryNow,
+        groupName,
+        setGroupName,
+        sendCreateGroupApi,
+    } = props;
     return (
         <SafeAreaView>
             <View
@@ -24,7 +31,7 @@ const CreateGroupScreen = ({ navigation }) => {
                         fontSize: 20,
                     }}
                 >
-                    게임 소모임
+                    {categoryNow.name} 소모임
                 </Text>
                 <TextInput
                     style={{
@@ -34,22 +41,16 @@ const CreateGroupScreen = ({ navigation }) => {
                         padding: 10,
                         height: 60,
                     }}
-                    placeholder="제목"
-                />
-                <TextInput
-                    style={{
-                        fontSize: 20,
-                        borderWidth: 1,
-                        padding: 10,
-                        height: 400,
-                    }}
-                    placeholder="내용"
+                    onChangeText={(newGroupName) => setGroupName(newGroupName)}
+                    value={groupName}
+                    placeholder="방 제목"
                 />
             </View>
             <View style={{ alignItems: "center" }}>
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => {
+                        sendCreateGroupApi();
                         navigation.navigate("GroupList");
                         navigation.navigate("Group");
                     }}

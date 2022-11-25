@@ -7,7 +7,7 @@ import {
     habitRecordListState,
     updateScreenState,
 } from "../../recoil/UC-02-Record";
-import { replaceItemAtIndex } from "../CommonContainer";
+import { getHabitList, replaceItemAtIndex } from "../CommonContainer";
 
 const UpdateHabitRecordContianer = (props) => {
     const { item, id } = props;
@@ -34,15 +34,6 @@ const UpdateHabitRecordContianer = (props) => {
 
     //     setHabitRecordList(newList);
     // };
-
-    const getHabitList = async () => {
-        try {
-            const { data } = await memberHabitInquiry(userInfo.email);
-            setHabitRecordList(data);
-        } catch (e) {
-            setHabitRecordList([]);
-        }
-    };
 
     const updateItem = useCallback(async () => {
         try {

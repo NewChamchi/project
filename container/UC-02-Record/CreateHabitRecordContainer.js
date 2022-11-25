@@ -3,19 +3,22 @@ import { useState, useEffect, useCallback } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { createHabit } from "../../api/record";
 import CreateHabitRecordScreen from "../../component/UC-02-Record/CreateHabitRecordScreen";
+import { categoryListState } from "../../recoil/CommonRecoil";
 import { userInfoState } from "../../recoil/UC-01-Member";
 import { habitRecordListState } from "../../recoil/UC-02-Record";
-import { nowDate } from "../CommonContainer";
+import { getHabitList, nowDate } from "../CommonContainer";
 
 let id = 0;
 
 const CreateHabitRecordContainer = ({ navigation }) => {
     const habitRecordList = useRecoilValue(habitRecordListState);
     const setHabitRecordList = useSetRecoilState(habitRecordListState);
+    const categoryList = useRecoilValue(categoryListState);
+    const setCategoryList = useSetRecoilState(categoryListState);
     const userInfo = useRecoilValue(userInfoState);
     const [habitName, setHabitName] = useState("");
-    const [habitCategory, setHabitCategory] = useState("game");
-    const [habitCategoryList] = useState(["game", "tobacco", "alcohol"]);
+    const [habitCategory, setHabitCategory] = useState(categoryList[0].name);
+    const [habitCategoryList] = useState(categoryList.map((item) => item.name));
     const [amount, setAmount] = useState(1);
     const [amountList] = useState([1, 2, 3, 4, 5, 6, 7]);
     const [period, setPeriod] = useState(1);
@@ -37,15 +40,6 @@ const CreateHabitRecordContainer = ({ navigation }) => {
     //     console.log(habitRecordList);
     // };
 
-    const getHabitList = async () => {
-        try {
-            const { data } = await memberHabitInquiry(userInfo.email);
-            setHabitRecordList(data);
-        } catch (e) {
-            setHabitRecordList([]);
-        }
-    };
-
     const addItem = useCallback(async () => {
         try {
             const body = {
@@ -55,7 +49,11 @@ const CreateHabitRecordContainer = ({ navigation }) => {
             };
 
             // 상의 필요
-            // const { data } = await registerHabit(habitCategory, userInfo.email, body);
+            const { data } = await registerHabit(
+                categoryList.find((item) => item.name == habitCategory).id,
+                userInfo.memberId,
+                body
+            );
             console.log("생성 성공");
             setHabitRecordList(data.contents);
             getHabitList();

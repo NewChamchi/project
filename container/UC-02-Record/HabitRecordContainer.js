@@ -7,7 +7,7 @@ import {
     habitRecordItemState,
     habitRecordListState,
 } from "../../recoil/UC-02-Record";
-import { nowDate } from "../CommonContainer";
+import { getHabitList, nowDate } from "../CommonContainer";
 
 const testData = [
     {
@@ -38,18 +38,10 @@ const HabitRecordContainer = ({ navigation }) => {
     const userInfo = useRecoilValue(userInfoState);
 
     useEffect(() => {
-        const getHabitList = async () => {
-            try {
-                const { data } = await memberHabitInquiry(userInfo.email);
-                setHabitRecordList(data);
-            } catch (e) {
-                setHabitRecordList([]);
-            }
-        };
-        // getHabitList();
+        getHabitList();
 
         // test
-        setHabitRecordList(testData);
+        // setHabitRecordList(testData);
     }, [habitRecordList]);
 
     const propDatas = {

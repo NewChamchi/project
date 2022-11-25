@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { categoryNameToIcon } from "../../container/CommonContainer";
 import UpdateHabitRecordContianer from "../../container/UC-02-Record/UpdateHabitRecordContainer";
 import {
     habitRecordListState,
@@ -38,7 +39,7 @@ const HabitRecordBox = (props) => {
                 }}
             >
                 <Text style={{ fontSize: 20, margin: 10 }}>
-                    {categoryList[item["category"]]}
+                    {categoryNameToIcon[item["categoryName"]]}
                 </Text>
                 <Text
                     style={{ fontSize: 20, margin: 10, width: 250 }}
@@ -58,11 +59,11 @@ const HabitRecordBox = (props) => {
                 <TouchableOpacity
                     style={{ margin: 5 }}
                     onPress={() => {
-                        // sendCheckHabitApi(id);
-                        setHabitCheckBox(!habitCheckBox);
+                        sendCheckHabitApi(id);
+                        // setHabitCheckBox(!habitCheckBox);
                     }}
                 >
-                    {habitCheckBox ? ( // item.check
+                    {item.check ? ( // habitCheckBox
                         <MaterialCommunityIcons
                             name="checkbox-marked"
                             size={25}

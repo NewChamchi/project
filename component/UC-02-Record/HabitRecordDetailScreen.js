@@ -48,7 +48,7 @@ const HabitRecordDetailScreen = (props) => {
                     습관 이름 : {habitRecordItem["name"]}
                 </Text>
                 <Text style={{ fontSize: 25, paddingBottom: 10 }}>
-                    습관 대분류 : {habitRecordItem["category"]}
+                    습관 대분류 : {habitRecordItem["categoryName"]}
                 </Text>
                 <Text style={{ fontSize: 25, paddingBottom: 10 }}>
                     정량 단위 : {habitRecordItem["amount"]}
@@ -57,7 +57,13 @@ const HabitRecordDetailScreen = (props) => {
                     확인 기간 : {habitRecordItem["period"]}
                 </Text>
                 <Text style={{ fontSize: 25, paddingBottom: 10 }}>
-                    습관 진행 시간 : {proceedTime}
+                    성공 수 : {habitRecordItem["count"]}
+                </Text>
+                <Text style={{ fontSize: 25, paddingBottom: 10 }}>
+                    습관 진행 첫 시작 이후 시간
+                </Text>
+                <Text style={{ fontSize: 25, paddingBottom: 10 }}>
+                    {proceedTime}
                 </Text>
                 <Text style={{ fontSize: 25, paddingBottom: 10 }}>
                     {/* 습관 진행 시간 : {habitRecordItem["startTime"].toString()} */}

@@ -2,6 +2,11 @@ import { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { inquiryCategoryAll } from "../api/record";
 import { categoryListState } from "../recoil/CommonRecoil";
+import { userInfoState } from "../recoil/UC-01-Member";
+import { habitRecordListState } from "../recoil/UC-02-Record";
+
+const userInfo = useRecoilValue(userInfoState);
+const setHabitRecordList = useSetRecoilState(habitRecordListState);
 
 export const replaceItemAtIndex = (arr, index, newValue) => {
     return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
@@ -43,4 +48,13 @@ export const getCategoryList = () => {
             setCategoryList(data.contents);
         })
         .catch((error) => console.log(error));
+};
+
+export const getHabitList = async () => {
+    try {
+        const { data } = await memberHabitInquiry(userInfo.memberId);
+        setHabitRecordList(data);
+    } catch (e) {
+        setHabitRecordList([]);
+    }
 };

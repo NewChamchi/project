@@ -87,8 +87,8 @@ const GroupListScreen = (props) => {
                 </View>
                 <View style={{ flex: 11 }}>
                     <ScrollView>
-                        {categoryList
-                            ? categoryList.map((item) => {
+                        {groupListByCategory
+                            ? groupListByCategory.map((item) => {
                                   <GroupBox item={item} id={item.id} />;
                               })
                             : false}

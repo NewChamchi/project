@@ -12,12 +12,13 @@ import {
     ScrollView,
 } from "react-native";
 
-const GroupSettingScreen = ({ navigation }) => {
+const GroupSettingScreen = (props) => {
+    const { navigation, groupNow, setGroupNow } = props;
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1, margin: 16 }}>
                 <Text style={{ flex: 1, fontSize: 20 }}>
-                    롤 끊을 사람 모집!
+                    {groupNow.groupName}
                 </Text>
                 <View style={{ flex: 4, marginBottom: 15 }}>
                     <Text style={{ fontSize: 15, marginBottom: 5 }}>

@@ -15,8 +15,8 @@ export const updateHabit = (habitId, body) =>
 export const checkHabit = (habitId, body) =>
     client.put(`/api/check/success/habits/${habitId}`, body);
 
-export const judgeCheck = (habitId, body) =>
-    client.put(`/api/check/judge/habits/${habitId}`, body);
+export const judgeCheck = (habitId) =>
+    client.put(`/api/check/judge/habits/${habitId}`);
 
 export const deleteHabit = (habitId) => client.delete(`/api/habits/${habitId}`);
 

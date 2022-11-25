@@ -67,7 +67,7 @@ const UpdateHabitRecordScreen = (props) => {
                             }}
                         >
                             <Text style={{ fontSize: 25, paddingVertical: 5 }}>
-                                습관 대분류 : {item["category"]}
+                                습관 대분류 : {item["categoryName"]}
                             </Text>
                         </View>
                         <View

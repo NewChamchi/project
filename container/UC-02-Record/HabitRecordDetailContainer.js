@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { judgeCheck } from "../../api/record";
 import HabitRecordDetailScreen from "../../component/UC-02-Record/HabitRecordDetailScreen";
 import { userInfoState } from "../../recoil/UC-01-Member";
 import {
     habitRecordItemState,
     habitRecordListState,
 } from "../../recoil/UC-02-Record";
-import { nowDate, replaceItemAtIndex } from "../CommonContainer";
+import { getHabitList, nowDate, replaceItemAtIndex } from "../CommonContainer";
 
 const HabitRecordDetailContainer = (props) => {
     const { navigation, id } = props;
@@ -42,23 +43,23 @@ const HabitRecordDetailContainer = (props) => {
     //     setHabitRecordList(newList);
     // };
 
-    const updateTime = useCallback(async () => {
-        try {
-            const body = {
-                email: userInfo.email,
-                habitId: id,
-                startTime: nowDate(),
-            };
-            const { data } = resetStartTime(body);
-            console.log("시간 초기화 성공");
-            setHabitRecordItem({
-                ...habitRecordItem,
-                startTime: data["startTime"],
-            });
-        } catch (e) {
-            console.log("시간 초기화 실패");
-        }
-    });
+    // const updateTime = useCallback(async () => {
+    //     try {
+    //         const body = {
+    //             email: userInfo.email,
+    //             habitId: id,
+    //             startTime: nowDate(),
+    //         };
+    //         const { data } = resetStartTime(body);
+    //         console.log("시간 초기화 성공");
+    //         setHabitRecordItem({
+    //             ...habitRecordItem,
+    //             startTime: data["startTime"],
+    //         });
+    //     } catch (e) {
+    //         console.log("시간 초기화 실패");
+    //     }
+    // });
 
     // function difference(date1, date2) {
     //     const date1utc = Date.UTC(
@@ -90,8 +91,24 @@ const HabitRecordDetailContainer = (props) => {
     // }, [habitRecordItem]);
 
     useEffect(() => {
+        const verifyAmountCheck = setInterval(() => {
+            const tmpTime = nowDate() - Date.parse(habitRecordItem.date);
+            if (tmpTime <= habitRecordItem.amount * habitRecordItem.count) {
+                judgeCheck(habitRecordItem.id)
+                    .then((response) => {
+                        console.log(response);
+                        getHabitList();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+        });
+        return () => clearInterval(verifyAmountCheck);
+    });
+    useEffect(() => {
         const tmpDate = Date.parse("2022-11-17T09:30:59.000+00:00");
-        const tmpId = setInterval(() => {
+        const countProceedTime = setInterval(() => {
             const tmpTime = nowDate() - tmpDate;
             setSecond(parseInt(tmpTime / 1000) % 60);
             setMinute(parseInt(tmpTime / (1000 * 60)) % 60);
@@ -111,7 +128,7 @@ const HabitRecordDetailContainer = (props) => {
                     "초 "
             );
         }, 1000);
-        return () => clearInterval(tmpId);
+        return () => clearInterval(countProceedTime);
     });
     const propDatas = {
         navigation,

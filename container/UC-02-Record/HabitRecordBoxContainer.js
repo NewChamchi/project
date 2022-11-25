@@ -15,6 +15,7 @@ import {
     habitRecordListState,
     updateScreenState,
 } from "../../recoil/UC-02-Record";
+import { getHabitList } from "../CommonContainer";
 
 const HabitRecordBoxContainer = (props) => {
     const { navigation, id, item } = props;
@@ -37,15 +38,6 @@ const HabitRecordBoxContainer = (props) => {
     const setPictureScreen = () => {
         setHabitRecordItem(item);
         navigation.navigate("HabitPicture");
-    };
-
-    const getHabitList = async () => {
-        try {
-            const { data } = await memberHabitInquiry(userInfo.email);
-            setHabitRecordList(data);
-        } catch (e) {
-            setHabitRecordList([]);
-        }
     };
 
     const sendCheckHabitApi = () => {

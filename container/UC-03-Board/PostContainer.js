@@ -8,11 +8,11 @@ const PostContainer = ({ navigation }) => {
     const postNow = useRecoilValue(postNowState);
     const setPostNow = useSetRecoilState(postNowState);
     const userInfo = useRecoilValue(userInfoState);
-    const onClickRecommended = () => {
-        postNow.information.recommended.includes(userInfo.email)
-            ? setPostNow(postNow.information.recommended.filter(userInfo.email))
-            : postNow.information.recommended.push(userInfo.email);
-    };
+    // const onClickRecommended = () => {
+    //     postNow.information.recommended.includes(userInfo.memberId)
+    //         ? setPostNow(postNow.information.recommended.filter(userInfo.memberId))
+    //         : postNow.information.recommended.push(userInfo.memberId);
+    // };
     const propsData = {
         navigation,
         postNow,

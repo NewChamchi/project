@@ -14,17 +14,26 @@ import {
 } from "react-native";
 
 const PostScreen = (props) => {
-    const { navigation, postNow, setPostNow } = props;
+    const {
+        navigation,
+        postNow,
+        setPostNow,
+        sendDeletePostByIdApi,
+        sendCreateCommentApi,
+        comment,
+        setComment,
+    } = props;
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView style={{ flex: 1, margin: 16 }}>
                 <Text style={{ fontSize: 20, marginBottom: 16 }}>
-                    제목 : {postNow.information.title}
+                    제목 : {postNow.title}
                 </Text>
                 <Text style={{ fontSize: 15, marginBottom: 16 }}>
-                    닉네임 {postNow.information.nickname} | 조회수{" "}
-                    {postNow.information.views} | 추천수{" "}
-                    {postNow.information.recommended.length}
+                    닉네임 {postNow.userName} | 조회수 {postNow.view} | 생성일자{" "}
+                    {Date(postNow.createdTime).toLocaleString("ko-KR", {
+                        timeZone: "UTC",
+                    })}
                 </Text>
                 <View
                     style={{
@@ -35,7 +44,7 @@ const PostScreen = (props) => {
                         marginBottom: 16,
                     }}
                 ></View>
-                <Text>{postNow.contents}</Text>
+                <Text>{postNow.content}</Text>
                 <View
                     style={{
                         height: 2,
@@ -45,23 +54,6 @@ const PostScreen = (props) => {
                         marginVertical: 32,
                     }}
                 ></View>
-                <View style={{ paddingBottom: 32 }}>
-                    <TouchableOpacity
-                        style={{
-                            height: 100,
-                            width: 100,
-                            backgroundColor: "#DFDFDF",
-                            alignSelf: "center",
-                            alignItems: "center",
-                            justifyContent: "space-evenly",
-                            borderRadius: 50,
-                        }}
-                        // onPress={}
-                    >
-                        <MaterialCommunityIcons name="thumb-up" size={25} />
-                        <Text>{postNow.information.recommended.length}</Text>
-                    </TouchableOpacity>
-                </View>
                 <View
                     style={{
                         flexDirection: "row",
@@ -76,6 +68,9 @@ const PostScreen = (props) => {
                             alignItems: "center",
                             justifyContent: "center",
                         }}
+                        onPress={() => {
+                            navigation.navigate("UpdatePost");
+                        }}
                     >
                         <Text>수정</Text>
                     </TouchableOpacity>
@@ -86,6 +81,10 @@ const PostScreen = (props) => {
                             backgroundColor: "#DFDFDF",
                             alignItems: "center",
                             justifyContent: "center",
+                        }}
+                        onPress={() => {
+                            sendDeletePostByIdApi();
+                            navigation.navigate("Board");
                         }}
                     >
                         <Text>삭제</Text>
@@ -118,6 +117,8 @@ const PostScreen = (props) => {
                             marginHorizontal: "5%",
                             paddingHorizontal: 10,
                         }}
+                        onChangeText={(newComment) => setComment(newComment)}
+                        value={comment}
                     />
                     <TouchableOpacity
                         style={{
@@ -127,10 +128,22 @@ const PostScreen = (props) => {
                             alignItems: "center",
                             justifyContent: "center",
                         }}
+                        onPress={() => {}}
                     >
                         <Text style={{ fontSize: 16 }}>제출</Text>
                     </TouchableOpacity>
                 </View>
+                {postNow.comments
+                    ? postNow.comments.map((item) => {
+                          <View>
+                              <Text>
+                                  닉네임 : {item.name} | 생성시각 :{" "}
+                                  {item.createdTime}
+                              </Text>
+                              <Text>댓글 내용 : {item.body}</Text>
+                          </View>;
+                      })
+                    : false}
             </ScrollView>
         </SafeAreaView>
     );

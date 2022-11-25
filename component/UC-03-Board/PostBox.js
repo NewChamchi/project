@@ -11,8 +11,7 @@ import {
 } from "react-native";
 
 const PostBox = (props) => {
-    const { navigation, item, id, postNow, setPostNow, categoryNow, icon } =
-        props;
+    const { navigation, item, id, postNow, setPostNow } = props;
     return (
         <TouchableOpacity
             onPress={() => {
@@ -37,9 +36,8 @@ const PostBox = (props) => {
                         flexDirection: "row",
                     }}
                 >
-                    <Text style={{ fontSize: 20, margin: 10 }}>{icon}</Text>
                     <Text style={{ fontSize: 20, margin: 10 }}>
-                        {item.information.title}
+                        {item.title}
                     </Text>
                 </View>
                 <View
@@ -49,9 +47,10 @@ const PostBox = (props) => {
                     }}
                 >
                     <Text style={{ fontSize: 15, margin: 10 }}>
-                        닉네임 {item.information.nickname} | 조회수{" "}
-                        {item.information.views} | 추천수{" "}
-                        {item.information.recommended.length}
+                        닉네임 {item.userName} | 조회수 {item.view} | 생성일자{" "}
+                        {Date(item.createdTime).toLocaleString("ko-KR", {
+                            timeZone: "UTC",
+                        })}
                     </Text>
                 </View>
             </View>

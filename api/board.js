@@ -1,22 +1,28 @@
 import client from "./client";
 
-export const inquiryBoard = (body) =>
-client.post("api/board/inquiryBoard", body);
+export const createPost = (habitId, body) =>
+    client.post(`/api/habits/${habitId}/posts`, body);
 
-export const inquiryPost = (body) =>
-client.post("api/board/inquiryPost", body);
+export const inquiryPostAll = () => client.get(`/api/posts`);
 
-export const createPost = (body) =>
-client.post("api/board/createPost", body);
+export const inquiryPostById = (postId) => client.get(`/api/posts/${postId}`);
 
-export const updatePost = (body) =>
-client.put("api/board/updatePost", body);
+export const updatePostById = (postId, body) =>
+    client.put(`/api/posts/${postId}`, body);
 
-export const deletePost = (body) =>
-client.delete("api/board/deletePost", body);
+export const deletePostById = (postId) => client.delete(`/api/posts/${postId}`);
 
-export const createComment = (body) =>
-client.post("api/board/createComment", body);
+export const createComment = (memberId, postId, body) =>
+    client.post(`/api/members/${memberId}/posts/${postId}/comments`, body);
 
-export const updateComment = (body) =>
-client.delete("api/board/updateComment", body)
+export const inquiryCommentAll = (postId) =>
+    client.get(`/api/posts/${postId}/comments`);
+
+export const inquiryPostByComment = (postId, commentId) =>
+    client.get(`/api/posts/${postId}/comments/${commentId}`);
+
+export const updatePostByComment = (postId, commentId, body) =>
+    client.put(`/api/posts/${postId}/comments/${commentId}`, body);
+
+export const deletePostByComment = (postId, commentId) =>
+    client.delete(`/api/posts/${postId}/comments/${commentId}`);

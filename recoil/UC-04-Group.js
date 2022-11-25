@@ -10,6 +10,6 @@ export const groupNowState = atom({
 });
 
 export const groupNowMemberListState = atom({
-    key: " groupNowMemberList",
+    key: " groupNowMemberListState",
     default: {},
 });

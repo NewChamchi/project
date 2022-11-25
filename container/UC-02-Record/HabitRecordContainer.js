@@ -7,7 +7,7 @@ import {
     habitRecordItemState,
     habitRecordListState,
 } from "../../recoil/UC-02-Record";
-import { getHabitList, nowDate } from "../CommonContainer";
+import { nowDate } from "../CommonContainer";
 
 const testData = [
     {
@@ -38,11 +38,23 @@ const HabitRecordContainer = ({ navigation }) => {
     const userInfo = useRecoilValue(userInfoState);
 
     useEffect(() => {
+        const getHabitList = () => {
+            console.log("됨1");
+            const { data } = memberHabitInquiry(1) // 테스트용 임시
+                .then((response) => {
+                    console.log("됨2");
+                    console.log(response);
+                    setHabitRecordList(data);
+                })
+                .catch((error) => {
+                    console.log("됨3");
+                    console.log(error);
+                });
+        };
         getHabitList();
-
         // test
         // setHabitRecordList(testData);
-    }, [habitRecordList]);
+    });
 
     const propDatas = {
         navigation,

@@ -11,6 +11,8 @@ import {
     TextInput,
 } from "react-native";
 
+import SelectList from "react-native-dropdown-select-list";
+
 const CreatePostScreen = (props) => {
     const {
         navigation,
@@ -22,6 +24,10 @@ const CreatePostScreen = (props) => {
         postContents,
         setPostContents,
         sendItem,
+        habitRecordList,
+        habitName,
+        setHabitName,
+        sendCreatePostApi,
     } = props;
     return (
         <SafeAreaView>
@@ -30,13 +36,19 @@ const CreatePostScreen = (props) => {
                     margin: 10,
                 }}
             >
-                <Text
+                <View
                     style={{
-                        fontSize: 20,
+                        flexDirection: "row",
+                        alignItems: "center",
                     }}
                 >
-                    {categoryNow.name} 게시판
-                </Text>
+                    <Text style={{ fontSize: 25 }}>습관 선택</Text>
+                    <SelectList
+                        boxStyles={styles.input}
+                        setSelected={(newName) => setHabitName(newName)}
+                        data={habitRecordList.map((item) => item.name)}
+                    />
+                </View>
                 <TextInput
                     style={{
                         fontSize: 20,
@@ -66,9 +78,8 @@ const CreatePostScreen = (props) => {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => {
-                        sendItem(postList);
+                        sendCreatePostApi();
                         navigation.navigate("Board");
-                        navigation.navigate("Post");
                     }}
                 >
                     <Text>게시글 생성</Text>
@@ -79,6 +90,13 @@ const CreatePostScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
+    input: {
+        height: 30,
+        width: 200,
+        margin: 12,
+        borderWidth: 1,
+        padding: 3,
+    },
     button: {
         alignItems: "center",
         backgroundColor: "#DDDDDD",

@@ -7,7 +7,7 @@ import {
     habitRecordListState,
     updateScreenState,
 } from "../../recoil/UC-02-Record";
-import { getHabitList, replaceItemAtIndex } from "../CommonContainer";
+import { replaceItemAtIndex } from "../CommonContainer";
 
 const UpdateHabitRecordContianer = (props) => {
     const { item, id } = props;
@@ -35,6 +35,19 @@ const UpdateHabitRecordContianer = (props) => {
     //     setHabitRecordList(newList);
     // };
 
+    const getHabitList = () => {
+        console.log("됨1");
+        const { data } = memberHabitInquiry(userInfo.memberId)
+            .then((response) => {
+                console.log("됨2");
+                console.log(response);
+                setHabitRecordList(data);
+            })
+            .catch((error) => {
+                console.log("됨3");
+                console.log(error);
+            });
+    };
     const updateItem = useCallback(async () => {
         try {
             const body = {

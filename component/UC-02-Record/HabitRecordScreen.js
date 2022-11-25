@@ -37,7 +37,9 @@ const HabitRecordScreen = (props) => {
             >
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={() => navigation.navigate("CreateHabitRecord")}
+                    onPress={() => {
+                        navigation.navigate("CreateHabitRecord");
+                    }}
                 >
                     <Text>습관 생성</Text>
                 </TouchableOpacity>

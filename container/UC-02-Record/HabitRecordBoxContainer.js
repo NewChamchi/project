@@ -7,7 +7,7 @@ import { TouchableOpacity, StyleSheet, View, Text, Alert } from "react-native";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { checkHabit, deleteHabit, memberHabitInquiry } from "../../api/record";
 import HabitRecordBox from "../../component/UC-02-Record/HabitRecordBox";
-import { categoryListIconState } from "../../recoil/CommonRecoil";
+import { categoryListState } from "../../recoil/CommonRecoil";
 import { userInfoState } from "../../recoil/UC-01-Member";
 import {
     boxIndexState,
@@ -15,7 +15,6 @@ import {
     habitRecordListState,
     updateScreenState,
 } from "../../recoil/UC-02-Record";
-import { getHabitList } from "../CommonContainer";
 
 const HabitRecordBoxContainer = (props) => {
     const { navigation, id, item } = props;
@@ -24,11 +23,11 @@ const HabitRecordBoxContainer = (props) => {
     const setHabitRecordList = useSetRecoilState(habitRecordListState);
     const setHabitRecordItem = useSetRecoilState(habitRecordItemState);
     const userInfo = useRecoilValue(userInfoState);
-    const categoryList = useRecoilValue(categoryListIconState);
-    // const [habitCheckBox, setHabitCheckBox] = useState(item.check);
+    const categoryList = useRecoilValue(categoryListState);
+    const [habitCheckBox, setHabitCheckBox] = useState(item.check);
 
     // test
-    const [habitCheckBox, setHabitCheckBox] = useState(false);
+    // const [habitCheckBox, setHabitCheckBox] = useState(false);
 
     const setDetailScreen = () => {
         setHabitRecordItem(item);
@@ -39,7 +38,19 @@ const HabitRecordBoxContainer = (props) => {
         setHabitRecordItem(item);
         navigation.navigate("HabitPicture");
     };
-
+    const getHabitList = () => {
+        console.log("됨1");
+        const { data } = memberHabitInquiry(userInfo.memberId)
+            .then((response) => {
+                console.log("됨2");
+                console.log(response);
+                setHabitRecordList(data);
+            })
+            .catch((error) => {
+                console.log("됨3");
+                console.log(error);
+            });
+    };
     const sendCheckHabitApi = () => {
         checkHabit(id)
             .then((response) => {

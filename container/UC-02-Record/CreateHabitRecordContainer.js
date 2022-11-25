@@ -6,7 +6,7 @@ import CreateHabitRecordScreen from "../../component/UC-02-Record/CreateHabitRec
 import { categoryListState } from "../../recoil/CommonRecoil";
 import { userInfoState } from "../../recoil/UC-01-Member";
 import { habitRecordListState } from "../../recoil/UC-02-Record";
-import { getHabitList, nowDate } from "../CommonContainer";
+import { nowDate } from "../CommonContainer";
 
 let id = 0;
 
@@ -39,7 +39,19 @@ const CreateHabitRecordContainer = ({ navigation }) => {
     //     ]);
     //     console.log(habitRecordList);
     // };
-
+    const getHabitList = () => {
+        console.log("됨1");
+        const { data } = memberHabitInquiry(userInfo.memberId)
+            .then((response) => {
+                console.log("됨2");
+                console.log(response);
+                setHabitRecordList(data);
+            })
+            .catch((error) => {
+                console.log("됨3");
+                console.log(error);
+            });
+    };
     const addItem = useCallback(async () => {
         try {
             const body = {

@@ -7,7 +7,7 @@ import {
     habitRecordItemState,
     habitRecordListState,
 } from "../../recoil/UC-02-Record";
-import { getHabitList, nowDate, replaceItemAtIndex } from "../CommonContainer";
+import { nowDate, replaceItemAtIndex } from "../CommonContainer";
 
 const HabitRecordDetailContainer = (props) => {
     const { navigation, id } = props;
@@ -90,6 +90,19 @@ const HabitRecordDetailContainer = (props) => {
     //     }, 1000);
     // }, [habitRecordItem]);
 
+    const getHabitList = () => {
+        console.log("됨1");
+        const { data } = memberHabitInquiry(userInfo.memberId)
+            .then((response) => {
+                console.log("됨2");
+                console.log(response);
+                setHabitRecordList(data);
+            })
+            .catch((error) => {
+                console.log("됨3");
+                console.log(error);
+            });
+    };
     useEffect(() => {
         const verifyAmountCheck = setInterval(() => {
             const tmpTime = nowDate() - Date.parse(habitRecordItem.date);

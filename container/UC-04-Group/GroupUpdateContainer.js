@@ -1,6 +1,6 @@
-const GroupUpdateContainer = ({ navigation }) => {
-    const {} = propDatas;
-    return <GroupUpdateScreen {...propDatas} />;
-};
+// const GroupUpdateContainer = ({ navigation }) => {
+//     const {} = propDatas;
+//     return <GroupUpdateScreen {...propDatas} />;
+// };
 
-export default GroupUpdateContainer;
+// export default GroupUpdateContainer;

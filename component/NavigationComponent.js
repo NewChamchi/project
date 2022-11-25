@@ -33,7 +33,7 @@ import HabitPictureContainer from "../container/UC-02-Record/HabitPictureContain
 import UserMainContainer from "../container/UC-01-Member/UserMainContainer";
 import UpdateUserContainer from "../container/UC-01-Member/UpdateUserContainer";
 import UserAllInfoContainer from "../container/UC-01-Member/UserAllInfoContainer";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import LoginContainer from "../container/LoginContainer";
 import SignUpContainer from "../container/SignUpContainer";
 import HabitPictureSampleContainer from "../container/UC-02-Record/HabitPictureSampleContainer";
@@ -224,7 +224,7 @@ const LoginStack = () => {
 const App = () => {
     const userInfo = useRecoilValue(userInfoState);
 
-    return userInfo.email ? (
+    return !userInfo.memberId ? (
         <NavigationContainer>
             <Tab.Navigator
                 initialRouteName="Feed"

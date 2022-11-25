@@ -24,6 +24,8 @@ const BoardScreen = (props) => {
         setCategoryNow,
         postList,
         setPostList,
+        page,
+        setPage,
     } = props;
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -45,7 +47,7 @@ const BoardScreen = (props) => {
             </View>
             <View style={{ flex: 2, alignItems: "center" }}>
                 {postList.pageNo != 0 ? (
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => setPage(page - 1)}>
                         <Text>
                             <MaterialCommunityIcons
                                 name={"chevron-left"}
@@ -58,7 +60,7 @@ const BoardScreen = (props) => {
                 )}
                 <Text>{postList.pageNo + 1}</Text>
                 {!postList.last ? (
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => setPage(page + 1)}>
                         <Text>
                             <MaterialCommunityIcons
                                 name={"chevron-right"}

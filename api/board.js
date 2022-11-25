@@ -3,7 +3,7 @@ import client from "./client";
 export const createPost = (habitId, body) =>
     client.post(`/api/habits/${habitId}/posts`, body);
 
-export const inquiryPostAll = () => client.get(`/api/posts`);
+export const inquiryPostAll = (page) => client.get(`/api/posts?pageNo=${page}`);
 
 export const inquiryPostById = (postId) => client.get(`/api/posts/${postId}`);
 

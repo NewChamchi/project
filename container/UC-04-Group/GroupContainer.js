@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { applyGroup, inquiryGroup } from "../../api/group";
+import { userInfoState } from "../../recoil/UC-01-Member";
 import {
     groupNowMemberListState,
     groupNowState,
@@ -11,6 +12,7 @@ const GroupContainer = ({ navigation }) => {
     const setGroupNow = useSetRecoilState(groupNowState);
     const groupNowMemberList = useRecoilValue(groupNowMemberListState);
     const setGroupNowMemberList = useSetRecoilState(groupNowMemberListState);
+    const userInfo = useRecoilValue(userInfoState);
     // 필요 없을지도?
     useEffect(() => {
         const getGroupInfo = () => {
@@ -20,12 +22,16 @@ const GroupContainer = ({ navigation }) => {
             )
                 .then((response) => {
                     console.log(response);
+                    setGroupNow(data);
                 })
                 .catch((error) => console.log(error));
         };
         const getGroupMemberListInfo = () => {
-            const { data } = inquiryGroupMemberList()
-            // {인자 들어가야함}
+            const body = {
+                myNickName: userInfo.name,
+                groupName: groupNow.groupName,
+            };
+            const { data } = inquiryGroupMemberList(body)
                 .then((response) => {
                     console.log(response);
                     setGroupNowMemberList(data);
@@ -38,7 +44,9 @@ const GroupContainer = ({ navigation }) => {
 
     const sendApplyGroupApi = () => {
         const body = {
-            /* 들어가야하는 body 값 */
+            groupName: groupNow.groupName,
+            adminNickName: groupNow.adminNickName,
+            userNickName: userInfo.name,
         };
         applyGroup(body)
             .then((response) => console.log(response))

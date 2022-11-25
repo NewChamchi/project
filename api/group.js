@@ -1,41 +1,43 @@
 import client from "./client";
 
 export const inquiryGroupList = (groupType) =>
-    client.get(`/api/group/get-type/${groupType}`);
+    client.get(`/api/group/get-type?grouType=${groupType}`);
 
 export const inquiryGroup = (groupName, adminNickName) =>
-    client.get(`/api/group/get-group/${groupName}/${adminNickName}`);
+    client.get(
+        `/api/group/get-group?groupName=${groupName}&adminNickName=${adminNickName}`
+    );
 
-export const createGroup = (
-    body // groupName, groupType, nickName
-) => client.post(`/api/group/new`, body);
+export const createGroup = (body) => client.post(`/api/group/new`, body);
 
 export const applyGroup = (body) => client.post(`/api/group/apply`, body);
-// 나중에 문서 확인 필요(문서 확인하면 지우기)
 
-export const permissionApplyGroup = (body) =>
-    client.post(`/api/group/admin/handle-application`, body);
-// 나중에 문서 확인 필요(문서 확인하면 지우기)
+export const permissionApplyGroup = (permit, userNickName, body) =>
+    client.put(
+        `/api/group/admin/handle-application?permit=${permit}&userNickName=${userNickName}`,
+        body
+    );
 
-export const updateGroup = (body) =>
-    client.put(`/api/group/admin/update-group`, body);
-// 나중에 문서 확인 필요(문서 확인하면 지우기)
+export const updateGroup = (updateName, body) =>
+    client.put(`/api/group/admin/update-group?updateName=${updateName}`, body);
 
-export const deleteGroup = () => client.delete(`/api/group/admin/delete-group`);
-// 나중에 문서 확인 필요(문서 확인하면 지우기)
+export const deleteGroup = (body) =>
+    client.delete(`/api/group/admin/delete-group`, body);
 
 export const inquiryGroupChat = () => client.get(`/api/group`);
 // 나중에 문서 확인 필요(문서 확인하면 지우기)
 
-export const writeGroupChat = (body) => client.post(`/api/group`, body);
+export const writeGroupChat = (body) => client.put(`/api/group`, body);
 // 나중에 문서 확인 필요(문서 확인하면 지우기)
 
-export const inquiryGroupMemberList = () =>
-    client.get(`/api/group/user/get-group-members`);
-// 나중에 문서 확인 필요(문서 확인하면 지우기)
+export const inquiryGroupMemberList = (body) =>
+    client.get(`/api/group/user/get-group-members`, body);
 
-export const withdrawGroup = () => client.delete(`/api/group/user/withdrawal`);
-// 나중에 문서 확인 필요(문서 확인하면 지우기)
+export const withdrawGroup = (userNickNameWillBeAdmin, body) =>
+    client.delete(
+        `/api/group/user/withdrawal?userNickNameWillBeAdmin=${userNickNameWillBeAdmin}`,
+        body
+    );
 
-export const warnGroupMember = () => client.put(`/api/grou/warn`);
-// 나중에 문서 확인 필요(문서 확인하면 지우기)
+export const warnGroupMember = (userNickName, body) =>
+    client.put(`/api/grou/warn?userNickName=${userNickName}`, body);

@@ -14,9 +14,10 @@ const BoardContainer = ({ navigation }) => {
     const setCategoryNow = useSetRecoilState(categoryNowState);
     const postList = useRecoilValue(postListState);
     const setPostList = useSetRecoilState(postListState);
+    const [page, setPage] = useState(0);
     useEffect(() => {
         const getPostList = () => {
-            const { data } = inquiryPostAll()
+            const { data } = inquiryPostAll(page)
                 .then((response) => {
                     console.log(response);
                     setPostList(data);
@@ -35,6 +36,8 @@ const BoardContainer = ({ navigation }) => {
         setCategoryNow,
         postList,
         setPostList,
+        page,
+        setPage,
     };
     return <BoardScreen {...propsData} />;
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { warnUser } from "../../api/user";
+import { userAllInfo, warnUser } from "../../api/user";
 import UserInfoBox from "../../component/UC-01-Member/UserInfoBox";
 import { userInfoListState, userInfoState } from "../../recoil/UC-01-Member";
 
@@ -21,7 +21,6 @@ const UserInfoBoxContainer = (props) => {
     const sendWarnUserApi = (email) => {
         warnUser(email)
             .then((response) => {
-                console.log(response);
                 getUserAllList();
             })
             .catch((error) => {

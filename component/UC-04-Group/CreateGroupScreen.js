@@ -31,7 +31,7 @@ const CreateGroupScreen = (props) => {
                         fontSize: 20,
                     }}
                 >
-                    {categoryNow.name} 소모임
+                    {categoryNow ? categoryNow["name"] : false} 소모임
                 </Text>
                 <TextInput
                     style={{
@@ -41,7 +41,7 @@ const CreateGroupScreen = (props) => {
                         padding: 10,
                         height: 60,
                     }}
-                    onChangeText={(newGroupName) => setGroupName(newGroupName)}
+                    onChangeText={setGroupName}
                     value={groupName}
                     placeholder="방 제목"
                 />

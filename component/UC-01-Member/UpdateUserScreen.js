@@ -12,7 +12,16 @@ import { ScrollView } from "react-native-web";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const UpdateUserScreen = (props) => {
-    const { navigation, name, setName, password, setPassword } = props;
+    const {
+        navigation,
+        name,
+        setName,
+        password,
+        setPassword,
+        userInfo,
+        setUserInfo,
+        sendUpdateUserApi,
+    } = props;
 
     return (
         <SafeAreaView style={{ flex: 1 }}>

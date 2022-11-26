@@ -36,9 +36,11 @@ const GroupBox = (props) => {
                         flexDirection: "row",
                     }}
                 >
-                    <Text style={{ fontSize: 20, margin: 10 }}>🎮</Text>
                     <Text style={{ fontSize: 20, margin: 10 }}>
-                        {item.name}
+                        {categoryNamwToIcon(item.groupType)}
+                    </Text>
+                    <Text style={{ fontSize: 20, margin: 10 }}>
+                        {item.groupName}
                     </Text>
                 </View>
                 <View
@@ -48,7 +50,7 @@ const GroupBox = (props) => {
                     }}
                 >
                     <Text style={{ fontSize: 15, margin: 10 }}>
-                        {/* {방장 이름 들어가야함} */}
+                        {item.adminNickName}
                     </Text>
                 </View>
             </View>

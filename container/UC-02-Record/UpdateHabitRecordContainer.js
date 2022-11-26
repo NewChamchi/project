@@ -40,7 +40,7 @@ const UpdateHabitRecordContianer = (props) => {
         const { data } = memberHabitInquiry(userInfo.memberId)
             .then((response) => {
                 console.log("됨2");
-                console.log(response);
+
                 setHabitRecordList(data);
             })
             .catch((error) => {

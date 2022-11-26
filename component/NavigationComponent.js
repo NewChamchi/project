@@ -39,6 +39,12 @@ import SignUpContainer from "../container/SignUpContainer";
 import HabitPictureSampleContainer from "../container/UC-02-Record/HabitPictureSampleContainer";
 import { userInfoState } from "../recoil/UC-01-Member";
 import { categoryListState } from "../recoil/CommonRecoil";
+import GroupListContainer from "../container/UC-04-Group/GroupListContainer";
+import ChatContainer from "../container/UC-04-Group/ChatContainer";
+import CreateGroupContainer from "../container/UC-04-Group/CreateGroupContainer";
+import GroupContainer from "../container/UC-04-Group/GroupContainer";
+import GroupSettingContainer from "../container/UC-04-Group/GroupSettingContainer";
+import UserMainScreen from "./UC-01-Member/UserMainScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -143,27 +149,27 @@ const GroupStack = () => {
         >
             <Stack.Screen
                 name="GroupList"
-                component={GroupListScreen}
+                component={GroupListContainer}
                 options={{ title: "메인 화면" }}
             />
             <Stack.Screen
                 name="Chat"
-                component={ChatScreen}
+                component={ChatContainer}
                 options={{ title: "채팅방" }}
             />
             <Stack.Screen
                 name="CreateGroup"
-                component={CreateGroupScreen}
+                component={CreateGroupContainer}
                 options={{ title: "소모임 생성" }}
             />
             <Stack.Screen
                 name="Group"
-                component={GroupScreen}
+                component={GroupContainer}
                 options={{ title: "소모임" }}
             />
             <Stack.Screen
                 name="GroupSetting"
-                component={GroupSettingScreen}
+                component={GroupSettingContainer}
                 options={{ title: "소모임 관리" }}
             />
         </Stack.Navigator>
@@ -224,7 +230,7 @@ const LoginStack = () => {
 const App = () => {
     const userInfo = useRecoilValue(userInfoState);
 
-    return !userInfo.memberId ? (
+    return userInfo.memberId ? (
         <NavigationContainer>
             <Tab.Navigator
                 initialRouteName="Feed"

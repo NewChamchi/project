@@ -9,7 +9,15 @@ import {
 } from "react-native";
 
 const UserMainScreen = (props) => {
-    const { navigation, sendLogoutApi, sendWithdrawApi, name, email } = props;
+    const {
+        navigation,
+        sendLogoutApi,
+        sendWithdrawApi,
+        name,
+        email,
+        userInfo,
+        setUserInfo,
+    } = props;
     const LogoutAlert = (sendLogoutApi) => {
         Alert.alert("로그아웃", "정말 로그아웃 하시겠습니까?", [
             {
@@ -58,7 +66,7 @@ const UserMainScreen = (props) => {
                         fontSize: 25,
                     }}
                 >
-                    이름 : {name}
+                    이름 : {userInfo ? userInfo.name : false}
                 </Text>
                 <Text
                     style={{
@@ -68,7 +76,7 @@ const UserMainScreen = (props) => {
                         fontSize: 25,
                     }}
                 >
-                    이메일 : {email}
+                    이메일 : {userInfo ? userInfo.email : false}
                 </Text>
             </View>
             <View style={{ flex: 4, justifyContent: "flex-start" }}>

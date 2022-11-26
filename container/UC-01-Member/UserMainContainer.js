@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import client from "../../api/client";
 import { logout, userSelfInfo, withdrawMember } from "../../api/user";
 import UserMainScreen from "../../component/UC-01-Member/UserMainScreen";
 import { userInfoState } from "../../recoil/UC-01-Member";
@@ -15,20 +16,27 @@ const UserMainContainer = ({ navigation }) => {
             try {
                 const { data } = await userSelfInfo();
                 console.log(data);
-                setName(data.name);
-                setEmail(data.email);
+                setUserInfo({
+                    ...userInfo,
+                    name: data.name,
+                    email: data.email,
+                });
             } catch (e) {
                 console.log(e);
             }
         };
         getSelfInfo();
-    });
+    }, []);
     const sendLogoutApi = () => {
         logout()
             .then((response) => {
-                console.log(response);
-                setUserInfo({ name: "", email: "" });
-                axios.defaults.headers["Cookies"] = null;
+                setUserInfo({
+                    name: "",
+                    email: "",
+                    password: "",
+                    memberId: "",
+                });
+                client.defaults.headers.Cookie = null;
             })
             .catch((error) => {
                 console.log(error.response);
@@ -38,7 +46,6 @@ const UserMainContainer = ({ navigation }) => {
     const sendWithdrawApi = () => {
         withdrawMember()
             .then((response) => {
-                console.log(response);
                 setUserInfo({ name: "", email: "" });
             })
             .catch((error) => {
@@ -51,6 +58,8 @@ const UserMainContainer = ({ navigation }) => {
         sendWithdrawApi,
         name,
         email,
+        userInfo,
+        setUserInfo,
     };
     return <UserMainScreen {...propDatas} />;
 };

@@ -26,7 +26,7 @@ const UserAllInfoContainer = ({ navigation }) => {
         // test
         // setUserInfoList(testData);
         // console.log(testData);
-    }, [userInfoList]);
+    }, []);
     const propDatas = {
         navigation,
         userInfoList,

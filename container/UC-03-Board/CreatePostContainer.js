@@ -28,9 +28,7 @@ const CreatePostContainer = ({ navigation }) => {
             content: postContents,
         };
         createPost(habitId, body)
-            .then((response) => {
-                console.log(response);
-            })
+            .then((response) => {})
             .catch((error) => {
                 console.log(error);
             });

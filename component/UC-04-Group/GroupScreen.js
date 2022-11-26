@@ -23,6 +23,7 @@ const GroupScreen = (props) => {
         sendApplyGroupApi,
         groupNowMemberList,
         setGroupNowMemberList,
+        userInfo,
     } = props;
     const [chatModalVisible, setChatModalVisible] = useState(false);
 
@@ -52,7 +53,7 @@ const GroupScreen = (props) => {
                     {groupNow.groupName}
                 </Text>
                 <View style={{ flex: 2, alignItems: "center" }}>
-                    {groupNow.isGroupAdmin ? (
+                    {groupNow.adminNickName == userInfo.name ? (
                         <TouchableOpacity
                             style={styles.button}
                             onPress={() => navigation.navigate("GroupSetting")}
@@ -62,21 +63,27 @@ const GroupScreen = (props) => {
                     ) : (
                         <TouchableOpacity
                             style={styles.button}
-                            onPress={() => navigation.navigate("GroupSetting")}
+                            onPress={() => applyAlert(sendApplyGroupApi)}
                         >
                             <Text>소모임 가입 신청</Text>
                         </TouchableOpacity>
                     )}
                 </View>
-                <Text style={{ flex: 0.5, fontSize: 15 }}>
+                {/* <Text style={{ flex: 0.5, fontSize: 15 }}>
                     인원수 : {groupNow.inwon} /{groupNow.chonginwon}
-                </Text>
+                </Text> */}
                 <View style={{ flex: 3 }}>
                     <ScrollView horizontal={true}>
                         {groupNowMemberList
-                            ? groupNowMemberList.map((groupMemberItem) => (
-                                  <GroupMemberBox item={groupMemberItem} />
-                              ))
+                            ? groupNowMemberList
+                                  .filter(
+                                      (groupMemberItem) =>
+                                          groupMemberItem.role !=
+                                          "ROLE_GROUP_PENDING"
+                                  )
+                                  .map((groupMemberItem) => (
+                                      <GroupMemberBox item={groupMemberItem} />
+                                  ))
                             : false}
                     </ScrollView>
                 </View>

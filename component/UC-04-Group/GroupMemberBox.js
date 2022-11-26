@@ -1,8 +1,9 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { ImageType } from "expo-camera/build/Camera.types";
 import { Text, TouchableOpacity, View } from "react-native";
 
 const GroupMemberBox = (props) => {
-    const { item, id } = props;
+    const { item } = props;
     return (
         <TouchableOpacity
             style={{
@@ -15,8 +16,10 @@ const GroupMemberBox = (props) => {
         >
             <MaterialCommunityIcons name="account-circle" size={40} />
             <View>
-                <Text>{item.memberName}</Text>
-                <Text>{item.time}</Text>
+                <Text>{item.nickName}</Text>
+                <Text>
+                    {item.role == "ROLE_GROUP_ADMIN" ? "관리자" : "사용자"}
+                </Text>
             </View>
         </TouchableOpacity>
     );

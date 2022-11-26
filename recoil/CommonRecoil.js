@@ -6,8 +6,6 @@ export const categoryListIconState = atom({
         game: "🎮",
         tobacco: "🚬",
         alcohol: "🍺",
-        // { name: "담배" "🚬" },
-        // { name: "술", icon: "🍺" },
         // { name: "운동", icon: "🎾" },
         // { name: "책", icon: "📕" },
         // { name: "기타", icon: "💬" },

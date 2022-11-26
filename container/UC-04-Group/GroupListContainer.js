@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { inquiryGroupList } from "../../api/group";
 import { inquiryCategoryAll } from "../../api/record";
+import GroupListScreen from "../../component/UC-04-Group/GroupListScreen";
 import { categoryListState, categoryNowState } from "../../recoil/CommonRecoil";
 import { groupListState } from "../../recoil/UC-04-Group";
 
@@ -11,20 +12,17 @@ const GroupListContainer = ({ navigation }) => {
     const categoryList = useRecoilValue(categoryListState);
     const categoryNow = useRecoilValue(categoryNowState);
     const setCategoryNow = useSetRecoilState(categoryNowState);
-    const getGroupListByCategory = (groupType) => {
+    const getGroupListByCategory = (groupType) => {};
+
+    useEffect(() => {
         const { data } = inquiryGroupList(groupType)
             .then((response) => {
-                console.log(response);
                 setGroupListByCategory(data);
                 console.log(data);
             })
             .catch((error) => {
                 console.log(error);
             });
-    };
-
-    useEffect(() => {
-        getGroupListByCategory(categoryNow.name);
     }, []);
     const propDatas = {
         navigation,

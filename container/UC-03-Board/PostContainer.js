@@ -17,10 +17,8 @@ const PostContainer = ({ navigation }) => {
     const sendDeletePostByIdApi = () => {
         deletePostById(postNow.id)
             .then((response) => {
-                console.log(response);
                 const { data } = inquiryPostAll()
                     .then((response) => {
-                        console.log(response);
                         setPostList(data);
                     })
                     .catch((error) => console.log(error));
@@ -31,16 +29,13 @@ const PostContainer = ({ navigation }) => {
     const sendCreateCommentApi = () => {
         const body = { body: comment };
         createComment(userInfo.id, postNow.id, body).then((response) => {
-            console.log(response);
             const { listData } = inquiryPostAll()
                 .then((response) => {
-                    console.log(response);
                     setPostList(listData);
                 })
                 .catch((error) => console.log(error));
             const { data } = inquiryPostById(postNow.id)
                 .then((response) => {
-                    console.log(response);
                     setPostNow(data);
                 })
                 .catch((error) => console.log(error));

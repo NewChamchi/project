@@ -1,24 +1,27 @@
 import React, { useState } from "react";
-import { updateUserInfo } from "../../api/user";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { updateUserInfo, userSelfInfo } from "../../api/user";
 import UpdateUserScreen from "../../component/UC-01-Member/UpdateUserScreen";
+import { userInfoState } from "../../recoil/UC-01-Member";
 
 const UpdateUserContainer = ({ navigation }) => {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
+    const userInfo = useRecoilValue(userInfoState);
+    const setUserInfo = useSetRecoilState(userInfoState);
     const getSelfInfo = async () => {
         try {
             const { data } = await userSelfInfo();
             console.log(data);
-            setName(data.name);
-            setEmail(data.email);
+            setUserInfo({ ...userInfo, name: name, password: password });
         } catch (e) {
             console.log(e);
         }
     };
-    sendUpdateUserApi = (content, updateInfo) => {
+    const sendUpdateUserApi = (content, updateInfo) => {
         updateUserInfo(content, updateInfo)
             .then((response) => {
-                console.log(response);
+                getSelfInfo();
             })
             .catch((error) => {
                 console.log(error.response);
@@ -30,6 +33,9 @@ const UpdateUserContainer = ({ navigation }) => {
         setName,
         password,
         setPassword,
+        userInfo,
+        setUserInfo,
+        sendUpdateUserApi,
     };
     return <UpdateUserScreen {...propDatas} />;
 };

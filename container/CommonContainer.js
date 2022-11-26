@@ -5,6 +5,7 @@ import { categoryListState } from "../recoil/CommonRecoil";
 import { userInfoState } from "../recoil/UC-01-Member";
 import { habitRecordListState } from "../recoil/UC-02-Record";
 
+import Cookies from "universal-cookie";
 export const replaceItemAtIndex = (arr, index, newValue) => {
     return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
 };
@@ -13,6 +14,7 @@ export const nowDate = () => {
     return Date.now();
 };
 
+export const cookies = new Cookies();
 export const categoryNameToIcon = (name) => {
     switch (name) {
         case "게임":
@@ -24,7 +26,7 @@ export const categoryNameToIcon = (name) => {
         case "술":
             return "🍺";
             break;
-        case "운동동":
+        case "운동":
             return "🎾";
             break;
         case "책":
@@ -34,15 +36,4 @@ export const categoryNameToIcon = (name) => {
             return "💬";
             break;
     }
-};
-
-export const getCategoryList = () => {
-    const categoryList = useRecoilValue(categoryListState);
-    const setCategoryList = useSetRecoilState(categoryListState);
-    const { data } = inquiryCategoryAll()
-        .then((response) => {
-            console.log(response);
-            setCategoryList(data.contents);
-        })
-        .catch((error) => console.log(error));
 };

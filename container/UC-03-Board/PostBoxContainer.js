@@ -14,7 +14,6 @@ const PostBoxContainer = (props) => {
         const getPostById = () => {
             const { data } = inquiryPostById(id)
                 .then((response) => {
-                    console.log(response);
                     setPostNow(data);
                 })
                 .catch((error) => {

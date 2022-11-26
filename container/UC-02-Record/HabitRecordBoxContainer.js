@@ -43,7 +43,7 @@ const HabitRecordBoxContainer = (props) => {
         const { data } = memberHabitInquiry(userInfo.memberId)
             .then((response) => {
                 console.log("됨2");
-                console.log(response);
+
                 setHabitRecordList(data);
             })
             .catch((error) => {
@@ -53,9 +53,7 @@ const HabitRecordBoxContainer = (props) => {
     };
     const sendCheckHabitApi = () => {
         checkHabit(id)
-            .then((response) => {
-                console.log(response);
-            })
+            .then((response) => {})
             .catch((error) => {
                 console.log(error.response);
             });

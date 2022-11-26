@@ -19,13 +19,15 @@ const HabitRecordScreen = (props) => {
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 6, padding: 16 }}>
                 <ScrollView>
-                    {habitRecordList.map((habitRecordItem) => (
-                        <HabitRecordBoxContainer
-                            key={habitRecordItem.id}
-                            item={habitRecordItem}
-                            navigation={navigation}
-                        />
-                    ))}
+                    {habitRecordList
+                        ? habitRecordList.map((habitRecordItem) => (
+                              <HabitRecordBoxContainer
+                                  key={habitRecordItem.id}
+                                  item={habitRecordItem}
+                                  navigation={navigation}
+                              />
+                          ))
+                        : false}
                 </ScrollView>
             </View>
             <View

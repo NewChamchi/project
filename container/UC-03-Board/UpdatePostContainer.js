@@ -11,16 +11,13 @@ const UpdatePostContainer = ({ navigation }) => {
     const sendUpdatePostByIdApi = () => {
         updatePostById(postNow.id)
             .then((response) => {
-                console.log(response);
                 const { listData } = inquiryPostAll()
                     .then((response) => {
-                        console.log(response);
                         setPostList(listData);
                     })
                     .catch((error) => console.log(error));
                 const { data } = inquiryPostById(postNow.id)
                     .then((response) => {
-                        console.log(response);
                         setPostNow(data);
                     })
                     .catch((error) => console.log(error));

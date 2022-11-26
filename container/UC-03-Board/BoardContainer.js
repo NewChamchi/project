@@ -19,7 +19,6 @@ const BoardContainer = ({ navigation }) => {
         const getPostList = () => {
             const { data } = inquiryPostAll(page)
                 .then((response) => {
-                    console.log(response);
                     setPostList(data);
                 })
                 .catch((error) => {

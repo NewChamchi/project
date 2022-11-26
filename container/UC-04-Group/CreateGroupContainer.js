@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { createGroup } from "../../api/group";
+import CreateGroupScreen from "../../component/UC-04-Group/CreateGroupScreen";
 import { categoryNowState } from "../../recoil/CommonRecoil";
 import { userInfoState } from "../../recoil/UC-01-Member";
 import { groupListState } from "../../recoil/UC-04-Group";
@@ -8,8 +10,11 @@ const CreateGroupContainer = ({ navigation }) => {
     const groupListByCategory = useRecoilValue(groupListState);
     const setGroupListByCategory = useSetRecoilState(groupListState);
     const categoryNow = useRecoilValue(categoryNowState);
-    const [groupName, setGroupName] = useState;
+    const [groupName, setGroupName] = useState("");
     const userInfo = useRecoilValue(userInfoState);
+    useEffect(() => {
+        console.log(categoryNow);
+    });
     const sendCreateGroupApi = () => {
         const body = {
             groupName: groupName,
@@ -18,10 +23,8 @@ const CreateGroupContainer = ({ navigation }) => {
         };
         createGroup(body)
             .then((response) => {
-                console.log(response);
-                const { data } = inquiryGroupList(groupType)
+                const { data } = inquiryGroupList(categoryNow.name)
                     .then((response) => {
-                        console.log(response);
                         setGroupListByCategory(data);
                         console.log(data);
                     })

@@ -18,7 +18,6 @@ const SignUpContainer = ({ navigation }) => {
             password: password,
         })
             .then((response) => {
-                console.log(response);
                 navigation.navigate("Login");
             })
             .catch((error) => {

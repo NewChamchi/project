@@ -21,7 +21,6 @@ const GroupContainer = ({ navigation }) => {
                 groupNow.adminNickName
             )
                 .then((response) => {
-                    console.log(response);
                     setGroupNow(data);
                 })
                 .catch((error) => console.log(error));
@@ -33,7 +32,6 @@ const GroupContainer = ({ navigation }) => {
             };
             const { data } = inquiryGroupMemberList(body)
                 .then((response) => {
-                    console.log(response);
                     setGroupNowMemberList(data);
                 })
                 .catch((error) => console.log(error));
@@ -60,6 +58,7 @@ const GroupContainer = ({ navigation }) => {
         sendApplyGroupApi,
         groupNowMemberList,
         setGroupNowMemberList,
+        userInfo,
     };
     return <GroupScreen {...propDatas} />;
 };

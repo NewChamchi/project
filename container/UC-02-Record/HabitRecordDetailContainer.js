@@ -95,7 +95,7 @@ const HabitRecordDetailContainer = (props) => {
         const { data } = memberHabitInquiry(userInfo.memberId)
             .then((response) => {
                 console.log("됨2");
-                console.log(response);
+
                 setHabitRecordList(data);
             })
             .catch((error) => {
@@ -109,7 +109,6 @@ const HabitRecordDetailContainer = (props) => {
             if (tmpTime <= habitRecordItem.amount * habitRecordItem.count) {
                 judgeCheck(habitRecordItem.id)
                     .then((response) => {
-                        console.log(response);
                         getHabitList();
                     })
                     .catch((error) => {

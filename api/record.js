@@ -24,7 +24,7 @@ export const registerCategory = (
     body // { name: "담배"}
 ) => client.post(`/api/categories`, body);
 
-export const inquiryCategoryAll = () => client.get(`/api/categories/`);
+export const inquiryCategoryAll = () => client.get(`/api/categories`);
 
 export const updateCategory = (
     habitCategoryId,

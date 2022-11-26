@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { createGroup } from "../../api/group";
 import CreateGroupScreen from "../../component/UC-04-Group/CreateGroupScreen";
 import { categoryNowState } from "../../recoil/CommonRecoil";
@@ -7,8 +7,8 @@ import { userInfoState } from "../../recoil/UC-01-Member";
 import { groupListState } from "../../recoil/UC-04-Group";
 
 const CreateGroupContainer = ({ navigation }) => {
-    const groupListByCategory = useRecoilValue(groupListState);
-    const setGroupListByCategory = useSetRecoilState(groupListState);
+    const [groupListByCategory, setGroupListByCategory] =
+        useRecoilState(groupListState);
     const categoryNow = useRecoilValue(categoryNowState);
     const [groupName, setGroupName] = useState("");
     const userInfo = useRecoilValue(userInfoState);

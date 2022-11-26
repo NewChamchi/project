@@ -12,10 +12,10 @@ const GroupListContainer = ({ navigation }) => {
     const categoryList = useRecoilValue(categoryListState);
     const categoryNow = useRecoilValue(categoryNowState);
     const setCategoryNow = useSetRecoilState(categoryNowState);
-    const getGroupListByCategory = (groupType) => {};
 
     useEffect(() => {
-        const { data } = inquiryGroupList(groupType)
+        console.log(groupListByCategory);
+        const { data } = inquiryGroupList(categoryNow["name"])
             .then((response) => {
                 setGroupListByCategory(data);
                 console.log(data);
@@ -28,7 +28,6 @@ const GroupListContainer = ({ navigation }) => {
         navigation,
         groupListByCategory,
         setGroupListByCategory,
-        getGroupListByCategory,
         categoryList,
         categoryNow,
         setCategoryNow,

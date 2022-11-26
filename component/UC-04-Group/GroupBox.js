@@ -11,14 +11,9 @@ import {
 } from "react-native";
 
 const GroupBox = (props) => {
-    const { item, id, groupNow, setGroupNow } = props;
+    const { item, id } = props;
     return (
-        <TouchableOpacity
-            onPress={() => {
-                setGroupNow(item);
-                navigation.navigate("Group");
-            }}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate("Group")}>
             <View
                 style={{
                     height: 100,
@@ -36,11 +31,9 @@ const GroupBox = (props) => {
                         flexDirection: "row",
                     }}
                 >
+                    <Text style={{ fontSize: 20, margin: 10 }}>🎮</Text>
                     <Text style={{ fontSize: 20, margin: 10 }}>
-                        {categoryNamwToIcon(item.groupType)}
-                    </Text>
-                    <Text style={{ fontSize: 20, margin: 10 }}>
-                        {item.groupName}
+                        {item.name}
                     </Text>
                 </View>
                 <View
@@ -50,7 +43,7 @@ const GroupBox = (props) => {
                     }}
                 >
                     <Text style={{ fontSize: 15, margin: 10 }}>
-                        {item.adminNickName}
+                        {/* {방장 이름 들어가야함} */}
                     </Text>
                 </View>
             </View>

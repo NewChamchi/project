@@ -19,7 +19,7 @@ const GroupListScreen = (props) => {
         navigation,
         groupListByCategory,
         setGroupListByCategory,
-        getGroupListByCategory,
+        // getGroupListByCategory,
         categoryList,
         categoryNow,
         setCategoryNow,

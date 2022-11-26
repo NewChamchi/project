@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { applyGroup, inquiryGroup } from "../../api/group";
+import GroupScreen from "../../component/UC-04-Group/GroupScreen";
 import { userInfoState } from "../../recoil/UC-01-Member";
 import {
     groupNowMemberListState,

@@ -9,19 +9,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import HabitRecordScreen from "./UC-02-Record/HabitRecordScreen";
-import HabitRecordDetailScreen from "./UC-02-Record/HabitRecordDetailScreen";
-import HabitPictureScreen from "./UC-02-Record/HabitPictureScreen";
+import ChatContainer from "../container/UC-04-Group/ChatContainer";
+import CreateGroupContainer from "../container/UC-04-Group/CreateGroupContainer";
+import GroupContainer from "../container/UC-04-Group/GroupContainer";
+import GroupSettingContainer from "../container/UC-04-Group/GroupSettingContainer";
+
+import GroupListContainer from "../container/UC-04-Group/GroupListContainer";
 import HabitStatisticsScreen from "./UC-02-Record/HabitStatisticsScreen";
-import BoardScreen from "./UC-03-Board/BoardScreen";
-import CreatePostScreen from "./UC-03-Board/CreatePostScreen";
-import PostScreen from "./UC-03-Board/PostScreen";
-import UpdatePostScreen from "./UC-03-Board/UpdatePostScreen";
-import GroupListScreen from "./UC-04-Group/GroupListScreen";
-import ChatScreen from "./UC-04-Group/ChatScreen";
-import CreateGroupScreen from "./UC-04-Group/CreateGroupScreen";
-import GroupSettingScreen from "./UC-04-Group/GroupSettingScreen";
-import GroupScreen from "./UC-04-Group/GroupScreen";
 import CreateHabitRecordContainer from "../container/UC-02-Record/CreateHabitRecordContainer";
 import HabitRecordContainer from "../container/UC-02-Record/HabitRecordContainer";
 import HabitRecordDetailContainer from "../container/UC-02-Record/HabitRecordDetailContainer";
@@ -38,13 +32,6 @@ import LoginContainer from "../container/LoginContainer";
 import SignUpContainer from "../container/SignUpContainer";
 import HabitPictureSampleContainer from "../container/UC-02-Record/HabitPictureSampleContainer";
 import { userInfoState } from "../recoil/UC-01-Member";
-import { categoryListState } from "../recoil/CommonRecoil";
-import GroupListContainer from "../container/UC-04-Group/GroupListContainer";
-import ChatContainer from "../container/UC-04-Group/ChatContainer";
-import CreateGroupContainer from "../container/UC-04-Group/CreateGroupContainer";
-import GroupContainer from "../container/UC-04-Group/GroupContainer";
-import GroupSettingContainer from "../container/UC-04-Group/GroupSettingContainer";
-import UserMainScreen from "./UC-01-Member/UserMainScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -230,12 +217,18 @@ const LoginStack = () => {
 const App = () => {
     const userInfo = useRecoilValue(userInfoState);
 
-    return userInfo.memberId ? (
+    return !userInfo.memberId ? (
         <NavigationContainer>
             <Tab.Navigator
                 initialRouteName="Feed"
-                tabBarOptions={{
-                    activeTintColor: "skyblue",
+                screenOptions={{
+                    tabBarActiveTintColor: "skyblue",
+                    tabBarStyle: [
+                        {
+                            display: "flex",
+                        },
+                        null,
+                    ],
                 }}
             >
                 <Tab.Screen

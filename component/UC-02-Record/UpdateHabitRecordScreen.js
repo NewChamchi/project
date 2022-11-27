@@ -21,14 +21,15 @@ const UpdateHabitRecordScreen = (props) => {
         setUpdateScreen,
         habitName,
         setHabitName,
-        reduceUnit,
-        setReduceUnit,
-        reduceUnitList,
-        checkPeriod,
-        setCheckPeriod,
-        checkPeriodList,
+        amount,
+        amountList,
+        setAmount,
+        period,
+        periodList,
+        setPeriod,
         updateItem,
         clearState,
+        habitRecordItem,
     } = props;
     return (
         <Modal
@@ -67,7 +68,7 @@ const UpdateHabitRecordScreen = (props) => {
                             }}
                         >
                             <Text style={{ fontSize: 25, paddingVertical: 5 }}>
-                                습관 대분류 : {item["categoryName"]}
+                                습관 대분류 : {habitRecordItem["categoryName"]}
                             </Text>
                         </View>
                         <View
@@ -79,10 +80,10 @@ const UpdateHabitRecordScreen = (props) => {
                             <Text style={{ fontSize: 25 }}>정량 단위</Text>
                             <SelectList
                                 boxStyles={styles.input}
-                                setSelected={(newPeriod) =>
-                                    setReduceUnit(newPeriod)
+                                setSelected={(newAmount) =>
+                                    setAmount(newAmount)
                                 }
-                                data={reduceUnitList}
+                                data={amountList}
                             />
                         </View>
                         <View
@@ -95,9 +96,9 @@ const UpdateHabitRecordScreen = (props) => {
                             <SelectList
                                 boxStyles={styles.input}
                                 setSelected={(newPeriod) =>
-                                    setCheckPeriod(newPeriod)
+                                    setPeriod(newPeriod)
                                 }
-                                data={checkPeriodList}
+                                data={periodList}
                             />
                         </View>
                         <View
@@ -111,11 +112,7 @@ const UpdateHabitRecordScreen = (props) => {
                             <TouchableOpacity
                                 style={styles.button}
                                 onPress={() => {
-                                    updateItem(
-                                        habitName,
-                                        reduceUnit,
-                                        checkPeriod
-                                    );
+                                    updateItem(habitName, amount, period);
                                     clearState();
                                     setUpdateScreen(!updateScreen);
                                 }}

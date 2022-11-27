@@ -22,7 +22,9 @@ const PostScreen = (props) => {
         sendCreateCommentApi,
         comment,
         setComment,
+        deleteAlert,
     } = props;
+    const createdTime = new Date(postNow.createdTime);
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView style={{ flex: 1, margin: 16 }}>
@@ -30,10 +32,8 @@ const PostScreen = (props) => {
                     제목 : {postNow.title}
                 </Text>
                 <Text style={{ fontSize: 15, marginBottom: 16 }}>
-                    닉네임 {postNow.userName} | 조회수 {postNow.view} | 생성일자{" "}
-                    {Date(postNow.createdTime).toLocaleString("ko-KR", {
-                        timeZone: "UTC",
-                    })}
+                    닉네임 {postNow.userName} | 조회수 {postNow.view} |{" "}
+                    {createdTime.getHours()}:{createdTime.getMinutes()}
                 </Text>
                 <View
                     style={{
@@ -83,8 +83,7 @@ const PostScreen = (props) => {
                             justifyContent: "center",
                         }}
                         onPress={() => {
-                            sendDeletePostByIdApi();
-                            navigation.navigate("Board");
+                            deleteAlert();
                         }}
                     >
                         <Text>삭제</Text>

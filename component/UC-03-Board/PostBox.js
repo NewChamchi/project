@@ -12,6 +12,7 @@ import {
 
 const PostBox = (props) => {
     const { navigation, item, id, postNow, setPostNow } = props;
+    const createdTime = new Date(item.createdTime);
     return (
         <TouchableOpacity
             onPress={() => {
@@ -21,7 +22,7 @@ const PostBox = (props) => {
         >
             <View
                 style={{
-                    height: 100,
+                    height: 120,
                     flex: 1,
                     backgroundColor: "#DDDDDD",
                     margin: 16,
@@ -37,7 +38,7 @@ const PostBox = (props) => {
                     }}
                 >
                     <Text style={{ fontSize: 20, margin: 10 }}>
-                        {item.title}
+                        {item["title"]}
                     </Text>
                 </View>
                 <View
@@ -47,10 +48,8 @@ const PostBox = (props) => {
                     }}
                 >
                     <Text style={{ fontSize: 15, margin: 10 }}>
-                        닉네임 {item.userName} | 조회수 {item.view} | 생성일자{" "}
-                        {Date(item.createdTime).toLocaleString("ko-KR", {
-                            timeZone: "UTC",
-                        })}
+                        닉네임 {item.userName} | 조회수 {item.view} |{" "}
+                        {createdTime.getHours()}:{createdTime.getMinutes()}
                     </Text>
                 </View>
             </View>

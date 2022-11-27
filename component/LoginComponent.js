@@ -1,10 +1,18 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import { verifyPicture } from "../api/record";
 
 const LoginComponent = (props) => {
-    const { navigation, email, setEmail, password, setPassword, sendLoginApi } =
-        props;
+    const {
+        navigation,
+        email,
+        setEmail,
+        password,
+        setPassword,
+        sendLoginApi,
+        sendTestApi,
+    } = props;
     return (
         <View style={styles.screen}>
             <View style={{ flex: 1.5 }}></View>
@@ -36,6 +44,7 @@ const LoginComponent = (props) => {
                                 setPassword(newPassword)
                             }
                             value={password}
+                            secureTextEntry={true}
                         />
                     </View>
                     <View style={styles.buttonBox}>
@@ -47,6 +56,10 @@ const LoginComponent = (props) => {
                                 title="회원가입"
                                 onPress={() => navigation.navigate("SignUp")}
                             />
+                        </View>
+
+                        <View style={styles.button}>
+                            <Button title="test" onPress={sendTestApi} />
                         </View>
                     </View>
                 </View>

@@ -13,7 +13,9 @@ import {
     ScrollView,
     Alert,
 } from "react-native";
+import GroupMemberBoxContainer from "../../container/UC-04-Group/GroupMemberBoxContainer";
 import ChatScreen from "./ChatScreen";
+import { faker } from "@faker-js/faker";
 
 const GroupScreen = (props) => {
     const {
@@ -24,6 +26,8 @@ const GroupScreen = (props) => {
         groupNowMemberList,
         setGroupNowMemberList,
         userInfo,
+        userRole,
+        setUserRole,
     } = props;
     const [chatModalVisible, setChatModalVisible] = useState(false);
 
@@ -32,7 +36,7 @@ const GroupScreen = (props) => {
             {
                 text: "예",
                 onPress: () => {
-                    sendApplyGroupApi();
+                    sendApplyGroupApi(faker.internet.userName());
                 },
             },
             {
@@ -53,28 +57,30 @@ const GroupScreen = (props) => {
                     {groupNow.groupName}
                 </Text>
                 <View style={{ flex: 2, alignItems: "center" }}>
-                    {groupNow.adminNickName == userInfo.name ? (
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={() => navigation.navigate("GroupSetting")}
-                        >
-                            <Text>소모임 관리</Text>
-                        </TouchableOpacity>
-                    ) : (
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={() => applyAlert(sendApplyGroupApi)}
-                        >
-                            <Text>소모임 가입 신청</Text>
-                        </TouchableOpacity>
-                    )}
+                    {/* {userRole == "ROLE_GROUP_ADMIN" ? ( */}
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => navigation.navigate("GroupSetting")}
+                    >
+                        <Text>소모임 관리</Text>
+                    </TouchableOpacity>
+                    {/* ) : userRole == "ROLE_GROUP_ANONYMOUS" ? ( */}
+                    {/* <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => applyAlert(sendApplyGroupApi)}
+                    >
+                        <Text>소모임 가입 신청</Text>
+                    </TouchableOpacity> */}
+                    {/* ) : (
+                        false
+                    )} */}
                 </View>
                 {/* <Text style={{ flex: 0.5, fontSize: 15 }}>
                     인원수 : {groupNow.inwon} /{groupNow.chonginwon}
                 </Text> */}
                 <View style={{ flex: 3 }}>
                     <ScrollView horizontal={true}>
-                        {groupNowMemberList
+                        {Array.isArray(groupNowMemberList)
                             ? groupNowMemberList
                                   .filter(
                                       (groupMemberItem) =>
@@ -82,7 +88,9 @@ const GroupScreen = (props) => {
                                           "ROLE_GROUP_PENDING"
                                   )
                                   .map((groupMemberItem) => (
-                                      <GroupMemberBox item={groupMemberItem} />
+                                      <GroupMemberBoxContainer
+                                          item={groupMemberItem}
+                                      />
                                   ))
                             : false}
                     </ScrollView>

@@ -20,6 +20,8 @@ const HabitRecordDetailScreen = (props) => {
         setHabitRecordItem,
         proceedTime,
         updateTime,
+        judgeCheck,
+        getHabitList,
     } = props;
     const createTwoButtonAlert = () =>
         Alert.alert(
@@ -29,7 +31,14 @@ const HabitRecordDetailScreen = (props) => {
                 {
                     text: "예",
                     onPress: () => {
-                        updateTime();
+                        judgeCheck(habitRecordItem.id)
+                            .then((response) => {
+                                console.log("시간 체크");
+                                getHabitList();
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
                         console.log("Ok Pressed");
                     },
                 },
@@ -54,7 +63,8 @@ const HabitRecordDetailScreen = (props) => {
                     정량 단위 : {habitRecordItem["amount"]}
                 </Text>
                 <Text style={{ fontSize: 25, paddingBottom: 10 }}>
-                    확인 기간 : {habitRecordItem["period"]}
+                    확인 기간 : {habitRecordItem["period"] / (24 * 3600 * 1000)}
+                    일
                 </Text>
                 <Text style={{ fontSize: 25, paddingBottom: 10 }}>
                     성공 수 : {habitRecordItem["count"]}

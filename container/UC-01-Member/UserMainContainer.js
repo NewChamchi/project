@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import client from "../../api/client";
 import { logout, userSelfInfo, withdrawMember } from "../../api/user";
 import UserMainScreen from "../../component/UC-01-Member/UserMainScreen";
+import { loadingState } from "../../recoil/CommonRecoil";
 import { userInfoState } from "../../recoil/UC-01-Member";
 
 const UserMainContainer = ({ navigation }) => {
@@ -11,7 +12,9 @@ const UserMainContainer = ({ navigation }) => {
     const [email, setEmail] = useState("");
     const userInfo = useRecoilValue(userInfoState);
     const setUserInfo = useSetRecoilState(userInfoState);
+    const [loading, setLoading] = useRecoilState(loadingState);
     useEffect(() => {
+        setLoading(!loading);
         const getSelfInfo = async () => {
             try {
                 const { data } = await userSelfInfo();
@@ -26,8 +29,10 @@ const UserMainContainer = ({ navigation }) => {
             }
         };
         getSelfInfo();
+        setLoading(!loading);
     }, []);
     const sendLogoutApi = () => {
+        setLoading(!loading);
         logout()
             .then((response) => {
                 setUserInfo({
@@ -41,9 +46,11 @@ const UserMainContainer = ({ navigation }) => {
             .catch((error) => {
                 console.log(error.response);
             });
+        setLoading(!loading);
     };
 
     const sendWithdrawApi = () => {
+        setLoading(!loading);
         withdrawMember()
             .then((response) => {
                 setUserInfo({ name: "", email: "" });
@@ -51,6 +58,7 @@ const UserMainContainer = ({ navigation }) => {
             .catch((error) => {
                 console.log(error.response);
             });
+        setLoading(!loading);
     };
     const propDatas = {
         navigation,

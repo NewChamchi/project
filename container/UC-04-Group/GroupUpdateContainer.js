@@ -19,7 +19,10 @@ const GroupUpdateContainer = (props) => {
         };
         updateGroup(updateName, body)
             .then((response) => {
-                const { listData } = inquiryGroupList(groupNow.groupType)
+                const { listData } = inquiryGroupList(
+                    groupNow.groupType,
+                    "name"
+                )
                     .then((response) => {
                         setGroupListByCategory(listData);
                         console.log(listData);

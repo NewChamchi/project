@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { createGroup } from "../../api/group";
+import { createGroup, inquiryGroupList } from "../../api/group";
 import CreateGroupScreen from "../../component/UC-04-Group/CreateGroupScreen";
 import { categoryNowState } from "../../recoil/CommonRecoil";
 import { userInfoState } from "../../recoil/UC-01-Member";
@@ -11,22 +11,24 @@ const CreateGroupContainer = ({ navigation }) => {
         useRecoilState(groupListState);
     const categoryNow = useRecoilValue(categoryNowState);
     const [groupName, setGroupName] = useState("");
+    const [nickName, setNickName] = useState("");
     const userInfo = useRecoilValue(userInfoState);
-    useEffect(() => {
-        console.log(categoryNow);
-    });
+    const setUserInfo = useSetRecoilState(userInfoState);
+    // useEffect(() => {
+    //     console.log(categoryNow);
+    // });
     const sendCreateGroupApi = () => {
         const body = {
             groupName: groupName,
             groupType: categoryNow.name,
-            nickName: userInfo.name,
+            nickName: nickName,
         };
         createGroup(body)
             .then((response) => {
-                const { data } = inquiryGroupList(categoryNow.name)
+                inquiryGroupList(categoryNow["name"], "name")
                     .then((response) => {
-                        setGroupListByCategory(data);
-                        console.log(data);
+                        setGroupListByCategory(response["data"]);
+                        console.log(response["data"]);
                     })
                     .catch((error) => {
                         console.log(error);
@@ -39,6 +41,8 @@ const CreateGroupContainer = ({ navigation }) => {
         categoryNow,
         groupName,
         setGroupName,
+        setNickName,
+        nickName,
         sendCreateGroupApi,
     };
     return <CreateGroupScreen {...propDatas} />;

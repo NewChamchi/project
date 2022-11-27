@@ -32,7 +32,7 @@ const BoardScreen = (props) => {
             <View style={{ flex: 11 }}>
                 <ScrollView>
                     {postList.content
-                        ? postList.content.map((item, index) => (
+                        ? postList.content.map((item) => (
                               <PostBoxContainer
                                   navigation={navigation}
                                   item={item}
@@ -41,12 +41,12 @@ const BoardScreen = (props) => {
                           ))
                         : false}
                     <View
-                        style={{ flexDirection: "row", alignItems: center }}
+                        style={{ flexDirection: "row", alignItems: "center" }}
                     ></View>
                 </ScrollView>
             </View>
             <View style={{ flex: 2, alignItems: "center" }}>
-                {postList.pageNo != 0 ? (
+                {postList["pageNo"] != 0 ? (
                     <TouchableOpacity onPress={() => setPage(page - 1)}>
                         <Text>
                             <MaterialCommunityIcons
@@ -58,8 +58,8 @@ const BoardScreen = (props) => {
                 ) : (
                     false
                 )}
-                <Text>{postList.pageNo + 1}</Text>
-                {!postList.last ? (
+                <Text>{postList["pageNo"] + 1}</Text>
+                {!postList["last"] ? (
                     <TouchableOpacity onPress={() => setPage(page + 1)}>
                         <Text>
                             <MaterialCommunityIcons

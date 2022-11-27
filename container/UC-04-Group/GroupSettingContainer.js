@@ -1,5 +1,6 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
+    inquiryGroupMemberList,
     permissionApplyGroup,
     warnGroupMember,
     withdrawGroup,
@@ -21,16 +22,13 @@ const GroupSettingContainer = ({ navigation }) => {
     const sendPermissonApplyGroupApi = (permit, userNickName) => {
         const body = {
             groupName: groupNow.groupName,
-            myNickName: userInfo.name,
+            myNickName: groupNow.adminNickName,
         };
         permissionApplyGroup(permit, userNickName, body)
             .then((response) => {
-                const { data } = inquiryGroupMemberList({
-                    myNickName: userInfo.name,
-                    groupName: groupNow.groupName,
-                })
+                inquiryGroupMemberList(body)
                     .then((response) => {
-                        setGroupNowMemberList(data);
+                        setGroupNowMemberList(response["data"]);
                     })
                     .catch((error) => console.log(error));
             })
@@ -40,16 +38,13 @@ const GroupSettingContainer = ({ navigation }) => {
     const sendWarnGroupMemberApi = (userNickName) => {
         const body = {
             groupName: groupNow.groupName,
-            myNickName: userInfo.name,
+            myNickName: groupNow.adminNickName,
         };
         warnGroupMember(userNickName, body)
             .then((response) => {
-                const { data } = inquiryGroupMemberList({
-                    myNickName: userInfo.name,
-                    groupName: groupNow.groupName,
-                })
+                inquiryGroupMemberList(body)
                     .then((response) => {
-                        setGroupNowMemberList(data);
+                        setGroupNowMemberList(response["data"]);
                     })
                     .catch((error) => console.log(error));
             })
@@ -59,16 +54,13 @@ const GroupSettingContainer = ({ navigation }) => {
     const sendWithdrawGroupApi = (userNickNameWillBeAdmin) => {
         const body = {
             groupName: groupNow.groupName,
-            myNickName: userInfo.name,
+            myNickName: groupNow.adminNickName,
         };
         withdrawGroup(userNickNameWillBeAdmin, body)
             .then((response) => {
-                const { data } = inquiryGroupMemberList({
-                    myNickName: userInfo.name,
-                    groupName: groupNow.groupName,
-                })
+                inquiryGroupMemberList(body)
                     .then((response) => {
-                        setGroupNowMemberList(data);
+                        setGroupNowMemberList(response["data"]);
                     })
                     .catch((error) => console.log(error));
             })

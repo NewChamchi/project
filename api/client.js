@@ -1,7 +1,10 @@
 import axios from "axios";
 
 axios.defaults.baseURL = "http://172.20.10.2:8080";
+
+// axios.defaults.baseURL = "http://202.31.202.150:5000";
 axios.defaults.withCredentials = true;
+// axios.defaults.headers.Cookie = "fgoxpqwtedpdqari";
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post["Content-Type"] =
 //     "application/x-www-form-urlencoded";

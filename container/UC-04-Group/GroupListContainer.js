@@ -12,18 +12,20 @@ const GroupListContainer = ({ navigation }) => {
     const categoryList = useRecoilValue(categoryListState);
     const categoryNow = useRecoilValue(categoryNowState);
     const setCategoryNow = useSetRecoilState(categoryNowState);
-
+    const [order, setOrder] = useState("name");
+    const [orderList, setOrderList] = useState(["name", "number"]);
     useEffect(() => {
-        console.log(groupListByCategory);
-        const { data } = inquiryGroupList(categoryNow["name"])
+        console.log(categoryNow["name"]);
+        inquiryGroupList(categoryNow["name"], order)
             .then((response) => {
-                setGroupListByCategory(data);
-                console.log(data);
+                setGroupListByCategory(response["data"]);
+
+                console.log(groupListByCategory);
             })
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
+    }, [order]);
     const propDatas = {
         navigation,
         groupListByCategory,
@@ -31,6 +33,9 @@ const GroupListContainer = ({ navigation }) => {
         categoryList,
         categoryNow,
         setCategoryNow,
+        order,
+        setOrder,
+        orderList,
     };
     return <GroupListScreen {...propDatas} />;
 };

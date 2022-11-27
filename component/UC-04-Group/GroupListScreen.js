@@ -12,17 +12,20 @@ import {
 } from "react-native";
 import SelectList from "react-native-dropdown-select-list";
 import SearchBar from "react-native-dynamic-search-bar";
-import GroupBox from "./GroupBox";
+
+import GroupBoxContainer from "../../container/UC-04-Group/GroupBoxContainer";
 
 const GroupListScreen = (props) => {
     const {
         navigation,
         groupListByCategory,
         setGroupListByCategory,
-        // getGroupListByCategory,
         categoryList,
         categoryNow,
         setCategoryNow,
+        order,
+        setOrder,
+        orderList,
     } = props;
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -76,21 +79,28 @@ const GroupListScreen = (props) => {
                         justifyContent: "space-between",
                     }}
                 >
-                    <SearchBar style={{ height: 40, width: "70%" }} />
+                    {/* <SearchBar style={{ height: 40, width: "70%" }} /> */}
                     <SelectList
                         boxStyles={{
-                            height: 40,
-                            width: 80,
+                            height: 50,
+                            width: 200,
                             backgroundColor: "#FFFFFF",
                         }}
+                        setSelected={(newOrder) => setOrder(newOrder)}
+                        data={orderList}
                     />
                 </View>
                 <View style={{ flex: 11 }}>
                     <ScrollView>
                         {groupListByCategory
-                            ? groupListByCategory.map((item) => {
-                                  <GroupBox item={item} id={item.id} />;
-                              })
+                            ? groupListByCategory.map((item) => (
+                                  <GroupBoxContainer
+                                      item={item}
+                                      key={item.id}
+                                      id={item.id}
+                                      navigation={navigation}
+                                  />
+                              ))
                             : false}
                     </ScrollView>
                 </View>

@@ -23,6 +23,7 @@ const HabitRecordScreen = (props) => {
                         ? habitRecordList.map((habitRecordItem) => (
                               <HabitRecordBoxContainer
                                   key={habitRecordItem.id}
+                                  id={habitRecordItem.id}
                                   item={habitRecordItem}
                                   navigation={navigation}
                               />

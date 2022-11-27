@@ -24,13 +24,15 @@ const HabitRecordBox = (props) => {
         setHabitCheckBox,
         setDetailScreen,
         setPictureScreen,
+        setHabitRecordItem,
         categoryList,
         deleteAlert,
         sendCheckHabitApi,
     } = props;
+
     return (
         <View style={styles.box}>
-            <UpdateHabitRecordContianer item={item} id={id} />
+            <UpdateHabitRecordContianer />
             <View
                 style={{
                     flex: 2,
@@ -39,7 +41,7 @@ const HabitRecordBox = (props) => {
                 }}
             >
                 <Text style={{ fontSize: 20, margin: 10 }}>
-                    {categoryNameToIcon[item["categoryName"]]}
+                    {categoryNameToIcon(item["categoryName"])}
                 </Text>
                 <Text
                     style={{ fontSize: 20, margin: 10, width: 250 }}
@@ -89,7 +91,10 @@ const HabitRecordBox = (props) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{ margin: 5 }}
-                    onPress={() => setUpdateScreen(!updateScreen)}
+                    onPress={() => {
+                        setHabitRecordItem(item);
+                        setUpdateScreen(!updateScreen);
+                    }}
                 >
                     <MaterialCommunityIcons name="pencil-box" size={25} />
                 </TouchableOpacity>

@@ -15,6 +15,8 @@ const CreateGroupScreen = (props) => {
     const {
         navigation,
         categoryNow,
+        setNickName,
+        nickName,
         groupName,
         setGroupName,
         sendCreateGroupApi,
@@ -33,6 +35,18 @@ const CreateGroupScreen = (props) => {
                 >
                     {categoryNow ? categoryNow["name"] : false} 소모임
                 </Text>
+                <TextInput
+                    style={{
+                        fontSize: 20,
+                        borderWidth: 1,
+                        marginVertical: 20,
+                        padding: 10,
+                        height: 60,
+                    }}
+                    onChangeText={setNickName}
+                    value={nickName}
+                    placeholder="닉네임"
+                />
                 <TextInput
                     style={{
                         fontSize: 20,

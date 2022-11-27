@@ -9,11 +9,17 @@ import {
     Text,
     SafeAreaView,
 } from "react-native";
+import { categoryNameToIcon } from "../../container/CommonContainer";
 
 const GroupBox = (props) => {
-    const { item, id } = props;
+    const { navigation, item, id, groupNow, setGroupNow } = props;
     return (
-        <TouchableOpacity onPress={() => navigation.navigate("Group")}>
+        <TouchableOpacity
+            onPress={() => {
+                setGroupNow(item);
+                navigation.navigate("Group");
+            }}
+        >
             <View
                 style={{
                     height: 100,
@@ -31,9 +37,11 @@ const GroupBox = (props) => {
                         flexDirection: "row",
                     }}
                 >
-                    <Text style={{ fontSize: 20, margin: 10 }}>🎮</Text>
                     <Text style={{ fontSize: 20, margin: 10 }}>
-                        {item.name}
+                        {categoryNameToIcon(item.GroupType)}
+                    </Text>
+                    <Text style={{ fontSize: 20, margin: 10 }}>
+                        {item.groupName}
                     </Text>
                 </View>
                 <View
@@ -43,7 +51,7 @@ const GroupBox = (props) => {
                     }}
                 >
                     <Text style={{ fontSize: 15, margin: 10 }}>
-                        {/* {방장 이름 들어가야함} */}
+                        {item.adminNickName}
                     </Text>
                 </View>
             </View>

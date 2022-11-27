@@ -2,7 +2,7 @@
 // https://aboutreact.com/react-native-bottom-navigation/
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import * as React from "react";
+import React, { useState } from "react";
 import {
     TouchableOpacity,
     StyleSheet,
@@ -24,6 +24,7 @@ const GroupSettingScreen = (props) => {
         sendWarnGroupMemberApi,
         sendWithdrawGroupApi,
     } = props;
+    const [updateScreen, setUpdateScreen] = useState(false);
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <GroupUpdateContainer />
@@ -40,7 +41,7 @@ const GroupSettingScreen = (props) => {
                             ? groupNowMemberList
                                   .filter(
                                       (item) =>
-                                          item.role == "ROLE_GROUP_PENDING"
+                                          item["role"] == "ROLE_GROUP_PENDING"
                                   )
                                   .map((item) => {
                                       <View
@@ -61,7 +62,7 @@ const GroupSettingScreen = (props) => {
                                                   onPress={() =>
                                                       sendPermissonApplyGroupApi(
                                                           "CONSET",
-                                                          item.nickName
+                                                          item.myNickName
                                                       )
                                                   }
                                               >
@@ -92,7 +93,8 @@ const GroupSettingScreen = (props) => {
                         {groupNowMemberList
                             ? groupNowMemberList
                                   .filter(
-                                      (item) => item.role == "ROLE_GROUP_USER"
+                                      (item) =>
+                                          item["role"] == "ROLE_GROUP_USER"
                                   )
                                   .map((item) => {
                                       <View
@@ -111,7 +113,7 @@ const GroupSettingScreen = (props) => {
                                           <TouchableOpacity
                                               onPress={() =>
                                                   sendWarnGroupMemberApi(
-                                                      item.nickName
+                                                      item.myNickName
                                                   )
                                               }
                                           >
@@ -120,7 +122,7 @@ const GroupSettingScreen = (props) => {
                                           <TouchableOpacity
                                               onPress={() =>
                                                   sendWithdrawGroupApi(
-                                                      item.nickName
+                                                      item.myNickName
                                                   )
                                               }
                                           >

@@ -23,80 +23,13 @@ const HabitRecordDetailContainer = (props) => {
     const [date, setDate] = useState(0);
     const [year, setYear] = useState(0);
 
-    // const updateTime = () => {
-    //     const index = habitRecordList.findIndex(
-    //         (listItem) => listItem === habitRecordItem
-    //     );
-    //     console.log(habitRecordItem);
-    //     setHabitRecordItem({
-    //         ...habitRecordItem,
-    //         startTime: nowDate(),
-    //     });
-    //     console.log(habitRecordList);
-
-    //     const newList = replaceItemAtIndex(
-    //         habitRecordList,
-    //         index,
-    //         habitRecordItem
-    //     );
-
-    //     setHabitRecordList(newList);
-    // };
-
-    // const updateTime = useCallback(async () => {
-    //     try {
-    //         const body = {
-    //             email: userInfo.email,
-    //             habitId: id,
-    //             startTime: nowDate(),
-    //         };
-    //         const { data } = resetStartTime(body);
-    //         console.log("시간 초기화 성공");
-    //         setHabitRecordItem({
-    //             ...habitRecordItem,
-    //             startTime: data["startTime"],
-    //         });
-    //     } catch (e) {
-    //         console.log("시간 초기화 실패");
-    //     }
-    // });
-
-    // function difference(date1, date2) {
-    //     const date1utc = Date.UTC(
-    //         date1.getFullYear(),
-    //         date1.getMonth(),
-    //         date1.getDate()
-    //     );
-    //     const date2utc = Date.UTC(
-    //         date2.getFullYear(),
-    //         date2.getMonth(),
-    //         date2.getDate()
-    //     );
-    //     day = 1000 * 60 * 60 * 24;
-    //     return (date2utc - date1utc) / day;
-    // }
-
-    // useEffect(() => {
-    //     let proceedTimestamp;
-    //     setInterval(() => {
-    //         const now = Math.floor(+now / 1000);
-    //         const startTime = Math.floor(+habitRecordItem["startTime"] / 1000);
-    //         proceedTimestamp = now - startTime;
-    //         setSecond(parseInt(proceedTimestamp / 1000) % 60);
-    //         setMinute(parseInt(proceedTimestamp / (1000 * 60)) % 60);
-    //         setHour(parseInt(proceedTimestamp / (1000 * 60 * 60)) % 24);
-    //         setDate(parseInt(proceedTimestamp / (1000 * 60 * 60 * 24)) % 365);
-    //         setYear(parseInt(proceedTimestamp / (1000 * 60 * 60 * 24 * 365)));
-    //     }, 1000);
-    // }, [habitRecordItem]);
-
     const getHabitList = () => {
         console.log("됨1");
-        const { data } = memberHabitInquiry(userInfo.memberId)
+        memberHabitInquiry(userInfo.memberId)
             .then((response) => {
-                console.log("됨2");
+                console.log(response["data"]);
 
-                setHabitRecordList(data);
+                setHabitRecordList(response["data"]);
             })
             .catch((error) => {
                 console.log("됨3");
@@ -109,17 +42,18 @@ const HabitRecordDetailContainer = (props) => {
             if (tmpTime <= habitRecordItem.amount * habitRecordItem.count) {
                 judgeCheck(habitRecordItem.id)
                     .then((response) => {
+                        console.log("시간 체크");
                         getHabitList();
                     })
                     .catch((error) => {
                         console.log(error);
                     });
             }
-        });
+        }, 1000);
         return () => clearInterval(verifyAmountCheck);
     });
     useEffect(() => {
-        const tmpDate = Date.parse("2022-11-17T09:30:59.000+00:00");
+        const tmpDate = Date.parse(habitRecordItem.date);
         const countProceedTime = setInterval(() => {
             const tmpTime = nowDate() - tmpDate;
             setSecond(parseInt(tmpTime / 1000) % 60);
@@ -149,7 +83,8 @@ const HabitRecordDetailContainer = (props) => {
         habitRecordItem,
         setHabitRecordItem,
         proceedTime,
-        updateTime,
+        judgeCheck,
+        getHabitList,
     };
     return <HabitRecordDetailScreen {...propDatas} />;
 };

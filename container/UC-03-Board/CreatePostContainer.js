@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { createPost, inquiryPostAll } from "../../api/board";
 import CreatePostScreen from "../../component/UC-03-Board/CreatePostScreen";
-import { categoryNowState } from "../../recoil/CommonRecoil";
+import { categoryNowState, loadingState } from "../../recoil/CommonRecoil";
 import { habitRecordListState } from "../../recoil/UC-02-Record";
 import { postListState } from "../../recoil/UC-03-Board";
 
@@ -13,6 +14,7 @@ const CreatePostContainer = ({ navigation }) => {
     const [postTitle, setPostTitle] = useState("");
     const [postContents, setPostContents] = useState("");
     const [habitName, setHabitName] = useState("");
+    const [loading, setLoading] = useRecoilState(loadingState);
 
     const findHabitIdByHabitName = () => {
         const habitId = habitRecordList.find(
@@ -20,18 +22,31 @@ const CreatePostContainer = ({ navigation }) => {
         ).id;
         return habitId;
     };
-
+    const getPostList = (page) => {
+        inquiryPostAll(page)
+            .then((response) => {
+                console.log(response["data"]);
+                setPostList(response["data"]);
+            })
+            .catch((error) => {
+                console.log("에러");
+                console.log(error);
+            });
+    };
     const sendCreatePostApi = () => {
+        setLoading(!loading);
+
         const habitId = findHabitIdByHabitName();
         const body = {
             title: postTitle,
             content: postContents,
         };
         createPost(habitId, body)
-            .then((response) => {})
+            .then((response) => getPostList(0))
             .catch((error) => {
                 console.log(error);
             });
+        setLoading(!loading);
     };
     const propsData = {
         navigation,
@@ -42,7 +57,6 @@ const CreatePostContainer = ({ navigation }) => {
         setPostTitle,
         postContents,
         setPostContents,
-        sendItem,
         habitRecordList,
         habitName,
         setHabitName,

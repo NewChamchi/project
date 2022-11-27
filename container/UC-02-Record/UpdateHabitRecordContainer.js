@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { updateHabit } from "../../api/record";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { memberHabitInquiry, updateHabit } from "../../api/record";
 import UpdateHabitRecordScreen from "../../component/UC-02-Record/UpdateHabitRecordScreen";
+import { loadingState } from "../../recoil/CommonRecoil";
 import { userInfoState } from "../../recoil/UC-01-Member";
 import {
+    habitRecordItemState,
     habitRecordListState,
     updateScreenState,
 } from "../../recoil/UC-02-Record";
@@ -15,13 +17,16 @@ const UpdateHabitRecordContianer = (props) => {
     const setUpdateScreen = useSetRecoilState(updateScreenState);
     const habitRecordList = useRecoilValue(habitRecordListState);
     const setHabitRecordList = useSetRecoilState(habitRecordListState);
+    const habitRecordItem = useRecoilValue(habitRecordItemState);
     const userInfo = useRecoilValue(userInfoState);
     const [habitName, setHabitName] = useState("");
-    const [reduceUnit, setReduceUnit] = useState(1);
-    const [reduceUnitList] = useState([1, 2, 3, 4, 5, 6, 7]);
-    const [checkPeriod, setCheckPeriod] = useState(1);
-    const [checkPeriodList] = useState([1, 2, 3, 4, 5, 6, 7]);
+    const [amount, setAmount] = useState(1);
+    const [amountList] = useState([1, 2, 3, 4, 5, 6, 7]);
+    const [period, setPeriod] = useState(1);
+    const [periodList] = useState([1, 2, 3, 4, 5, 6, 7]);
     const index = habitRecordList.findIndex((listItem) => listItem === item);
+    const [loading, setLoading] = useRecoilState(loadingState);
+
     // const updateItem = (habitName, reduceUnit, checkPeriod) => {
     //     console.log(item);
     //     console.log(index);
@@ -36,36 +41,38 @@ const UpdateHabitRecordContianer = (props) => {
     // };
 
     const getHabitList = () => {
+        setLoading(!loading);
         console.log("됨1");
-        const { data } = memberHabitInquiry(userInfo.memberId)
+        memberHabitInquiry(userInfo.memberId)
             .then((response) => {
-                console.log("됨2");
+                console.log(response["data"]);
 
-                setHabitRecordList(data);
+                setHabitRecordList(response["data"]);
             })
             .catch((error) => {
                 console.log("됨3");
                 console.log(error);
             });
+        setLoading(!loading);
     };
-    const updateItem = useCallback(async () => {
-        try {
-            const body = {
-                name: habitName,
-                amount: amount,
-                period: period,
-            };
-            const { data } = updateHabit(id, body);
-            console.log("수정 성공");
-            getHabitList();
-        } catch (e) {
-            console.log("수정 실패");
-        }
-    });
+    const updateItem = () => {
+        setLoading(!loading);
+
+        const body = {
+            name: habitName,
+            amount: amount,
+            period: period * 24 * 3600 * 1000,
+        };
+        console.log(habitRecordItem);
+        updateHabit(habitRecordItem.id, body)
+            .then((response) => getHabitList())
+            .catch((error) => console.log(error));
+        setLoading(!loading);
+    };
     const clearState = () => {
         setHabitName("");
-        setReduceUnit(1);
-        setCheckPeriod(1);
+        setAmount(1);
+        setPeriod(1);
     };
     const propDatas = {
         item,
@@ -74,12 +81,13 @@ const UpdateHabitRecordContianer = (props) => {
         setUpdateScreen,
         habitName,
         setHabitName,
-        reduceUnit,
-        setReduceUnit,
-        reduceUnitList,
-        checkPeriod,
-        setCheckPeriod,
-        checkPeriodList,
+        habitRecordItem,
+        amount,
+        amountList,
+        setAmount,
+        period,
+        periodList,
+        setPeriod,
         updateItem,
         clearState,
     };

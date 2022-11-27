@@ -23,7 +23,6 @@ const CreatePostScreen = (props) => {
         setPostTitle,
         postContents,
         setPostContents,
-        sendItem,
         habitRecordList,
         habitName,
         setHabitName,

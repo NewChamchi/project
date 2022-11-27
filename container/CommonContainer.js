@@ -13,24 +13,46 @@ export const nowDate = () => {
     return Date.now();
 };
 
-export const categoryNameToIcon = (name) => {
+export const korToEng = (name) => {
     switch (name) {
-        case "게임":
-            return "🎮";
+        case "술":
+            return "ALCOHOL";
             break;
         case "담배":
-            return "🚬";
-            break;
-        case "술":
-            return "🍺";
+            return "TOBACCO";
             break;
         case "운동":
+            return "WORKOUT";
+            break;
+    }
+};
+
+export const engToKor = (name) => {
+    switch (name) {
+        case "ALCOHOL":
+            return "술";
+            break;
+        case "TOBACCO":
+            return "담배";
+            break;
+        case "WORKOUT":
+            return "운동";
+            break;
+    }
+};
+
+export const categoryNameToIcon = (name) => {
+    switch (name) {
+        case "TOBACCO":
+            return "🚬";
+            break;
+        case "ALCOHOL":
+            return "🍺";
+            break;
+        case "WORKOUT":
             return "🎾";
             break;
-        case "책":
-            return "📕";
-            break;
-        case "기타":
+        default:
             return "💬";
             break;
     }

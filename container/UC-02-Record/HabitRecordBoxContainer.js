@@ -4,10 +4,15 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useCallback, useEffect, useState } from "react";
 import { TouchableOpacity, StyleSheet, View, Text, Alert } from "react-native";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { checkHabit, deleteHabit, memberHabitInquiry } from "../../api/record";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+    checkHabit,
+    deleteHabit,
+    judgeCheck,
+    memberHabitInquiry,
+} from "../../api/record";
 import HabitRecordBox from "../../component/UC-02-Record/HabitRecordBox";
-import { categoryListState } from "../../recoil/CommonRecoil";
+import { categoryListState, loadingState } from "../../recoil/CommonRecoil";
 import { userInfoState } from "../../recoil/UC-01-Member";
 import {
     boxIndexState,
@@ -15,6 +20,7 @@ import {
     habitRecordListState,
     updateScreenState,
 } from "../../recoil/UC-02-Record";
+import { nowDate } from "../CommonContainer";
 
 const HabitRecordBoxContainer = (props) => {
     const { navigation, id, item } = props;
@@ -25,6 +31,7 @@ const HabitRecordBoxContainer = (props) => {
     const userInfo = useRecoilValue(userInfoState);
     const categoryList = useRecoilValue(categoryListState);
     const [habitCheckBox, setHabitCheckBox] = useState(item.check);
+    const [loading, setLoading] = useRecoilState(loadingState);
 
     // test
     // const [habitCheckBox, setHabitCheckBox] = useState(false);
@@ -40,11 +47,11 @@ const HabitRecordBoxContainer = (props) => {
     };
     const getHabitList = () => {
         console.log("됨1");
-        const { data } = memberHabitInquiry(userInfo.memberId)
+        memberHabitInquiry(userInfo.memberId)
             .then((response) => {
-                console.log("됨2");
+                console.log(response["data"]);
 
-                setHabitRecordList(data);
+                setHabitRecordList(response["data"]);
             })
             .catch((error) => {
                 console.log("됨3");
@@ -52,26 +59,24 @@ const HabitRecordBoxContainer = (props) => {
             });
     };
     const sendCheckHabitApi = () => {
+        setLoading(!loading);
+
         checkHabit(id)
-            .then((response) => {})
+            .then((response) => getHabitList())
             .catch((error) => {
                 console.log(error.response);
             });
-        getHabitList();
+        setLoading(!loading);
     };
 
     const deleteAlert = () =>
         Alert.alert("습관 삭제", "정말 삭제하시겠습니까?", [
             {
                 text: "네",
-                onPress: async () => {
-                    try {
-                        const { data } = await deleteHabit(id);
-                        getHabitList();
-                        console.log("삭제 성공");
-                    } catch (e) {
-                        console.log("삭제 실패");
-                    }
+                onPress: () => {
+                    deleteHabit(item.id)
+                        .then((response) => getHabitList())
+                        .catch((error) => console.log(error));
                 },
             },
             {
@@ -80,7 +85,23 @@ const HabitRecordBoxContainer = (props) => {
                 style: "cancel",
             },
         ]);
-
+    useEffect(() => {
+        const verifyAmountCheck = setInterval(() => {
+            const tmpTime = nowDate() - Date.parse(item.date);
+            // console.log(tmpTime);
+            if (tmpTime <= item.period * item.count) {
+                judgeCheck(item.id)
+                    .then((response) => {
+                        console.log("시간 체크");
+                        getHabitList();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+        }, 1000);
+        return () => clearInterval(verifyAmountCheck);
+    });
     const propDatas = {
         navigation,
         id,
@@ -89,6 +110,7 @@ const HabitRecordBoxContainer = (props) => {
         setUpdateScreen,
         setHabitRecordList,
         habitCheckBox,
+        setHabitRecordItem,
         setHabitCheckBox,
         setDetailScreen,
         setPictureScreen,

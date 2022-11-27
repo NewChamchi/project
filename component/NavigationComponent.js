@@ -32,6 +32,9 @@ import LoginContainer from "../container/LoginContainer";
 import SignUpContainer from "../container/SignUpContainer";
 import HabitPictureSampleContainer from "../container/UC-02-Record/HabitPictureSampleContainer";
 import { userInfoState } from "../recoil/UC-01-Member";
+import { ActivityIndicator } from "react-native";
+import Spinner from "react-native-loading-spinner-overlay/lib";
+import { loadingState } from "../recoil/CommonRecoil";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -217,8 +220,10 @@ const LoginStack = () => {
 const App = () => {
     const userInfo = useRecoilValue(userInfoState);
 
-    return !userInfo.memberId ? (
+    const loading = useRecoilValue(loadingState);
+    return userInfo.memberId ? (
         <NavigationContainer>
+            <Spinner visible={loading} />
             <Tab.Navigator
                 initialRouteName="Feed"
                 screenOptions={{
@@ -305,6 +310,7 @@ const App = () => {
         </NavigationContainer>
     ) : (
         <NavigationContainer>
+            <Spinner visible={loading} />
             <LoginStack />
         </NavigationContainer>
     );

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { updateUserInfo, userSelfInfo } from "../../api/user";
 import UpdateUserScreen from "../../component/UC-01-Member/UpdateUserScreen";
+import { loadingState } from "../../recoil/CommonRecoil";
 import { userInfoState } from "../../recoil/UC-01-Member";
 
 const UpdateUserContainer = ({ navigation }) => {
@@ -9,6 +10,7 @@ const UpdateUserContainer = ({ navigation }) => {
     const [name, setName] = useState("");
     const userInfo = useRecoilValue(userInfoState);
     const setUserInfo = useSetRecoilState(userInfoState);
+    const [loading, setLoading] = useRecoilState(loadingState);
     const getSelfInfo = async () => {
         try {
             const { data } = await userSelfInfo();
@@ -19,6 +21,7 @@ const UpdateUserContainer = ({ navigation }) => {
         }
     };
     const sendUpdateUserApi = (content, updateInfo) => {
+        setLoading(!loading);
         updateUserInfo(content, updateInfo)
             .then((response) => {
                 getSelfInfo();
@@ -26,6 +29,7 @@ const UpdateUserContainer = ({ navigation }) => {
             .catch((error) => {
                 console.log(error.response);
             });
+        setLoading(!loading);
     };
     const propDatas = {
         navigation,

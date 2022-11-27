@@ -133,7 +133,8 @@ const LineChartComponent = () => {
         </View>
     );
 };
-const CreateHabitRecordScreen = ({ navigation }) => {
+const CreateHabitRecordScreen = (props) => {
+    const { categoryList } = props;
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flexDirection: "row", flex: 1 }}>
@@ -155,36 +156,25 @@ const CreateHabitRecordScreen = ({ navigation }) => {
                         backgroundColor: "#DFDFDF",
                     }}
                 >
-                    <TouchableOpacity style={{ justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, paddingHorizontal: 15 }}>
-                            게임
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, paddingHorizontal: 15 }}>
-                            담배
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, paddingHorizontal: 15 }}>
-                            술
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, paddingHorizontal: 15 }}>
-                            운동
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, paddingHorizontal: 15 }}>
-                            책
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, paddingHorizontal: 15 }}>
-                            기타
-                        </Text>
-                    </TouchableOpacity>
+                    {categoryList
+                        ? categoryList.map((item) => (
+                              <TouchableOpacity
+                                  style={{ justifyContent: "center" }}
+                                  onPress={() => {
+                                      setCategoryNow(item);
+                                  }}
+                              >
+                                  <Text
+                                      style={{
+                                          fontSize: 20,
+                                          paddingHorizontal: 15,
+                                      }}
+                                  >
+                                      {item.name}
+                                  </Text>
+                              </TouchableOpacity>
+                          ))
+                        : false}
                 </ScrollView>
             </View>
             <View style={{ flex: 15, backgroundColor: "white" }}>

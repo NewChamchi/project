@@ -24,7 +24,7 @@ export const registerCategory = (
     body // { name: "담배"}
 ) => client.post(`/api/categories`, body);
 
-export const inquiryCategoryAll = () => client.get(`/api/categories`);
+export const inquiryCategoryAll = () => client.get(`/api/categories/`);
 
 export const updateCategory = (
     habitCategoryId,
@@ -33,3 +33,7 @@ export const updateCategory = (
 
 export const deleteCategory = (habitCategoryId) =>
     client.delete(`/api/categories/${habitCategoryId}`);
+
+export const verifyPicture = (body) => {
+    client.get(`/api/test`, body);
+};

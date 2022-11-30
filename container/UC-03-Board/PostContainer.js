@@ -28,7 +28,7 @@ const PostContainer = ({ navigation }) => {
 
     const [updateScreen, setUpdateScreen] = useState(false);
     const sendDeletePostByIdApi = () => {
-        setLoading((prev) => !prev);
+        setLoading(true);
 
         deletePostById(postNow.id)
             .then((response) => {
@@ -40,7 +40,7 @@ const PostContainer = ({ navigation }) => {
                     .catch((error) => console.log(1));
             })
             .catch((error) => console.log(2));
-        setLoading((prev) => !prev);
+        setLoading(false);
     };
     const deleteAlert = () =>
         Alert.alert("게시글 삭제", "정말 삭제하시겠습니까?", [
@@ -58,7 +58,7 @@ const PostContainer = ({ navigation }) => {
             },
         ]);
     const sendCreateCommentApi = () => {
-        setLoading((prev) => !prev);
+        setLoading(true);
 
         const body = { body: comment };
         console.log("test");
@@ -77,7 +77,7 @@ const PostContainer = ({ navigation }) => {
                 })
                 .catch((error) => console.log(error));
         });
-        setLoading((prev) => !prev);
+        setLoading(false);
     };
     const propsData = {
         navigation,

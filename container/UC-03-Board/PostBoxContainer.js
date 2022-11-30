@@ -18,6 +18,7 @@ const PostBoxContainer = (props) => {
     const [loading, setLoading] = useRecoilStateLoadable(loadingState);
 
     useEffect(() => {
+        setLoading(true);
         const getPostById = () => {
             inquiryPostById(id)
                 .then((response) => {
@@ -28,6 +29,7 @@ const PostBoxContainer = (props) => {
                 });
         };
         getPostById();
+        setLoading(false);
     }, []);
     const propsData = { navigation, item, id, postNow, setPostNow };
     return <PostBox {...propsData} />;

@@ -19,7 +19,7 @@ const UserAllInfoContainer = ({ navigation }) => {
     const [loading, setLoading] = useRecoilStateLoadable(loadingState);
 
     useEffect(() => {
-        setLoading((prev) => !prev);
+        setLoading(true);
         const getUserAllList = async () => {
             try {
                 const { data } = await userAllInfo();
@@ -34,7 +34,7 @@ const UserAllInfoContainer = ({ navigation }) => {
         // test
         // setUserInfoList(testData);
         // console.log(testData);
-        setLoading((prev) => !prev);
+        setLoading(false);
     }, []);
     const propDatas = {
         navigation,

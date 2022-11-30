@@ -1,5 +1,7 @@
+// import { ConfigurationServicePlaceholders } from "aws-sdk/lib/config_service_placeholders";
 import axios from "axios";
 import React, { useState } from "react";
+import { Alert } from "react-native";
 import {
     useRecoilState,
     useRecoilValue,
@@ -9,7 +11,7 @@ import {
 import client from "../api/client";
 import { getRoleInThisGroup } from "../api/group";
 import { inquiryCategoryAll, verifyPicture } from "../api/record";
-import { login } from "../api/user";
+import { login, userSelfInfo } from "../api/user";
 import LoginComponent from "../component/LoginComponent";
 import {
     categoryListState,
@@ -48,49 +50,56 @@ const LoginContainer = ({ navigation }) => {
         //     .catch((error) => console.log(error));
     };
 
-    const sendLoginApi = () => {
-        setLoading((prev) => !prev);
-        // inquiryCategoryAll()
-        //     .then((response) => {
-        //         console.log(response["data"]["content"]);
-        //         setCategoryList(response["data"]["content"]);
-        //     })
-        //     .catch((error) => console.log(error));
-        // const data2 = {
-        //     email: email,
-        //     name: "asdasd",
-        //     password: password,
-        //     memberId: 11,
-        // };
-        // setUserInfo(data2);
+    const sendLoginApi = async () => {
+        setLoading(true);
         const body = {
             email: email,
             password: password,
         };
-        login(body)
-            .then((response) => {
-                console.log("로그인 시도");
-                //
-                const [cookie] = response.headers["set-cookie"];
-                client.defaults.headers.Cookie = cookie;
 
-                setUserInfo({
-                    email: email,
-                    name: "",
-                    password: password,
-                    memberId: response.headers.id,
-                });
-                inquiryCategoryAll()
-                    .then((response) => {
-                        setCategoryList(response["data"]["content"]);
-                        setCategoryNow(response["data"]["content"][0]);
-                    })
-                    .catch((error) => console.log(error));
-            })
-            .catch((error) => {
-                console.log(error);
+        try {
+            const { data, headers } = await login(body);
+            const [cookie] = headers["set-cookie"];
+            client.defaults.headers.Cookie = cookie;
+            setUserInfo({
+                email: email,
+                name: "",
+                role: "",
+                password: password,
+                memberId: headers.id,
             });
-        setLoading((prev) => !prev);
+
+            try {
+                const { data } = await userSelfInfo();
+                setUserInfo({ ...userInfo, name: data.name, role: data.role });
+            } catch (error) {
+                console.log(error);
+            }
+            console.log(data);
+            try {
+                const { data } = inquiryCategoryAll();
+                setCategoryList(data.content);
+                setCategoryNow(data.content[0]);
+                console.log(data);
+            } catch (error) {
+                console.log(error.response.data);
+            }
+        } catch (error) {
+            console.log(error.response.data);
+            Alert.alert(
+                "로그인 오류",
+                "이메일 혹은 비밀번호가 정확하지 않습니다.",
+                [
+                    {
+                        text: "확인",
+                        onPress: () => {},
+                        style: "cancel",
+                    },
+                ]
+            );
+        }
+
+        setLoading(false);
     };
 
     const propDatas = {

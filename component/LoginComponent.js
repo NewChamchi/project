@@ -1,8 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    View,
+    TextInput,
+    Button,
+    TouchableOpacity,
+} from "react-native";
 import { verifyPicture } from "../api/record";
 import { Dropdown } from "react-native-element-dropdown";
+import { CommonStyle } from "../style/CommonStyle";
 const LoginComponent = (props) => {
     const {
         navigation,
@@ -16,69 +24,48 @@ const LoginComponent = (props) => {
     return (
         <View style={styles.screen}>
             <View style={{ flex: 1.5 }}></View>
-            <View style={styles.loginBox}>
-                <View>
-                    {/* <Dropdown /> */}
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            marginBottom: 30,
-                        }}
-                    >
-                        <Text
-                            style={{
-                                height: "100%",
-                                padding: 10,
-                            }}
-                        >
-                            이메일 :{" "}
-                        </Text>
-                        <TextInput
-                            style={styles.input}
-                            onChangeText={(newEmail) => setEmail(newEmail)}
-                            value={email}
-                        />
-                    </View>
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                        }}
-                    >
-                        <Text
-                            style={{
-                                height: "100%",
-                                padding: 10,
-                            }}
-                        >
-                            비밀번호 :{" "}
-                        </Text>
-                        <TextInput
-                            style={styles.input}
-                            onChangeText={(newPassword) =>
-                                setPassword(newPassword)
-                            }
-                            value={password}
-                            secureTextEntry={true}
-                        />
-                    </View>
-                    <View style={styles.buttonBox}>
-                        <View style={styles.button}>
-                            <Button title="로그인" onPress={sendLoginApi} />
-                        </View>
-                        <View style={styles.button}>
-                            <Button
-                                title="회원가입"
-                                onPress={() => navigation.navigate("SignUp")}
-                            />
-                        </View>
+            <View>
+                {/* <Dropdown /> */}
 
-                        {/* <View style={styles.button}>
+                <TextInput
+                    style={CommonStyle.textInput}
+                    onChangeText={(newEmail) => setEmail(newEmail)}
+                    placeholder="이메일"
+                    value={email}
+                />
+
+                <TextInput
+                    style={CommonStyle.textInput}
+                    onChangeText={(newPassword) => setPassword(newPassword)}
+                    placeholder="비밀번호"
+                    value={password}
+                    secureTextEntry={true}
+                />
+
+                {/* <View style={styles.button}>
                             <Button title="test" onPress={sendTestApi} />
                         </View> */}
-                    </View>
-                </View>
+            </View>
+            <View
+                style={{
+                    alignItems: "center",
+                    width: "100%",
+                    justifyContent: "flex-end",
+                    marginTop: 100,
+                }}
+            >
+                <TouchableOpacity
+                    style={CommonStyle.button}
+                    onPress={sendLoginApi}
+                >
+                    <Text style={{ fontSize: 20 }}>로그인</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={CommonStyle.button}
+                    onPress={() => navigation.navigate("SignUp")}
+                >
+                    <Text style={{ fontSize: 20 }}>회원 가입</Text>
+                </TouchableOpacity>
             </View>
             <View style={{ flex: 1.5 }}></View>
         </View>

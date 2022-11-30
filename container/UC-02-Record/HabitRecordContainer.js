@@ -67,7 +67,7 @@ const HabitRecordContainer = ({ navigation }) => {
             .catch((error) => console.log(error.response.data.message));
     };
     useEffect(() => {
-        setLoading((prev) => !prev);
+        setLoading(true);
 
         const getHabitList = () => {
             console.log(userInfo);
@@ -85,7 +85,7 @@ const HabitRecordContainer = ({ navigation }) => {
         getHabitList();
         // test
         // setHabitRecordList(testData);
-        setLoading((prev) => !prev);
+        setLoading(false);
     }, []);
 
     const propDatas = {

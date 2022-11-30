@@ -37,7 +37,7 @@ const UserMainContainer = ({ navigation }) => {
         // setLoading((prev)=>!prev);
     }, []);
     const sendLogoutApi = () => {
-        setLoading((prev) => !prev);
+        setLoading(true);
         logout()
             .then((response) => {
                 setUserInfo({
@@ -51,11 +51,11 @@ const UserMainContainer = ({ navigation }) => {
             .catch((error) => {
                 console.log(error.response);
             });
-        setLoading((prev) => !prev);
+        setLoading(false);
     };
 
     const sendWithdrawApi = () => {
-        setLoading((prev) => !prev);
+        setLoading(true);
         withdrawMember()
             .then((response) => {
                 setUserInfo({ name: "", email: "" });
@@ -63,7 +63,7 @@ const UserMainContainer = ({ navigation }) => {
             .catch((error) => {
                 console.log(error.response);
             });
-        setLoading((prev) => !prev);
+        setLoading(false);
     };
     const propDatas = {
         navigation,

@@ -39,7 +39,7 @@ const CreatePostContainer = ({ navigation }) => {
             });
     };
     const sendCreatePostApi = () => {
-        setLoading((prev) => !prev);
+        setLoading(true);
 
         const habitId = findHabitIdByHabitName();
         const body = {
@@ -51,7 +51,7 @@ const CreatePostContainer = ({ navigation }) => {
             .catch((error) => {
                 console.log(error);
             });
-        setLoading((prev) => !prev);
+        setLoading(false);
     };
     const propsData = {
         navigation,

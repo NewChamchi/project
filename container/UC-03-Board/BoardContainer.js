@@ -24,7 +24,7 @@ const BoardContainer = ({ navigation }) => {
     const [loading, setLoading] = useRecoilStateLoadable(loadingState);
 
     useEffect(() => {
-        setLoading((prev) => !prev);
+        setLoading(true);
 
         const getPostList = () => {
             inquiryPostAll(page)
@@ -39,7 +39,7 @@ const BoardContainer = ({ navigation }) => {
         };
         getPostList();
 
-        setLoading((prev) => !prev);
+        setLoading(false);
         // 임시 값이 필요함
     }, []);
     const propsData = {

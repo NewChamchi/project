@@ -64,14 +64,14 @@ const HabitRecordBoxContainer = (props) => {
             });
     };
     const sendCheckHabitApi = () => {
-        setLoading((prev) => !prev);
+        setLoading(true);
 
         checkHabit(id)
             .then((response) => getHabitList())
             .catch((error) => {
                 console.log(error.response);
             });
-        setLoading((prev) => !prev);
+        setLoading(false);
     };
 
     const deleteAlert = () =>

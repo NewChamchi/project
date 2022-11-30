@@ -26,7 +26,7 @@ const UpdateUserContainer = ({ navigation }) => {
         }
     };
     const sendUpdateUserApi = (content, updateInfo) => {
-        setLoading((prev) => !prev);
+        setLoading(true);
         updateUserInfo(content, updateInfo)
             .then((response) => {
                 getSelfInfo();
@@ -34,7 +34,7 @@ const UpdateUserContainer = ({ navigation }) => {
             .catch((error) => {
                 console.log(error.response);
             });
-        setLoading((prev) => !prev);
+        setLoading(false);
     };
     const propDatas = {
         navigation,

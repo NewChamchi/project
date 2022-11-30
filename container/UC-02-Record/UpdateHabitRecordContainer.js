@@ -46,7 +46,7 @@ const UpdateHabitRecordContianer = (props) => {
     // };
 
     const getHabitList = () => {
-        setLoading((prev) => !prev);
+        setLoading(true);
         console.log("됨1");
         memberHabitInquiry(userInfo.memberId)
             .then((response) => {
@@ -58,10 +58,10 @@ const UpdateHabitRecordContianer = (props) => {
                 console.log("됨3");
                 console.log(error);
             });
-        setLoading((prev) => !prev);
+        setLoading(false);
     };
     const updateItem = () => {
-        setLoading((prev) => !prev);
+        setLoading(true);
 
         const body = {
             name: habitName,
@@ -72,7 +72,7 @@ const UpdateHabitRecordContianer = (props) => {
         updateHabit(habitRecordItem.id, body)
             .then((response) => getHabitList())
             .catch((error) => console.log(error));
-        setLoading((prev) => !prev);
+        setLoading(false);
     };
     const clearState = () => {
         setHabitName("");

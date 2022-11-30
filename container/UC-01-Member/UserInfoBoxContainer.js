@@ -27,7 +27,7 @@ const UserInfoBoxContainer = (props) => {
         }
     };
     const sendWarnUserApi = (email) => {
-        setLoading((prev) => !prev);
+        setLoading(true);
         warnUser(email)
             .then((response) => {
                 getUserAllList();
@@ -36,7 +36,7 @@ const UserInfoBoxContainer = (props) => {
                 console.log(error.response);
             });
         // console.log("warningTest");
-        setLoading((prev) => !prev);
+        setLoading(false);
     };
 
     const propDatas = {

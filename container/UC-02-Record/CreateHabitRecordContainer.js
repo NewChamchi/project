@@ -51,7 +51,7 @@ const CreateHabitRecordContainer = ({ navigation }) => {
     //     console.log(habitRecordList);
     // };
     const getHabitList = () => {
-        setLoading((prev) => !prev);
+        setLoading(true);
         console.log("됨1");
         memberHabitInquiry(userInfo.memberId)
             .then((response) => {
@@ -63,10 +63,10 @@ const CreateHabitRecordContainer = ({ navigation }) => {
                 console.log("됨3");
                 console.log(error);
             });
-        setLoading((prev) => !prev);
+        setLoading(false);
     };
     const addItem = useCallback(() => {
-        setLoading((prev) => !prev);
+        setLoading(true);
         const body = {
             name: habitName,
             amount: amount,
@@ -80,7 +80,7 @@ const CreateHabitRecordContainer = ({ navigation }) => {
         )
             .then((response) => getHabitList())
             .catch((error) => console.log(error));
-        setLoading((prev) => !prev);
+        setLoading(false);
     });
 
     const propDatas = {

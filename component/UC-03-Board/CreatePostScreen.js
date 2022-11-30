@@ -23,6 +23,7 @@ const CreatePostScreen = (props) => {
         setPostTitle,
         postContents,
         setPostContents,
+        sendItem,
         habitRecordList,
         habitName,
         setHabitName,
@@ -41,7 +42,7 @@ const CreatePostScreen = (props) => {
                         alignItems: "center",
                     }}
                 >
-                    <Text style={{ fontSize: 25 }}>습관 선택</Text>
+                    <Text style={{ fontSize: 25 }}>진행 습관 선택</Text>
                     <SelectList
                         boxStyles={styles.input}
                         setSelected={(newName) => setHabitName(newName)}

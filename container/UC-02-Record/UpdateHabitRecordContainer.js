@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+    useRecoilState,
+    useRecoilStateLoadable,
+    useRecoilValue,
+    useSetRecoilState,
+} from "recoil";
 import { memberHabitInquiry, updateHabit } from "../../api/record";
 import UpdateHabitRecordScreen from "../../component/UC-02-Record/UpdateHabitRecordScreen";
 import { loadingState } from "../../recoil/CommonRecoil";
@@ -25,7 +30,7 @@ const UpdateHabitRecordContianer = (props) => {
     const [period, setPeriod] = useState(1);
     const [periodList] = useState([1, 2, 3, 4, 5, 6, 7]);
     const index = habitRecordList.findIndex((listItem) => listItem === item);
-    const [loading, setLoading] = useRecoilState(loadingState);
+    const [loading, setLoading] = useRecoilStateLoadable(loadingState);
 
     // const updateItem = (habitName, reduceUnit, checkPeriod) => {
     //     console.log(item);
@@ -41,7 +46,7 @@ const UpdateHabitRecordContianer = (props) => {
     // };
 
     const getHabitList = () => {
-        setLoading(!loading);
+        setLoading((prev) => !prev);
         console.log("됨1");
         memberHabitInquiry(userInfo.memberId)
             .then((response) => {
@@ -53,10 +58,10 @@ const UpdateHabitRecordContianer = (props) => {
                 console.log("됨3");
                 console.log(error);
             });
-        setLoading(!loading);
+        setLoading((prev) => !prev);
     };
     const updateItem = () => {
-        setLoading(!loading);
+        setLoading((prev) => !prev);
 
         const body = {
             name: habitName,
@@ -67,7 +72,7 @@ const UpdateHabitRecordContianer = (props) => {
         updateHabit(habitRecordItem.id, body)
             .then((response) => getHabitList())
             .catch((error) => console.log(error));
-        setLoading(!loading);
+        setLoading((prev) => !prev);
     };
     const clearState = () => {
         setHabitName("");

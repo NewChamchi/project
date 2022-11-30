@@ -2,38 +2,46 @@ import client from "./client";
 
 export const registerHabit = (categoryId, memberId, body) =>
     client.post(
-        `/api/categories/${categoryId}/members/${memberId}/habits`,
+        `/api/user/categories/${categoryId}/members/${memberId}/habits`,
         body
     );
 
 export const memberHabitInquiry = (memberId) =>
-    client.get(`/api/members/${memberId}/habits`);
+    client.get(`/api/user/members/${memberId}/habits`);
 
 export const updateHabit = (habitId, body) =>
-    client.put(`/api/habits/${habitId}`, body);
+    client.put(`/api/user/habits/${habitId}`, body);
 
 export const checkHabit = (habitId, body) =>
-    client.put(`/api/check/success/habits/${habitId}`, body);
+    client.put(`/api/user/check/success/habits/${habitId}`, body);
 
-export const judgeCheck = (habitId) =>
-    client.put(`/api/check/judge/habits/${habitId}`);
-
-export const deleteHabit = (habitId) => client.delete(`/api/habits/${habitId}`);
+export const judgeCheck = (habitId) => {
+    console.log("판단 반복중?");
+    client.put(`/api/user/check/judge/habits/${habitId}`);
+};
+export const deleteHabit = (habitId) =>
+    client.delete(`/api/user/habits/${habitId}`);
 
 export const registerCategory = (
     body // { name: "담배"}
-) => client.post(`/api/categories`, body);
+) => client.post(`/api/user/categories`, body);
 
-export const inquiryCategoryAll = () => client.get(`/api/categories/`);
+export const inquiryCategoryAll = () => client.get(`/api/user/categories/`);
 
 export const updateCategory = (
     habitCategoryId,
     body // { name: "돈 저축하기"}
-) => client.put(`/api/categories/${habitCategoryId}`, body);
+) => client.put(`/api/user/categories/${habitCategoryId}`, body);
 
 export const deleteCategory = (habitCategoryId) =>
-    client.delete(`/api/categories/${habitCategoryId}`);
+    client.delete(`/api/user/categories/${habitCategoryId}`);
 
 export const verifyPicture = (body) => {
-    client.get(`/api/test`, body);
+    client.get(`/api/user/test`, body);
 };
+
+export const inquiryAmountAll = (habitCategoryId) =>
+    client.get(`/api/user/categories/${habitCategoryId}/total_amount`);
+
+export const inquiryPeriodAll = (habitCategoryId) =>
+    client.get(`/api/user/categories/${habitCategoryId}/total_period`);

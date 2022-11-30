@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 import { verifyPicture } from "../api/record";
-
+import { Dropdown } from "react-native-element-dropdown";
 const LoginComponent = (props) => {
     const {
         navigation,
@@ -18,13 +18,22 @@ const LoginComponent = (props) => {
             <View style={{ flex: 1.5 }}></View>
             <View style={styles.loginBox}>
                 <View>
+                    {/* <Dropdown /> */}
                     <View
                         style={{
                             flexDirection: "row",
                             justifyContent: "space-between",
+                            marginBottom: 30,
                         }}
                     >
-                        <Text>이메일 : </Text>
+                        <Text
+                            style={{
+                                height: "100%",
+                                padding: 10,
+                            }}
+                        >
+                            이메일 :{" "}
+                        </Text>
                         <TextInput
                             style={styles.input}
                             onChangeText={(newEmail) => setEmail(newEmail)}
@@ -37,7 +46,14 @@ const LoginComponent = (props) => {
                             justifyContent: "space-between",
                         }}
                     >
-                        <Text>비밀번호 : </Text>
+                        <Text
+                            style={{
+                                height: "100%",
+                                padding: 10,
+                            }}
+                        >
+                            비밀번호 :{" "}
+                        </Text>
                         <TextInput
                             style={styles.input}
                             onChangeText={(newPassword) =>
@@ -58,9 +74,9 @@ const LoginComponent = (props) => {
                             />
                         </View>
 
-                        <View style={styles.button}>
+                        {/* <View style={styles.button}>
                             <Button title="test" onPress={sendTestApi} />
-                        </View>
+                        </View> */}
                     </View>
                 </View>
             </View>
@@ -89,6 +105,7 @@ const styles = StyleSheet.create({
 
     buttonBox: {
         flexDirection: "row",
+        marginTop: 30,
         justifyContent: "space-around",
     },
 

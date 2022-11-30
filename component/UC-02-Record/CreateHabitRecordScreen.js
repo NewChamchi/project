@@ -11,7 +11,7 @@ import {
 import SelectList from "react-native-dropdown-select-list";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { habitRecordListState } from "../../recoil/UC-02-Record";
-
+import { Dropdown } from "react-native-element-dropdown";
 const CreateHabitRecordScreen = (props) => {
     const {
         navigation,
@@ -68,6 +68,7 @@ const CreateHabitRecordScreen = (props) => {
                     }}
                 >
                     <Text style={{ fontSize: 25 }}>정량 단위</Text>
+
                     <SelectList
                         boxStyles={styles.input}
                         setSelected={(newAmount) => setAmount(newAmount)}
@@ -81,6 +82,7 @@ const CreateHabitRecordScreen = (props) => {
                     }}
                 >
                     <Text style={{ fontSize: 25 }}>확인 기간</Text>
+
                     <SelectList
                         boxStyles={styles.input}
                         setSelected={(newPeriod) => setPeriod(newPeriod)}
@@ -123,6 +125,30 @@ const styles = StyleSheet.create({
         padding: 10,
         width: 300,
         margin: 16,
+    },
+    dropdown: {
+        margin: 16,
+        height: 50,
+        width: 200,
+        borderBottomColor: "gray",
+        borderBottomWidth: 0.5,
+    },
+    icon: {
+        marginRight: 5,
+    },
+    placeholderStyle: {
+        fontSize: 16,
+    },
+    selectedTextStyle: {
+        fontSize: 16,
+    },
+    iconStyle: {
+        width: 20,
+        height: 20,
+    },
+    inputSearchStyle: {
+        height: 40,
+        fontSize: 16,
     },
 });
 

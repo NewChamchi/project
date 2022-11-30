@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+    useRecoilState,
+    useRecoilStateLoadable,
+    useRecoilValue,
+    useSetRecoilState,
+} from "recoil";
 import { userAllInfo } from "../../api/user";
 import UserAllInfoScreen from "../../component/UC-01-Member/UserAllInfoScreen";
 import { loadingState } from "../../recoil/CommonRecoil";
@@ -11,10 +16,10 @@ const testData = [
 const UserAllInfoContainer = ({ navigation }) => {
     const userInfoList = useRecoilValue(userInfoListState);
     const setUserInfoList = useSetRecoilState(userInfoListState);
-    const [loading, setLoading] = useRecoilState(loadingState);
+    const [loading, setLoading] = useRecoilStateLoadable(loadingState);
 
     useEffect(() => {
-        setLoading(!loading);
+        setLoading((prev) => !prev);
         const getUserAllList = async () => {
             try {
                 const { data } = await userAllInfo();
@@ -29,7 +34,7 @@ const UserAllInfoContainer = ({ navigation }) => {
         // test
         // setUserInfoList(testData);
         // console.log(testData);
-        setLoading(!loading);
+        setLoading((prev) => !prev);
     }, []);
     const propDatas = {
         navigation,

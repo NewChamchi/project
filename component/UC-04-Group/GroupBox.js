@@ -9,13 +9,17 @@ import {
     Text,
     SafeAreaView,
 } from "react-native";
+import { useSetRecoilState } from "recoil";
 import { categoryNameToIcon } from "../../container/CommonContainer";
+import { groupNowState } from "../../recoil/UC-04-Group";
 
 const GroupBox = (props) => {
-    const { navigation, item, id, groupNow, setGroupNow } = props;
+    const setGroupNow = useSetRecoilState(groupNowState);
+    const { navigation, item, id, groupNow } = props;
     return (
         <TouchableOpacity
             onPress={() => {
+                console.log(item);
                 setGroupNow(item);
                 navigation.navigate("Group");
             }}

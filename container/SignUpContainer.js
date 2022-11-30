@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Alert } from "react-native";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilStateLoadable } from "recoil";
 import { signUp } from "../api/user";
 import SignUpComponent from "../component/SignUpComponent";
 import { loadingState } from "../recoil/CommonRecoil";
@@ -9,9 +9,9 @@ const SignUpContainer = ({ navigation }) => {
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useRecoilState(loadingState);
+    const [loading, setLoading] = useRecoilStateLoadable(loadingState);
     const sendSignUpApi = () => {
-        setLoading(!loading);
+        // setLoading((prev) => !prev);
         console.log(email);
         console.log(name);
         console.log(password);
@@ -22,12 +22,12 @@ const SignUpContainer = ({ navigation }) => {
         })
             .then((response) => {
                 navigation.navigate("Login");
-                setLoading(!loading);
             })
             .catch((error) => {
                 console.log(error);
-                setLoading(!loading);
             });
+
+        // setLoading((prev) => !prev);
     };
     const propDatas = {
         navigation,

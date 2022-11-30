@@ -3,7 +3,7 @@ import { ImageType } from "expo-camera/build/Camera.types";
 import { Text, TouchableOpacity, View } from "react-native";
 
 const GroupMemberBox = (props) => {
-    const { item } = props;
+    const { item, sendInquiryGroupMemberInfoApi, navigation } = props;
     return (
         <TouchableOpacity
             style={{
@@ -12,6 +12,9 @@ const GroupMemberBox = (props) => {
                 marginHorizontal: 5,
                 justifyContent: "space-evenly",
                 alignItems: "center",
+            }}
+            onPress={() => {
+                sendInquiryGroupMemberInfoApi();
             }}
         >
             <MaterialCommunityIcons name="account-circle" size={40} />

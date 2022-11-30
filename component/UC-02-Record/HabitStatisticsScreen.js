@@ -1,7 +1,7 @@
 // React Native Bottom Navigation
 // https://aboutreact.com/react-native-bottom-navigation/
 
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 
 // import all the components we are going to use
 import {
@@ -16,6 +16,9 @@ import {
 
 //import React Native chart Kit for different kind of Chart
 import { LineChart, PieChart } from "react-native-chart-kit";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { inquiryAmountAll, inquiryPeriodAll } from "../../api/record";
+import { categoryListState, categoryNowState } from "../../recoil/CommonRecoil";
 const chartConfig = {
     backgroundGradientFrom: "#1E2923",
     backgroundGradientFromOpacity: 0,
@@ -65,40 +68,17 @@ const data = [
         legendFontSize: 15,
     },
 ];
-const LineChartComponent = () => {
+const LineChartComponent = (props) => {
+    const { datas } = props;
+
     return (
         <View>
-            <Text>Bezier Line Chart</Text>
             <LineChart
                 data={{
-                    labels: [
-                        "1주",
-                        "2주",
-                        "3주",
-                        "4주",
-                        "5주",
-                        "6주",
-                        "7주",
-                        "8주",
-                        "9주",
-                        "10주",
-                    ],
+                    labels: [],
                     datasets: [
                         {
-                            data: [
-                                Math.random() * 10000,
-                                Math.random() * 10000,
-                                Math.random() * 10000,
-                                Math.random() * 10000,
-                                Math.random() * 10000,
-                                Math.random() * 10000,
-                                Math.random() * 10000,
-                                Math.random() * 10000,
-                                Math.random() * 10000,
-                                Math.random() * 10000,
-                                Math.random() * 10000,
-                                Math.random() * 10000,
-                            ],
+                            data: [1, 5, 5, 9, 15, 18, 10, 6, 5, 4],
                         },
                     ],
                 }}
@@ -111,7 +91,7 @@ const LineChartComponent = () => {
                     backgroundColor: "#e26a00",
                     backgroundGradientFrom: "#fb8c00",
                     backgroundGradientTo: "#ffa726",
-                    decimalPlaces: 2, // optional, defaults to 2dp
+                    decimalPlaces: 0, // optional, defaults to 2dp
                     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                     labelColor: (opacity = 1) =>
                         `rgba(255, 255, 255, ${opacity})`,
@@ -126,15 +106,37 @@ const LineChartComponent = () => {
                 }}
                 bezier
                 style={{
-                    marginVertical: 8,
+                    margin: 10,
                     borderRadius: 16,
                 }}
             />
         </View>
     );
 };
-const CreateHabitRecordScreen = (props) => {
-    const { categoryList } = props;
+const HabitStatisticsScreen = (props) => {
+    const categoryList = useRecoilValue(categoryListState);
+    const [categoryNow, setCategoryNow] = useRecoilState(categoryNowState);
+    const [amountTotalList, setAmountTotalList] = useState(null);
+    const [periodTotalList, setPeriodTotalList] = useState(null);
+    useEffect(() => {
+        inquiryAmountAll(
+            categoryList.find((item) => item.name == categoryNow["name"]).id
+        )
+            .then((response) => {
+                setAmountTotalList(response["data"].totalAmountCount);
+                inquiryPeriodAll(
+                    categoryList.find(
+                        (item) => item.name == categoryNow["name"]
+                    ).id
+                )
+                    .then((response) => {
+                        setPeriodTotalList(response["data"].totalPeriodCount);
+                        console.log(response["data"]);
+                    })
+                    .catch((err) => console.log(`기간 통계 조회 오류 ${err}`));
+            })
+            .catch((err) => console.log(`정량 통계 조회 오류 ${err}`));
+    }, [categoryNow]);
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flexDirection: "row", flex: 1 }}>
@@ -181,8 +183,33 @@ const CreateHabitRecordScreen = (props) => {
                 <ScrollView>
                     <View style={styles.container}>
                         <View>
-                            <LineChartComponent />
-                            <PieChart
+                            <Text
+                                style={{
+                                    margin: 10,
+                                    fontSize: 20,
+                                }}
+                            >
+                                습관 정량 통계
+                            </Text>
+                            {amountTotalList ? (
+                                <LineChartComponent datas={amountTotalList} />
+                            ) : (
+                                false
+                            )}
+                            {/* <Text
+                                style={{
+                                    margin: 10,
+                                    fontSize: 20,
+                                }}
+                            >
+                                습관 시간 통계
+                            </Text>
+                            {periodTotalList ? (
+                                <LineChartComponent datas={periodTotalList} />
+                            ) : (
+                                false
+                            )} */}
+                            {/* <PieChart
                                 data={data}
                                 width={Dimensions.get("window").width}
                                 height={220}
@@ -192,7 +219,7 @@ const CreateHabitRecordScreen = (props) => {
                                 paddingLeft={"15"}
                                 center={[0, 0]}
                                 absolute
-                            />
+                            /> */}
                         </View>
                     </View>
                 </ScrollView>
@@ -218,4 +245,4 @@ const styles = StyleSheet.create({
         marginTop: 16,
     },
 });
-export default CreateHabitRecordScreen;
+export default HabitStatisticsScreen;

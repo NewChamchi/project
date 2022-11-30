@@ -1,6 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+    useRecoilState,
+    useRecoilStateLoadable,
+    useRecoilValue,
+    useSetRecoilState,
+} from "recoil";
 import client from "../../api/client";
 import { logout, userSelfInfo, withdrawMember } from "../../api/user";
 import UserMainScreen from "../../component/UC-01-Member/UserMainScreen";
@@ -12,9 +17,9 @@ const UserMainContainer = ({ navigation }) => {
     const [email, setEmail] = useState("");
     const userInfo = useRecoilValue(userInfoState);
     const setUserInfo = useSetRecoilState(userInfoState);
-    const [loading, setLoading] = useRecoilState(loadingState);
+    const [loading, setLoading] = useRecoilStateLoadable(loadingState);
     useEffect(() => {
-        setLoading(!loading);
+        // setLoading((prev)=>!prev);
         const getSelfInfo = async () => {
             try {
                 const { data } = await userSelfInfo();
@@ -29,10 +34,10 @@ const UserMainContainer = ({ navigation }) => {
             }
         };
         getSelfInfo();
-        setLoading(!loading);
+        // setLoading((prev)=>!prev);
     }, []);
     const sendLogoutApi = () => {
-        setLoading(!loading);
+        setLoading((prev) => !prev);
         logout()
             .then((response) => {
                 setUserInfo({
@@ -46,11 +51,11 @@ const UserMainContainer = ({ navigation }) => {
             .catch((error) => {
                 console.log(error.response);
             });
-        setLoading(!loading);
+        setLoading((prev) => !prev);
     };
 
     const sendWithdrawApi = () => {
-        setLoading(!loading);
+        setLoading((prev) => !prev);
         withdrawMember()
             .then((response) => {
                 setUserInfo({ name: "", email: "" });
@@ -58,7 +63,7 @@ const UserMainContainer = ({ navigation }) => {
             .catch((error) => {
                 console.log(error.response);
             });
-        setLoading(!loading);
+        setLoading((prev) => !prev);
     };
     const propDatas = {
         navigation,

@@ -1,7 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+    useRecoilState,
+    useRecoilValue,
+    useSetRecoilState,
+    useRecoilStateLoadable,
+} from "recoil";
 import client from "../api/client";
+import { getRoleInThisGroup } from "../api/group";
 import { inquiryCategoryAll, verifyPicture } from "../api/record";
 import { login } from "../api/user";
 import LoginComponent from "../component/LoginComponent";
@@ -21,18 +27,29 @@ const LoginContainer = ({ navigation }) => {
     const [categoryList, setCategoryList] = useRecoilState(categoryListState);
     const categoryNow = useRecoilValue(categoryNowState);
     const setCategoryNow = useSetRecoilState(categoryNowState);
-    const [loading, setLoading] = useRecoilState(loadingState);
+    const [loading, setLoading] = useRecoilStateLoadable(loadingState);
 
     const sendTestApi = () => {
-        axios
-            .get("http://202.31.202.150:5000/api/test")
+        const body = {
+            myNickName: "aa",
+            groupName: "a",
+        };
+        axios({
+            method: "get", // 통신 방식
+            url: "http://202.31.202.150:5000/api/test", // 서버
+        })
             .then((res) => console.log(res.data))
             .catch((err) => console.log(err));
         // 서버로부터 받은 데이터는 res에
+        // getRoleInThisGroup(body)
+        //     .then((response) => {
+        //         console.log(response["data"]);
+        //     })
+        //     .catch((error) => console.log(error));
     };
 
     const sendLoginApi = () => {
-        setLoading(!loading);
+        setLoading((prev) => !prev);
         // inquiryCategoryAll()
         //     .then((response) => {
         //         console.log(response["data"]["content"]);
@@ -73,7 +90,7 @@ const LoginContainer = ({ navigation }) => {
             .catch((error) => {
                 console.log(error);
             });
-        setLoading(!loading);
+        setLoading((prev) => !prev);
     };
 
     const propDatas = {

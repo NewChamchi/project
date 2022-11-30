@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+    useRecoilState,
+    useRecoilStateLoadable,
+    useRecoilValue,
+    useSetRecoilState,
+} from "recoil";
 import { inquiryPostAll } from "../../api/board";
 import BoardScreen from "../../component/UC-03-Board/BoardScreen";
 import {
@@ -16,10 +21,10 @@ const BoardContainer = ({ navigation }) => {
     const postList = useRecoilValue(postListState);
     const setPostList = useSetRecoilState(postListState);
     const [page, setPage] = useState(0);
-    const [loading, setLoading] = useRecoilState(loadingState);
+    const [loading, setLoading] = useRecoilStateLoadable(loadingState);
 
     useEffect(() => {
-        setLoading(!loading);
+        setLoading((prev) => !prev);
 
         const getPostList = () => {
             inquiryPostAll(page)
@@ -34,7 +39,7 @@ const BoardContainer = ({ navigation }) => {
         };
         getPostList();
 
-        setLoading(!loading);
+        setLoading((prev) => !prev);
         // 임시 값이 필요함
     }, []);
     const propsData = {

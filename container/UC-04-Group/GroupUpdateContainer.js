@@ -6,38 +6,33 @@ import { userInfoState } from "../../recoil/UC-01-Member";
 import { groupListState, groupNowState } from "../../recoil/UC-04-Group";
 
 const GroupUpdateContainer = (props) => {
-    const [updateScreen, setUpdateScreen] = useState(false);
+    const { updateScreen, setUpdateScreen } = props;
     const [groupName, setGroupName] = useState("");
-    const userInfo = useRecoilValue(userInfoState);
     const groupNow = useRecoilValue(groupNowState);
     const setGroupNow = useSetRecoilState(groupNowState);
     const setGroupListByCategory = useSetRecoilState(groupListState);
     const sendUpdateGroupApi = (updateName) => {
         const body = {
-            myNickName: userInfo.name,
+            myNickName: groupNow.adminNickName,
             groupName: groupNow.groupName,
         };
+        console.log(groupNow);
+        console.log(body);
         updateGroup(updateName, body)
             .then((response) => {
-                const { listData } = inquiryGroupList(
-                    groupNow.groupType,
-                    "name"
-                )
+                inquiryGroupList(groupNow.groupType, "name")
                     .then((response) => {
-                        setGroupListByCategory(listData);
-                        console.log(listData);
+                        setGroupListByCategory(response["data"]);
+                        console.log(response["data"]);
+                        inquiryGroup(updateName, groupNow.adminNickName)
+                            .then((response) => {
+                                setGroupNow(response["data"]);
+                            })
+                            .catch((error) => console.log(error));
                     })
                     .catch((error) => {
                         console.log(error);
                     });
-                const { data } = inquiryGroup(
-                    groupNow.groupName,
-                    groupNow.adminNickName
-                )
-                    .then((response) => {
-                        setGroupNow(data);
-                    })
-                    .catch((error) => console.log(error));
             })
             .catch((error) => console.log(error));
     };

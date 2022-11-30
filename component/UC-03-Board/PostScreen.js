@@ -12,6 +12,7 @@ import {
     ScrollView,
     TextInput,
 } from "react-native";
+import UpdatePostContainer from "../../container/UC-03-Board/UpdatePostContainer";
 
 const PostScreen = (props) => {
     const {
@@ -23,17 +24,26 @@ const PostScreen = (props) => {
         comment,
         setComment,
         deleteAlert,
+        updateScreen,
+        setUpdateScreen,
     } = props;
-    const createdTime = new Date(postNow.createdTime);
+    const createdTimeMaker = (createdTime) => {
+        return new Date(createdTime);
+    };
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView style={{ flex: 1, margin: 16 }}>
+                <UpdatePostContainer
+                    updateScreen={updateScreen}
+                    setUpdateScreen={setUpdateScreen}
+                />
                 <Text style={{ fontSize: 20, marginBottom: 16 }}>
                     제목 : {postNow.title}
                 </Text>
                 <Text style={{ fontSize: 15, marginBottom: 16 }}>
                     닉네임 {postNow.userName} | 조회수 {postNow.view} |{" "}
-                    {createdTime.getHours()}:{createdTime.getMinutes()}
+                    {createdTimeMaker(postNow.createdTime).getHours()}:
+                    {createdTimeMaker(postNow.createdTime).getMinutes()}
                 </Text>
                 <View
                     style={{
@@ -69,7 +79,7 @@ const PostScreen = (props) => {
                             justifyContent: "center",
                         }}
                         onPress={() => {
-                            navigation.navigate("UpdatePost");
+                            setUpdateScreen(!updateScreen);
                         }}
                     >
                         <Text>수정</Text>
@@ -127,21 +137,38 @@ const PostScreen = (props) => {
                             alignItems: "center",
                             justifyContent: "center",
                         }}
-                        onPress={() => {}}
+                        onPress={() => {
+                            sendCreateCommentApi();
+                        }}
                     >
                         <Text style={{ fontSize: 16 }}>제출</Text>
                     </TouchableOpacity>
                 </View>
-                {postNow.comments
-                    ? postNow.comments.map((item) => {
-                          <View>
+                {postNow
+                    ? postNow["comments"].map((item) => (
+                          <View
+                              style={{
+                                  height: 100,
+                                  width: "90%",
+                                  margin: 10,
+                                  backgroundColor: "#DFDFDF",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                              }}
+                          >
                               <Text>
-                                  닉네임 : {item.name} | 생성시각 :{" "}
-                                  {item.createdTime}
+                                  이름 : {item.name} | 생성시각 :{" "}
+                                  {createdTimeMaker(
+                                      item.createdTime
+                                  ).getHours()}
+                                  :
+                                  {createdTimeMaker(
+                                      item.createdTime
+                                  ).getMinutes()}
                               </Text>
                               <Text>댓글 내용 : {item.body}</Text>
-                          </View>;
-                      })
+                          </View>
+                      ))
                     : false}
             </ScrollView>
         </SafeAreaView>

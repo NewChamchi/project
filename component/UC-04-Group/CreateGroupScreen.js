@@ -66,7 +66,6 @@ const CreateGroupScreen = (props) => {
                     onPress={() => {
                         sendCreateGroupApi();
                         navigation.navigate("GroupList");
-                        navigation.navigate("Group");
                     }}
                 >
                     <Text>그룹 생성</Text>

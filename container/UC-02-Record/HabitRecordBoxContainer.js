@@ -4,7 +4,12 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useCallback, useEffect, useState } from "react";
 import { TouchableOpacity, StyleSheet, View, Text, Alert } from "react-native";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+    useRecoilState,
+    useRecoilStateLoadable,
+    useRecoilValue,
+    useSetRecoilState,
+} from "recoil";
 import {
     checkHabit,
     deleteHabit,
@@ -31,7 +36,7 @@ const HabitRecordBoxContainer = (props) => {
     const userInfo = useRecoilValue(userInfoState);
     const categoryList = useRecoilValue(categoryListState);
     const [habitCheckBox, setHabitCheckBox] = useState(item.check);
-    const [loading, setLoading] = useRecoilState(loadingState);
+    const [loading, setLoading] = useRecoilStateLoadable(loadingState);
 
     // test
     // const [habitCheckBox, setHabitCheckBox] = useState(false);
@@ -59,14 +64,14 @@ const HabitRecordBoxContainer = (props) => {
             });
     };
     const sendCheckHabitApi = () => {
-        setLoading(!loading);
+        setLoading((prev) => !prev);
 
         checkHabit(id)
             .then((response) => getHabitList())
             .catch((error) => {
                 console.log(error.response);
             });
-        setLoading(!loading);
+        setLoading((prev) => !prev);
     };
 
     const deleteAlert = () =>
@@ -85,23 +90,24 @@ const HabitRecordBoxContainer = (props) => {
                 style: "cancel",
             },
         ]);
-    useEffect(() => {
-        const verifyAmountCheck = setInterval(() => {
-            const tmpTime = nowDate() - Date.parse(item.date);
-            // console.log(tmpTime);
-            if (tmpTime <= item.period * item.count) {
-                judgeCheck(item.id)
-                    .then((response) => {
-                        console.log("시간 체크");
-                        getHabitList();
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-            }
-        }, 1000);
-        return () => clearInterval(verifyAmountCheck);
-    });
+    // useEffect(() => {
+    //     const verifyAmountCheck = setInterval(() => {
+    //         const startTime = Date.parse(item.date);
+    //         const tmpTime = nowDate() - startTime;
+    //         // console.log(tmpTime);
+    //         if (tmpTime >= item.period * (item.count + 1)) {
+    //             judgeCheck(item.id)
+    //                 .then((response) => {
+    //                     console.log("시간 체크");
+    //                     getHabitList();
+    //                 })
+    //                 .catch((error) => {
+    //                     console.log(error);
+    //                 });
+    //         }
+    //     }, 1000);
+    //     return () => clearInterval(verifyAmountCheck);
+    // });
     const propDatas = {
         navigation,
         id,

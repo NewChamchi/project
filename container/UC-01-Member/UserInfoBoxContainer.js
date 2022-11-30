@@ -1,5 +1,10 @@
 import React from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+    useRecoilState,
+    useRecoilStateLoadable,
+    useRecoilValue,
+    useSetRecoilState,
+} from "recoil";
 import { userAllInfo, warnUser } from "../../api/user";
 import UserInfoBox from "../../component/UC-01-Member/UserInfoBox";
 import { loadingState } from "../../recoil/CommonRecoil";
@@ -9,7 +14,7 @@ const UserInfoBoxContainer = (props) => {
     const { navigation, item } = props;
     const userInfoList = useRecoilValue(userInfoListState);
     const setUserInfoList = useSetRecoilState(userInfoListState);
-    const [loading, setLoading] = useRecoilState(loadingState);
+    const [loading, setLoading] = useRecoilStateLoadable(loadingState);
 
     const getUserAllList = async () => {
         try {
@@ -22,7 +27,7 @@ const UserInfoBoxContainer = (props) => {
         }
     };
     const sendWarnUserApi = (email) => {
-        setLoading(!loading);
+        setLoading((prev) => !prev);
         warnUser(email)
             .then((response) => {
                 getUserAllList();
@@ -31,7 +36,7 @@ const UserInfoBoxContainer = (props) => {
                 console.log(error.response);
             });
         // console.log("warningTest");
-        setLoading(!loading);
+        setLoading((prev) => !prev);
     };
 
     const propDatas = {

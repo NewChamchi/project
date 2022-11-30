@@ -31,6 +31,15 @@ const HabitPictureScreen = (props) => {
         myCameraRef,
         samplePictureScreen,
         setSamplePictureScreen,
+        uploadFile,
+        imageBase64,
+        dataURLtoFile,
+        sampleImage,
+        setSampleImage,
+        sampleImageBase64,
+        setSampleImageBase64,
+        isSampleCapture,
+        setIsSampleCapture,
     } = props;
 
     // if (!permission) {
@@ -70,6 +79,8 @@ const HabitPictureScreen = (props) => {
                                 <TouchableOpacity
                                     style={styles.cameraButton}
                                     onPress={() => {
+                                        console.log("test");
+                                        isSampleCapture ? false : uploadFile();
                                         setCaptureVisible(!captureVisible);
                                     }}
                                 >
@@ -96,12 +107,12 @@ const HabitPictureScreen = (props) => {
                         >
                             <TouchableOpacity
                                 style={styles.button}
-                                onPress={pickImage}
+                                onPress={() => pickImage(isSampleCapture)}
                             >
                                 <Text>샘플 사진 가져오기</Text>
                             </TouchableOpacity>
                         </View>
-                        <View
+                        {/* <View
                             style={{
                                 alignItems: "center",
                                 justifyContent: "flex-start",
@@ -110,6 +121,7 @@ const HabitPictureScreen = (props) => {
                             <TouchableOpacity
                                 style={styles.button}
                                 onPress={() => {
+                                    setIsSampleCapture(true);
                                     setCaptureVisible(!captureVisible);
                                 }}
                             >
@@ -125,10 +137,39 @@ const HabitPictureScreen = (props) => {
                             <TouchableOpacity
                                 style={styles.button}
                                 onPress={() => {
+                                    setIsSampleCapture(false);
                                     setCaptureVisible(!captureVisible);
                                 }}
                             >
-                                <Text>사진 인증하기</Text>
+                                <Text>인증 사진 찍기</Text>
+                            </TouchableOpacity>
+                        </View> */}
+                        <View
+                            style={{
+                                alignItems: "center",
+                                justifyContent: "flex-start",
+                            }}
+                        >
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={() => pickImage(isSampleCapture)}
+                            >
+                                <Text>인증 사진 가져오기</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View
+                            style={{
+                                alignItems: "center",
+                                justifyContent: "flex-start",
+                            }}
+                        >
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={() => {
+                                    uploadFile();
+                                }}
+                            >
+                                <Text>사진 보내기</Text>
                             </TouchableOpacity>
                         </View>
                         <View

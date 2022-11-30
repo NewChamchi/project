@@ -13,7 +13,7 @@ export const createGroup = (body) => client.post(`/api/group/new`, body);
 export const applyGroup = (body) => client.post(`/api/group/apply`, body);
 
 export const getRoleInThisGroup = (body) =>
-    client.get(`/api/group/get-my-role`, body);
+    client.post(`/api/group/user/get-my-role`, body);
 
 export const permissionApplyGroup = (permit, userNickName, body) =>
     client.put(
@@ -25,7 +25,7 @@ export const updateGroup = (updateName, body) =>
     client.put(`/api/group/admin/update-group?updateName=${updateName}`, body);
 
 export const deleteGroup = (body) =>
-    client.delete(`/api/group/admin/delete-group`, body);
+    client.post(`/api/group/admin/delete-group`, body);
 
 export const inquiryGroupChat = () => client.get(`/api/group`);
 // 나중에 문서 확인 필요(문서 확인하면 지우기)
@@ -36,11 +36,11 @@ export const writeGroupChat = (body) => client.put(`/api/group`, body);
 export const inquiryGroupMemberList = (body) =>
     client.post(`/api/group/user/get-group-members`, body);
 
-export const withdrawGroup = (userNickNameWillBeAdmin, body) =>
-    client.delete(
-        `/api/group/user/withdrawal?userNickNameWillBeAdmin=${userNickNameWillBeAdmin}`,
-        body
-    );
+export const withdrawGroup = (body) =>
+    client.post(`/api/group/user/withdrawal`, body);
 
 export const warnGroupMember = (userNickName, body) =>
-    client.put(`/api/group/warn?userNickName=${userNickName}`, body);
+    client.put(`/api/group/admin/warn?userNickName=${userNickName}`, body);
+
+export const inquirygroupMemberInfo = (body) =>
+    client.post(`/api/group/user/get-my-habit`, body);

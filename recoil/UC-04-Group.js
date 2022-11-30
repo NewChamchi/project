@@ -14,3 +14,8 @@ export const groupNowMemberListState = atom({
     key: " groupNowMemberListState",
     default: {},
 });
+
+export const groupNowMemberState = atom({
+    key: " groupNowMemberState",
+    default: {},
+});

@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+    useRecoilState,
+    useRecoilStateLoadable,
+    useRecoilValue,
+    useSetRecoilState,
+} from "recoil";
 import { createPost, inquiryPostAll } from "../../api/board";
 import CreatePostScreen from "../../component/UC-03-Board/CreatePostScreen";
 import { categoryNowState, loadingState } from "../../recoil/CommonRecoil";
@@ -14,7 +19,7 @@ const CreatePostContainer = ({ navigation }) => {
     const [postTitle, setPostTitle] = useState("");
     const [postContents, setPostContents] = useState("");
     const [habitName, setHabitName] = useState("");
-    const [loading, setLoading] = useRecoilState(loadingState);
+    const [loading, setLoading] = useRecoilStateLoadable(loadingState);
 
     const findHabitIdByHabitName = () => {
         const habitId = habitRecordList.find(
@@ -34,7 +39,7 @@ const CreatePostContainer = ({ navigation }) => {
             });
     };
     const sendCreatePostApi = () => {
-        setLoading(!loading);
+        setLoading((prev) => !prev);
 
         const habitId = findHabitIdByHabitName();
         const body = {
@@ -46,7 +51,7 @@ const CreatePostContainer = ({ navigation }) => {
             .catch((error) => {
                 console.log(error);
             });
-        setLoading(!loading);
+        setLoading((prev) => !prev);
     };
     const propsData = {
         navigation,

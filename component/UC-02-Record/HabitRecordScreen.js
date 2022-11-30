@@ -9,11 +9,13 @@ import {
     Text,
     SafeAreaView,
     ScrollView,
+    Button,
 } from "react-native";
 import HabitRecordBoxContainer from "../../container/UC-02-Record/HabitRecordBoxContainer";
 
 const HabitRecordScreen = (props) => {
-    const { navigation, habitRecordList, setHabitRecordList } = props;
+    const { navigation, habitRecordList, setHabitRecordList, sendTestApi } =
+        props;
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -30,6 +32,9 @@ const HabitRecordScreen = (props) => {
                           ))
                         : false}
                 </ScrollView>
+                {/* <View style={styles.button}>
+                    <Button title="test" onPress={sendTestApi} />
+                </View> */}
             </View>
             <View
                 style={{

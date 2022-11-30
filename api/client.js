@@ -1,6 +1,9 @@
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 import axios from "axios";
 
-axios.defaults.baseURL = "http://172.20.10.2:8080";
+axios.defaults.baseURL = "http://172.20.10.12:8080";
 
 // axios.defaults.baseURL = "http://202.31.202.150:5000";
 axios.defaults.withCredentials = true;

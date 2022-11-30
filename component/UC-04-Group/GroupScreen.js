@@ -28,6 +28,7 @@ const GroupScreen = (props) => {
         userInfo,
         userRole,
         setUserRole,
+        sendWithdrawGroupApi,
     } = props;
     const [chatModalVisible, setChatModalVisible] = useState(false);
 
@@ -46,6 +47,22 @@ const GroupScreen = (props) => {
             },
         ]);
     };
+
+    const withdrawAlert = (sendWithdrawGroupApi) => {
+        Alert.alert("그룹 탈퇴", "그룹을 탈퇴하시겠습니까?", [
+            {
+                text: "예",
+                onPress: () => {
+                    sendWithdrawGroupApi();
+                },
+            },
+            {
+                text: "아니오",
+                onPress: () => {},
+                style: "cancel",
+            },
+        ]);
+    };
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ChatScreen
@@ -53,27 +70,30 @@ const GroupScreen = (props) => {
                 setChatModalVisible={setChatModalVisible}
             />
             <View style={{ flex: 1, margin: 16 }}>
-                <Text style={{ flex: 1, fontSize: 20 }}>
-                    {groupNow.groupName}
-                </Text>
+                <Text style={{ flex: 1, fontSize: 20 }}></Text>
                 <View style={{ flex: 2, alignItems: "center" }}>
-                    {/* {userRole == "ROLE_GROUP_ADMIN" ? ( */}
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => navigation.navigate("GroupSetting")}
-                    >
-                        <Text>소모임 관리</Text>
-                    </TouchableOpacity>
-                    {/* ) : userRole == "ROLE_GROUP_ANONYMOUS" ? ( */}
-                    {/* <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => applyAlert(sendApplyGroupApi)}
-                    >
-                        <Text>소모임 가입 신청</Text>
-                    </TouchableOpacity> */}
-                    {/* ) : (
-                        false
-                    )} */}
+                    {userRole == "ROLE_GROUP_ADMIN" ? (
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => navigation.navigate("GroupSetting")}
+                        >
+                            <Text>소모임 관리</Text>
+                        </TouchableOpacity>
+                    ) : userRole == "ROLE_GROUP_USER" ? (
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => withdrawAlert(sendWithdrawGroupApi)}
+                        >
+                            <Text>소모임 탈퇴</Text>
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => applyAlert(sendApplyGroupApi)}
+                        >
+                            <Text>소모임 가입 신청</Text>
+                        </TouchableOpacity>
+                    )}
                 </View>
                 {/* <Text style={{ flex: 0.5, fontSize: 15 }}>
                     인원수 : {groupNow.inwon} /{groupNow.chonginwon}
@@ -90,6 +110,7 @@ const GroupScreen = (props) => {
                                   .map((groupMemberItem) => (
                                       <GroupMemberBoxContainer
                                           item={groupMemberItem}
+                                          navigation={navigation}
                                       />
                                   ))
                             : false}

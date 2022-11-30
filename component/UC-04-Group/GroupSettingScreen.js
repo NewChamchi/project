@@ -23,11 +23,18 @@ const GroupSettingScreen = (props) => {
         sendPermissonApplyGroupApi,
         sendWarnGroupMemberApi,
         sendWithdrawGroupApi,
+        sendDeleteGroupApi,
+        deleteAlert,
+        userRole,
     } = props;
     const [updateScreen, setUpdateScreen] = useState(false);
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <GroupUpdateContainer />
+            <GroupUpdateContainer
+                updateScreen={updateScreen}
+                setUpdateScreen={setUpdateScreen}
+            />
+
             <View style={{ flex: 1, margin: 16 }}>
                 <Text style={{ flex: 1, fontSize: 20 }}>
                     {groupNow.groupName}
@@ -43,7 +50,7 @@ const GroupSettingScreen = (props) => {
                                       (item) =>
                                           item["role"] == "ROLE_GROUP_PENDING"
                                   )
-                                  .map((item) => {
+                                  .map((item) => (
                                       <View
                                           style={{
                                               width: 100,
@@ -61,8 +68,8 @@ const GroupSettingScreen = (props) => {
                                               <TouchableOpacity
                                                   onPress={() =>
                                                       sendPermissonApplyGroupApi(
-                                                          "CONSET",
-                                                          item.myNickName
+                                                          "CONSENT",
+                                                          item.nickName
                                                       )
                                                   }
                                               >
@@ -80,8 +87,8 @@ const GroupSettingScreen = (props) => {
                                                   <Text>가입 거절</Text>
                                               </TouchableOpacity>
                                           </View>
-                                      </View>;
-                                  })
+                                      </View>
+                                  ))
                             : false}
                     </ScrollView>
                 </View>
@@ -90,13 +97,13 @@ const GroupSettingScreen = (props) => {
                         그룹 멤버 관리
                     </Text>
                     <ScrollView horizontal={true} style={{}}>
-                        {groupNowMemberList
+                        {Array.isArray(groupNowMemberList)
                             ? groupNowMemberList
                                   .filter(
                                       (item) =>
                                           item["role"] == "ROLE_GROUP_USER"
                                   )
-                                  .map((item) => {
+                                  .map((item) => (
                                       <View
                                           style={{
                                               width: 100,
@@ -113,7 +120,7 @@ const GroupSettingScreen = (props) => {
                                           <TouchableOpacity
                                               onPress={() =>
                                                   sendWarnGroupMemberApi(
-                                                      item.myNickName
+                                                      item.nickName
                                                   )
                                               }
                                           >
@@ -122,14 +129,14 @@ const GroupSettingScreen = (props) => {
                                           <TouchableOpacity
                                               onPress={() =>
                                                   sendWithdrawGroupApi(
-                                                      item.myNickName
+                                                      item.nickName
                                                   )
                                               }
                                           >
                                               <Text>멤버 탈퇴</Text>
                                           </TouchableOpacity>
-                                      </View>;
-                                  })
+                                      </View>
+                                  ))
                             : false}
                     </ScrollView>
                 </View>
@@ -147,6 +154,7 @@ const GroupSettingScreen = (props) => {
                             alignItems: "center",
                             justifyContent: "center",
                         }}
+                        onPress={() => setUpdateScreen(!updateScreen)}
                     >
                         <Text>수정</Text>
                     </TouchableOpacity>
@@ -158,6 +166,7 @@ const GroupSettingScreen = (props) => {
                             alignItems: "center",
                             justifyContent: "center",
                         }}
+                        onPress={deleteAlert}
                     >
                         <Text>삭제</Text>
                     </TouchableOpacity>

@@ -1,5 +1,15 @@
 import { useCallback, useEffect } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+    useRecoilState,
+    useRecoilStateLoadable,
+    useRecoilValue,
+    useSetRecoilState,
+} from "recoil";
+import {
+    applyGroup,
+    getRoleInThisGroup,
+    inquiryGroupMemberList,
+} from "../../api/group";
 import { inquiryHabitList, memberHabitInquiry } from "../../api/record";
 import HabitRecordScreen from "../../component/UC-02-Record/HabitRecordScreen";
 import { loadingState } from "../../recoil/CommonRecoil";
@@ -39,10 +49,25 @@ const HabitRecordContainer = ({ navigation }) => {
     const habitRecordList = useRecoilValue(habitRecordListState);
     const setHabitRecordList = useSetRecoilState(habitRecordListState);
     const userInfo = useRecoilValue(userInfoState);
-    const [loading, setLoading] = useRecoilState(loadingState);
-
+    const [loading, setLoading] = useRecoilStateLoadable(loadingState);
+    const sendTestApi = () => {
+        const body = {
+            myNickName: "aa",
+            groupName: "a",
+        };
+        // axios
+        //     .get("http://202.31.202.150:5000/api/test")
+        //     .then((res) => console.log(res.data))
+        //     .catch((err) => console.log(err));
+        // 서버로부터 받은 데이터는 res에
+        inquiryGroupMemberList(body)
+            .then((response) => {
+                console.log(response["data"]);
+            })
+            .catch((error) => console.log(error.response.data.message));
+    };
     useEffect(() => {
-        setLoading(!loading);
+        setLoading((prev) => !prev);
 
         const getHabitList = () => {
             console.log(userInfo);
@@ -60,13 +85,14 @@ const HabitRecordContainer = ({ navigation }) => {
         getHabitList();
         // test
         // setHabitRecordList(testData);
-        setLoading(!loading);
+        setLoading((prev) => !prev);
     }, []);
 
     const propDatas = {
         navigation,
         habitRecordList,
         setHabitRecordList,
+        sendTestApi,
     };
     return <HabitRecordScreen {...propDatas} />;
 };

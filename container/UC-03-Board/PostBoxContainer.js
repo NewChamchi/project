@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+    useRecoilState,
+    useRecoilStateLoadable,
+    useRecoilValue,
+    useSetRecoilState,
+} from "recoil";
 import { inquiryPostById } from "../../api/board";
 import PostBox from "../../component/UC-03-Board/PostBox";
 import { categoryNowState, loadingState } from "../../recoil/CommonRecoil";
@@ -10,7 +15,7 @@ const PostBoxContainer = (props) => {
     const { navigation, item, id } = props;
     const postNow = useRecoilValue(postNowState);
     const setPostNow = useSetRecoilState(postNowState);
-    const [loading, setLoading] = useRecoilState(loadingState);
+    const [loading, setLoading] = useRecoilStateLoadable(loadingState);
 
     useEffect(() => {
         const getPostById = () => {

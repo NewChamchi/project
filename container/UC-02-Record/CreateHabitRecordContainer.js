@@ -1,6 +1,11 @@
 import * as React from "react";
 import { useState, useEffect, useCallback } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+    useRecoilState,
+    useRecoilStateLoadable,
+    useRecoilValue,
+    useSetRecoilState,
+} from "recoil";
 import {
     createHabit,
     memberHabitInquiry,
@@ -27,7 +32,7 @@ const CreateHabitRecordContainer = ({ navigation }) => {
     const [amountList] = useState([1, 2, 3, 4, 5, 6, 7]);
     const [period, setPeriod] = useState(1);
     const [periodList] = useState([1, 2, 3, 4, 5, 6, 7]);
-    const [loading, setLoading] = useRecoilState(loadingState);
+    const [loading, setLoading] = useRecoilStateLoadable(loadingState);
 
     // const addItem = (oldHabitRecordList) => {
     //     setHabitRecordList((oldHabitRecordList) => [
@@ -46,7 +51,7 @@ const CreateHabitRecordContainer = ({ navigation }) => {
     //     console.log(habitRecordList);
     // };
     const getHabitList = () => {
-        setLoading(!loading);
+        setLoading((prev) => !prev);
         console.log("됨1");
         memberHabitInquiry(userInfo.memberId)
             .then((response) => {
@@ -58,16 +63,16 @@ const CreateHabitRecordContainer = ({ navigation }) => {
                 console.log("됨3");
                 console.log(error);
             });
-        setLoading(!loading);
+        setLoading((prev) => !prev);
     };
     const addItem = useCallback(() => {
-        setLoading(!loading);
+        setLoading((prev) => !prev);
         const body = {
             name: habitName,
             amount: amount,
             period: period * 24 * 3600 * 1000,
         };
-
+        console.log(body);
         registerHabit(
             categoryList.find((item) => item.name == habitCategory).id,
             userInfo.memberId,
@@ -75,7 +80,7 @@ const CreateHabitRecordContainer = ({ navigation }) => {
         )
             .then((response) => getHabitList())
             .catch((error) => console.log(error));
-        setLoading(!loading);
+        setLoading((prev) => !prev);
     });
 
     const propDatas = {

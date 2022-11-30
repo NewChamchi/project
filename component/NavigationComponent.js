@@ -35,6 +35,7 @@ import { userInfoState } from "../recoil/UC-01-Member";
 import { ActivityIndicator } from "react-native";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 import { loadingState } from "../recoil/CommonRecoil";
+import GroupMemberDetailContainer from "../container/UC-04-Group/GroupMemberDetailContainer";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -119,11 +120,6 @@ const BoardStack = () => {
                 component={PostContainer}
                 options={{ title: "게시글" }}
             />
-            <Stack.Screen
-                name="UpdatePost"
-                component={UpdatePostContainer}
-                options={{ title: "게시글 수정" }}
-            />
         </Stack.Navigator>
     );
 };
@@ -161,6 +157,11 @@ const GroupStack = () => {
                 name="GroupSetting"
                 component={GroupSettingContainer}
                 options={{ title: "소모임 관리" }}
+            />
+            <Stack.Screen
+                name="GroupMemberDetail"
+                component={GroupMemberDetailContainer}
+                options={{ title: "멤버 상세 정보" }}
             />
         </Stack.Navigator>
     );

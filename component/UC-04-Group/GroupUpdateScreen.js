@@ -46,25 +46,31 @@ const GroupUpdateScreen = (props) => {
                                 value={groupName}
                             />
                         </View>
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={() => {
-                                sendUpdateGroupApi(groupName);
-                                setGroupName("");
-                                setUpdateScreen(!updateScreen);
+                        <View
+                            style={{
+                                flexDirection: "row",
                             }}
                         >
-                            <Text>확인</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={() => {
-                                setGroupName("");
-                                setUpdateScreen(!updateScreen);
-                            }}
-                        >
-                            <Text>취소</Text>
-                        </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={() => {
+                                    sendUpdateGroupApi(groupName);
+                                    setGroupName("");
+                                    setUpdateScreen(!updateScreen);
+                                }}
+                            >
+                                <Text>확인</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={() => {
+                                    setGroupName("");
+                                    setUpdateScreen(!updateScreen);
+                                }}
+                            >
+                                <Text>취소</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </View>

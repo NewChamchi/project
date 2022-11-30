@@ -45,7 +45,9 @@ const BoardScreen = (props) => {
                     ></View>
                 </ScrollView>
             </View>
-            <View style={{ flex: 2, alignItems: "center" }}>
+            <View
+                style={{ flex: 2, alignSelf: "center", flexDirection: "row" }}
+            >
                 {postList["pageNo"] != 0 ? (
                     <TouchableOpacity onPress={() => setPage(page - 1)}>
                         <Text>

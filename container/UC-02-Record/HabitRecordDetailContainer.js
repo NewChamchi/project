@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { judgeCheck } from "../../api/record";
+import { judgeCheck, memberHabitInquiry } from "../../api/record";
 import HabitRecordDetailScreen from "../../component/UC-02-Record/HabitRecordDetailScreen";
 import { userInfoState } from "../../recoil/UC-01-Member";
 import {
@@ -23,6 +23,9 @@ const HabitRecordDetailContainer = (props) => {
     const [date, setDate] = useState(0);
     const [year, setYear] = useState(0);
 
+    useEffect(() => {
+        console.log(habitRecordItem);
+    });
     const getHabitList = () => {
         console.log("됨1");
         memberHabitInquiry(userInfo.memberId)
@@ -36,22 +39,26 @@ const HabitRecordDetailContainer = (props) => {
                 console.log(error);
             });
     };
-    useEffect(() => {
-        const verifyAmountCheck = setInterval(() => {
-            const tmpTime = nowDate() - Date.parse(habitRecordItem.date);
-            if (tmpTime <= habitRecordItem.amount * habitRecordItem.count) {
-                judgeCheck(habitRecordItem.id)
-                    .then((response) => {
-                        console.log("시간 체크");
-                        getHabitList();
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-            }
-        }, 1000);
-        return () => clearInterval(verifyAmountCheck);
-    });
+    // useEffect(() => {
+    //     const verifyAmountCheck = setInterval(() => {
+    //         const startTime = Date.parse(habitRecordItem.date);
+    //         const tmpTime = nowDate() - startTime;
+    //         if (
+    //             tmpTime >=
+    //             habitRecordItem.period * (habitRecordItem.count + 1)
+    //         ) {
+    //             judgeCheck(habitRecordItem.id)
+    //                 .then((response) => {
+    //                     console.log("시간 체크");
+    //                     getHabitList();
+    //                 })
+    //                 .catch((error) => {
+    //                     console.log(error);
+    //                 });
+    //         }
+    //     }, 1000);
+    //     return () => clearInterval(verifyAmountCheck);
+    // });
     useEffect(() => {
         const tmpDate = Date.parse(habitRecordItem.date);
         const countProceedTime = setInterval(() => {
@@ -60,18 +67,8 @@ const HabitRecordDetailContainer = (props) => {
             setMinute(parseInt(tmpTime / (1000 * 60)) % 60);
             setHour(parseInt(tmpTime / (1000 * 60 * 60)) % 24);
             setDate(parseInt(tmpTime / (1000 * 60 * 60 * 24)) % 365);
-            setYear(parseInt(tmpTime / (1000 * 60 * 60 * 24 * 365)));
             setProceedTime(
-                year +
-                    "년 " +
-                    date +
-                    "일 " +
-                    hour +
-                    "시간 " +
-                    minute +
-                    "분 " +
-                    second +
-                    "초 "
+                date + "일 " + hour + "시간 " + minute + "분 " + second + "초 "
             );
         }, 1000);
         return () => clearInterval(countProceedTime);

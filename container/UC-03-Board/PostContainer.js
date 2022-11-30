@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { Alert } from "react-native";
+import {
+    useRecoilState,
+    useRecoilStateLoadable,
+    useRecoilValue,
+    useSetRecoilState,
+} from "recoil";
 import {
     createComment,
     deletePostById,
@@ -18,29 +24,31 @@ const PostContainer = ({ navigation }) => {
     const setPostNow = useSetRecoilState(postNowState);
     const [comment, setComment] = useState("");
     const userInfo = useRecoilValue(userInfoState);
-    const [loading, setLoading] = useRecoilState(loadingState);
+    const [loading, setLoading] = useRecoilStateLoadable(loadingState);
 
-    const sendDeletePostByIdApi = (id) => {
-        setLoading(!loading);
+    const [updateScreen, setUpdateScreen] = useState(false);
+    const sendDeletePostByIdApi = () => {
+        setLoading((prev) => !prev);
 
-        deletePostById(id)
+        deletePostById(postNow.id)
             .then((response) => {
-                inquiryPostAll()
+                inquiryPostAll(0)
                     .then((response) => {
                         setPostList(response["data"]);
                         navigation.navigate("Board");
                     })
-                    .catch((error) => console.log(error));
+                    .catch((error) => console.log(1));
             })
-            .catch((error) => console.log(error));
-        setLoading(!loading);
+            .catch((error) => console.log(2));
+        setLoading((prev) => !prev);
     };
     const deleteAlert = () =>
         Alert.alert("게시글 삭제", "정말 삭제하시겠습니까?", [
             {
                 text: "네",
                 onPress: () => {
-                    sendDeletePostByIdApi(postNow.id);
+                    console.log(postNow.id);
+                    sendDeletePostByIdApi();
                 },
             },
             {
@@ -50,24 +58,26 @@ const PostContainer = ({ navigation }) => {
             },
         ]);
     const sendCreateCommentApi = () => {
-        setLoading(!loading);
+        setLoading((prev) => !prev);
 
         const body = { body: comment };
-        createComment(userInfo.id, postNow.id, body).then((response) => {
+        console.log("test");
+        createComment(userInfo.memberId, postNow.id, body).then((response) => {
             inquiryPostAll(0)
                 .then((response) => {
                     console.log("댓글 전송 후 포스트 전체 조회");
                     setPostList(response["data"]);
+                    inquiryPostById(postNow.id)
+                        .then((response) => {
+                            console.log("댓글 전송 후 현재 포스트 조회");
+                            setPostNow(response["data"]);
+                            console.log(response["data"]);
+                        })
+                        .catch((error) => console.log(error));
                 })
                 .catch((error) => console.log(error));
-            inquiryPostById(postNow.id)
-                .then((response) => {
-                    console.log("댓글 전송 후 현재 포스트 조회");
-                    setPostNow(response["data"]);
-                })
-                .catch((error) => console.log(error));
-            setLoading(!loading);
         });
+        setLoading((prev) => !prev);
     };
     const propsData = {
         navigation,
@@ -78,6 +88,8 @@ const PostContainer = ({ navigation }) => {
         comment,
         setComment,
         deleteAlert,
+        updateScreen,
+        setUpdateScreen,
     };
     return <PostScreen {...propsData} />;
 };

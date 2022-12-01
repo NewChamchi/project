@@ -1,3 +1,4 @@
+import { useIsFocused } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import {
     useRecoilState,
@@ -22,6 +23,7 @@ const BoardContainer = ({ navigation }) => {
     const setPostList = useSetRecoilState(postListState);
     const [page, setPage] = useState(0);
     const [loading, setLoading] = useRecoilStateLoadable(loadingState);
+    const isFocused = useIsFocused();
 
     useEffect(() => {
         setLoading(true);
@@ -41,7 +43,7 @@ const BoardContainer = ({ navigation }) => {
 
         setLoading(false);
         // 임시 값이 필요함
-    }, []);
+    }, [isFocused]);
     const propsData = {
         navigation,
         categoryList,

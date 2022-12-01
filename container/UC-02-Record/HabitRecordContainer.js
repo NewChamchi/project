@@ -1,4 +1,4 @@
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { useCallback, useEffect } from "react";
 import {
     useRecoilState,
@@ -51,23 +51,14 @@ const HabitRecordContainer = ({ navigation }) => {
     const setHabitRecordList = useSetRecoilState(habitRecordListState);
     const userInfo = useRecoilValue(userInfoState);
     const [loading, setLoading] = useRecoilStateLoadable(loadingState);
+    const isFocused = useIsFocused();
     const sendTestApi = () => {
         const body = {
             myNickName: "aa",
             groupName: "a",
         };
-        // axios
-        //     .get("http://202.31.202.150:5000/api/test")
-        //     .then((res) => console.log(res.data))
-        //     .catch((err) => console.log(err));
-        // 서버로부터 받은 데이터는 res에
-        inquiryGroupMemberList(body)
-            .then((response) => {
-                console.log(response["data"]);
-            })
-            .catch((error) => console.log(error.response.data.message));
     };
-    useFocusEffect(() => {
+    useEffect(() => {
         setLoading(true);
 
         const getHabitList = async () => {
@@ -80,11 +71,11 @@ const HabitRecordContainer = ({ navigation }) => {
                 console.log(error.response.data);
             }
         };
-        // getHabitList();
-        console.log("FoucsEffect");
-        setHabitRecordList(testData);
+        getHabitList();
+        // console.log("FoucsEffect");
+        // setHabitRecordList(testData);
         setLoading(false);
-    }, []);
+    }, [isFocused]);
 
     const propDatas = {
         navigation,

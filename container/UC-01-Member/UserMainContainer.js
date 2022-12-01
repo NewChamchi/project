@@ -1,4 +1,4 @@
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
@@ -21,26 +21,26 @@ const UserMainContainer = ({ navigation }) => {
     const userInfo = useRecoilValue(userInfoState);
     const setUserInfo = useSetRecoilState(userInfoState);
     const [loading, setLoading] = useRecoilStateLoadable(loadingState);
-    // useFocusEffect(() => {
-    //     useCallback(() => {
-    //         setLoading(true);
-    //         const getSelfInfo = async () => {
-    //             try {
-    //                 const { data } = await userSelfInfo();
-    //                 console.log(data);
-    //                 setUserInfo({
-    //                     ...userInfo,
-    //                     name: data.name,
-    //                     email: data.email,
-    //                 });
-    //             } catch (error) {
-    //                 console.log(error);
-    //             }
-    //         };
-    //         getSelfInfo();
-    //         setLoading(true);
-    //     }, [userInfo]);
-    // });
+    const isFocused = useIsFocused();
+    useEffect(() => {
+        setLoading(true);
+        const getSelfInfo = async () => {
+            try {
+                const { data } = await userSelfInfo();
+                console.log(data);
+                setUserInfo({
+                    ...userInfo,
+                    name: data.name,
+                    email: data.email,
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getSelfInfo();
+        setLoading(false);
+    }, [isFocused]);
+
     const sendLogoutApi = async () => {
         setLoading(true);
         try {

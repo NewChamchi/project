@@ -34,6 +34,8 @@ import { userInfoState } from "../recoil/UC-01-Member";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 import { loadingState } from "../recoil/CommonRecoil";
 import GroupMemberDetailContainer from "../container/UC-04-Group/GroupMemberDetailContainer";
+import HabitStatisticsContainer from "../container/UC-02-Record/HabitStatisticsContainer";
+import CategoryEditContainer from "../container/CategoryEditContainer";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -50,7 +52,7 @@ const RecordStack = () => {
             <Stack.Screen
                 name="HabitRecord"
                 component={HabitRecordContainer}
-                options={{ title: "메인 화면" }}
+                options={{ title: "습관 관리" }}
             />
             <Stack.Screen
                 name="HabitDetail"
@@ -87,8 +89,26 @@ const StatisticStack = () => {
         >
             <Stack.Screen
                 name="HabitStatistics"
-                component={HabitStatisticsScreen}
-                options={{ title: "메인 화면" }}
+                component={HabitStatisticsContainer}
+                options={{ title: "습관 통계" }}
+            />
+        </Stack.Navigator>
+    );
+};
+
+const CategoryEditStack = () => {
+    return (
+        <Stack.Navigator
+            initialRouteName="CategoryEdit"
+            screenOptions={{
+                headerStyle: { backgroundColor: "skyblue" },
+                headerTintColor: "#fff",
+            }}
+        >
+            <Stack.Screen
+                name="CategoryEdit"
+                component={CategoryEditContainer}
+                options={{ title: "카테고리 편집" }}
             />
         </Stack.Navigator>
     );
@@ -106,7 +126,7 @@ const BoardStack = () => {
             <Stack.Screen
                 name="Board"
                 component={BoardContainer}
-                options={{ title: "메인 화면" }}
+                options={{ title: "게시판" }}
             />
             <Stack.Screen
                 name="CreatePost"
@@ -134,12 +154,12 @@ const GroupStack = () => {
             <Stack.Screen
                 name="GroupList"
                 component={GroupListContainer}
-                options={{ title: "메인 화면" }}
+                options={{ title: "소모임 목록" }}
             />
             <Stack.Screen
                 name="Chat"
                 component={ChatContainer}
-                options={{ title: "채팅방" }}
+                options={{ title: "소모임 생성" }}
             />
             <Stack.Screen
                 name="CreateGroup"
@@ -235,11 +255,31 @@ const App = () => {
                     ],
                 }}
             >
+                {userInfo.role == "ROLE_ADMIN" ? (
+                    <Tab.Screen
+                        name="습관 카테고리 추가"
+                        component={CategoryEditStack}
+                        options={{
+                            headerShown: false,
+                            tabBarLabel: "습관 카테고리 추가",
+                            tabBarIcon: ({ color, size }) => (
+                                <MaterialCommunityIcons
+                                    name="check"
+                                    color={color}
+                                    size={size}
+                                />
+                            ),
+                        }}
+                    />
+                ) : (
+                    false
+                )}
                 {userInfo.role != "ROLE_ADMIN" ? (
                     <Tab.Screen
                         name="습관 관리"
                         component={RecordStack}
                         options={{
+                            headerShown: false,
                             tabBarLabel: "습관 관리",
                             tabBarIcon: ({ color, size }) => (
                                 <MaterialCommunityIcons
@@ -258,6 +298,7 @@ const App = () => {
                         name="통계"
                         component={StatisticStack}
                         options={{
+                            headerShown: false,
                             tabBarLabel: "통계",
                             tabBarIcon: ({ color, size }) => (
                                 <MaterialCommunityIcons
@@ -275,6 +316,7 @@ const App = () => {
                     name="게시판"
                     component={BoardStack}
                     options={{
+                        headerShown: false,
                         tabBarLabel: "게시판",
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons
@@ -289,6 +331,7 @@ const App = () => {
                     name="소모임"
                     component={GroupStack}
                     options={{
+                        headerShown: false,
                         tabBarLabel: "소모임",
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons
@@ -303,6 +346,7 @@ const App = () => {
                     name="나의 계정"
                     component={MemberStack}
                     options={{
+                        headerShown: false,
                         tabBarLabel: "나의 계정",
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons

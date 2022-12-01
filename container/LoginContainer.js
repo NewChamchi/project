@@ -81,51 +81,55 @@ const LoginContainer = ({ navigation }) => {
     const sendLoginApi = async () => {
         setLoading(true);
         const body = {
-            email: email,
-            password: password,
+            // email: email,
+            // password: password,
+            // test
+            email: "tofhdnsckacl123@daum.net",
+            password: "asdasd123!",
         };
-        try {
-            const { data: loginData, headers: loginHeaders } = await login(
-                body
-            );
-            console.log(loginData);
-            const [cookie] = loginHeaders["set-cookie"];
-            console.log(cookie);
-            client.defaults.headers.Cookie = cookie;
-
-            console.log("이거 안되?");
-            // try {
-            const { data: userData } = await userSelfInfo();
-            console.log(userData);
-            setUserInfo({
-                email: email,
-                password: password,
-                memberId: loginHeaders.id,
-                name: userData.name,
-                role: "ROLE_USER",
-                // role: data.role,
+        login(body)
+            .then((res) => {
+                console.log(res.data);
+                const [cookie] = res.headers["set-cookie"];
+                console.log(cookie);
+                client.defaults.headers.Cookie = cookie;
+                setUserInfo({
+                    email: email,
+                    password: password,
+                    memberId: res.headers.id,
+                });
+                userSelfInfo()
+                    .then((res) => {
+                        setUserInfo({
+                            ...userInfo,
+                            name: res.data.name,
+                            role: "ROLE_ADMIN",
+                            // role: data.role,
+                        });
+                    })
+                    .catch((err) => console.log(err));
+                inquiryCategoryAll()
+                    .then((res) => {
+                        setCategoryList(res.data.content);
+                        setCategoryNow(res.data.content[0]);
+                    })
+                    .catch((err) => console.log(err));
+            })
+            .catch((err) => {
+                console.log(err);
+                Alert.alert(
+                    "로그인 오류",
+                    "이메일 혹은 비밀번호가 정확하지 않습니다.",
+                    [
+                        {
+                            text: "확인",
+                            onPress: () => {},
+                            style: "cancel",
+                        },
+                    ]
+                );
             });
-            const { data: categoryListData } = await inquiryCategoryAll();
-            setCategoryList(categoryListData.content);
-            setCategoryNow(categoryListData.content[0]);
-            console.log(categoryListData);
-            // } catch (error) {
-            //     console.log(error);
-            // }
-        } catch (error) {
-            console.log(error);
-            Alert.alert(
-                "로그인 오류",
-                "이메일 혹은 비밀번호가 정확하지 않습니다.",
-                [
-                    {
-                        text: "확인",
-                        onPress: () => {},
-                        style: "cancel",
-                    },
-                ]
-            );
-        }
+
         setLoading(false);
     };
 

@@ -1,3 +1,4 @@
+import { useIsFocused } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { inquiryGroupList } from "../../api/group";
@@ -14,6 +15,7 @@ const GroupListContainer = ({ navigation }) => {
     const setCategoryNow = useSetRecoilState(categoryNowState);
     const [order, setOrder] = useState("name");
     const [orderList, setOrderList] = useState(["name", "number"]);
+    const isFocused = useIsFocused();
     useEffect(() => {
         console.log(categoryNow["name"]);
         inquiryGroupList(categoryNow["name"], order)
@@ -25,7 +27,7 @@ const GroupListContainer = ({ navigation }) => {
             .catch((error) => {
                 console.log(error);
             });
-    }, [order]);
+    }, [order, isFocused]);
     const propDatas = {
         navigation,
         groupListByCategory,

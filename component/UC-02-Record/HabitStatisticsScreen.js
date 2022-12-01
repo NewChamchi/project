@@ -19,55 +19,55 @@ import { LineChart, PieChart } from "react-native-chart-kit";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { inquiryAmountAll, inquiryPeriodAll } from "../../api/record";
 import { categoryListState, categoryNowState } from "../../recoil/CommonRecoil";
-const chartConfig = {
-    backgroundGradientFrom: "#1E2923",
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#08130D",
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
-    barPercentage: 0.5,
-    useShadowColorFromDataset: false, // optional
-    barRadius: 200,
-};
+// const chartConfig = {
+//     backgroundGradientFrom: "#1E2923",
+//     backgroundGradientFromOpacity: 0,
+//     backgroundGradientTo: "#08130D",
+//     backgroundGradientToOpacity: 0.5,
+//     color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+//     strokeWidth: 2, // optional, default 3
+//     barPercentage: 0.5,
+//     useShadowColorFromDataset: false, // optional
+//     barRadius: 200,
+// };
 
-const data = [
-    {
-        name: "3일 이하",
-        count: 21500000,
-        color: "tomato",
-        legendFontColor: "#7F7F7F",
-        legendFontSize: 15,
-    },
-    {
-        name: "일주일 이하",
-        count: 2800000,
-        color: "green",
-        legendFontColor: "#7F7F7F",
-        legendFontSize: 15,
-    },
-    {
-        name: "한 달 이하",
-        count: 527612,
-        color: "yellow",
-        legendFontColor: "#7F7F7F",
-        legendFontSize: 15,
-    },
-    {
-        name: "3개월 이하",
-        count: 8538000,
-        color: "gray",
-        legendFontColor: "#7F7F7F",
-        legendFontSize: 15,
-    },
-    {
-        name: "1년 이하",
-        count: 11920000,
-        color: "blue",
-        legendFontColor: "#7F7F7F",
-        legendFontSize: 15,
-    },
-];
+// const data = [
+//     {
+//         name: "3일 이하",
+//         count: 21500000,
+//         color: "tomato",
+//         legendFontColor: "#7F7F7F",
+//         legendFontSize: 15,
+//     },
+//     {
+//         name: "일주일 이하",
+//         count: 2800000,
+//         color: "green",
+//         legendFontColor: "#7F7F7F",
+//         legendFontSize: 15,
+//     },
+//     {
+//         name: "한 달 이하",
+//         count: 527612,
+//         color: "yellow",
+//         legendFontColor: "#7F7F7F",
+//         legendFontSize: 15,
+//     },
+//     {
+//         name: "3개월 이하",
+//         count: 8538000,
+//         color: "gray",
+//         legendFontColor: "#7F7F7F",
+//         legendFontSize: 15,
+//     },
+//     {
+//         name: "1년 이하",
+//         count: 11920000,
+//         color: "blue",
+//         legendFontColor: "#7F7F7F",
+//         legendFontSize: 15,
+//     },
+// ];
 const LineChartComponent = (props) => {
     const { datas } = props;
 
@@ -78,7 +78,15 @@ const LineChartComponent = (props) => {
                     labels: [],
                     datasets: [
                         {
-                            data: [1, 5, 5, 9, 15, 18, 10, 6, 5, 4],
+                            data: [
+                                1, 5, 5, 9, 15, 18, 10, 6, 5, 4, 1, 5, 5, 9, 15,
+                                18, 10, 6, 5, 4, 1, 5, 5, 9, 15, 18, 10, 6, 5,
+                                4, 1, 5, 5, 9, 15, 18, 10, 6, 5, 4, 1, 5, 5, 9,
+                                15, 18, 10, 6, 5, 4, 1, 5, 5, 9, 15, 18, 10, 6,
+                                5, 4, 1, 5, 5, 9, 15, 18, 10, 6, 5, 4, 1, 5, 5,
+                                9, 15, 18, 10, 6, 5, 4, 1, 5, 5, 9, 15, 18, 10,
+                                6, 5, 4, 1, 5, 5, 9, 15, 18, 10, 6, 5, 4,
+                            ],
                         },
                     ],
                 }}
@@ -114,29 +122,15 @@ const LineChartComponent = (props) => {
     );
 };
 const HabitStatisticsScreen = (props) => {
-    const categoryList = useRecoilValue(categoryListState);
-    const [categoryNow, setCategoryNow] = useRecoilState(categoryNowState);
-    const [amountTotalList, setAmountTotalList] = useState(null);
-    const [periodTotalList, setPeriodTotalList] = useState(null);
-    useEffect(() => {
-        inquiryAmountAll(
-            categoryList.find((item) => item.name == categoryNow["name"]).id
-        )
-            .then((response) => {
-                setAmountTotalList(response["data"].totalAmountCount);
-                inquiryPeriodAll(
-                    categoryList.find(
-                        (item) => item.name == categoryNow["name"]
-                    ).id
-                )
-                    .then((response) => {
-                        setPeriodTotalList(response["data"].totalPeriodCount);
-                        console.log(response["data"]);
-                    })
-                    .catch((err) => console.log(`기간 통계 조회 오류 ${err}`));
-            })
-            .catch((err) => console.log(`정량 통계 조회 오류 ${err}`));
-    }, [categoryNow]);
+    const {
+        categoryList,
+        categoryNow,
+        setCategoryNow,
+        amountTotalList,
+        setAmountTotalList,
+        periodTotalList,
+        setPeriodTotalList,
+    } = props;
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flexDirection: "row", flex: 1 }}>
@@ -191,7 +185,7 @@ const HabitStatisticsScreen = (props) => {
                             >
                                 습관 정량 통계
                             </Text>
-                            {amountTotalList ? (
+                            {!amountTotalList ? (
                                 <LineChartComponent datas={amountTotalList} />
                             ) : (
                                 false

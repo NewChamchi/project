@@ -24,24 +24,52 @@ import { cookies, getCategoryList } from "./CommonContainer";
 const LoginContainer = ({ navigation }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const userInfo = useRecoilValue(userInfoState);
-    const setUserInfo = useSetRecoilState(userInfoState);
-    const [categoryList, setCategoryList] = useRecoilState(categoryListState);
-    const categoryNow = useRecoilValue(categoryNowState);
-    const setCategoryNow = useSetRecoilState(categoryNowState);
+    const [userInfo, setUserInfo] = useRecoilStateLoadable(userInfoState);
+    const [categoryList, setCategoryList] =
+        useRecoilStateLoadable(categoryListState);
+    const [categoryNow, setCategoryNow] =
+        useRecoilStateLoadable(categoryNowState);
     const [loading, setLoading] = useRecoilStateLoadable(loadingState);
 
-    const sendTestApi = () => {
+    const sendTestApi = async () => {
         const body = {
-            myNickName: "aa",
-            groupName: "a",
+            email: "tofhdnsckacl123@daum.net",
+            password: "asdasd123!",
         };
-        axios({
-            method: "get", // 통신 방식
-            url: "http://202.31.202.150:5000/api/test", // 서버
-        })
-            .then((res) => console.log(res.data))
-            .catch((err) => console.log(err));
+        try {
+            const { data, headers } = await login(body);
+            console.log(data);
+            console.log(headers);
+            const [cookie] = headers["set-cookie"];
+            console.log(cookie);
+            client.defaults.headers.Cookie = cookie;
+            const { data: testdata2 } = await userSelfInfo();
+            console.log(testdata2);
+            // setUserInfo({
+            //     email: email,
+            //     password: password,
+            //     memberId: headers.id,
+            //     name: testdata2.name,
+            //     role: "ROLE_USER",
+            //     // role: data.role,
+            // });
+            const { data: categoryListData } = await inquiryCategoryAll();
+            // setCategoryList(categoryListData.content);
+            // setCategoryNow(categoryListData.content[0]);
+            console.log(categoryListData);
+        } catch (error) {
+            console.log(error);
+        }
+        // const body = {
+        //     myNickName: "aa",
+        //     groupName: "a",
+        // };
+        // axios({
+        //     method: "get", // 통신 방식
+        //     url: "http://202.31.202.150:5000/api/test", // 서버
+        // })
+        //     .then((res) => console.log(res.data))
+        //     .catch((err) => console.log(err));
         // 서버로부터 받은 데이터는 res에
         // getRoleInThisGroup(body)
         //     .then((response) => {
@@ -56,36 +84,36 @@ const LoginContainer = ({ navigation }) => {
             email: email,
             password: password,
         };
-
         try {
-            const { data, headers } = await login(body);
-            const [cookie] = headers["set-cookie"];
+            const { data: loginData, headers: loginHeaders } = await login(
+                body
+            );
+            console.log(loginData);
+            const [cookie] = loginHeaders["set-cookie"];
+            console.log(cookie);
             client.defaults.headers.Cookie = cookie;
+
+            console.log("이거 안되?");
+            // try {
+            const { data: userData } = await userSelfInfo();
+            console.log(userData);
             setUserInfo({
                 email: email,
-                name: "",
-                role: "",
                 password: password,
-                memberId: headers.id,
+                memberId: loginHeaders.id,
+                name: userData.name,
+                role: "ROLE_USER",
+                // role: data.role,
             });
-
-            try {
-                const { data } = await userSelfInfo();
-                setUserInfo({ ...userInfo, name: data.name, role: data.role });
-            } catch (error) {
-                console.log(error);
-            }
-            console.log(data);
-            try {
-                const { data } = inquiryCategoryAll();
-                setCategoryList(data.content);
-                setCategoryNow(data.content[0]);
-                console.log(data);
-            } catch (error) {
-                console.log(error.response.data);
-            }
+            const { data: categoryListData } = await inquiryCategoryAll();
+            setCategoryList(categoryListData.content);
+            setCategoryNow(categoryListData.content[0]);
+            console.log(categoryListData);
+            // } catch (error) {
+            //     console.log(error);
+            // }
         } catch (error) {
-            console.log(error.response.data);
+            console.log(error);
             Alert.alert(
                 "로그인 오류",
                 "이메일 혹은 비밀번호가 정확하지 않습니다.",
@@ -98,7 +126,6 @@ const LoginContainer = ({ navigation }) => {
                 ]
             );
         }
-
         setLoading(false);
     };
 

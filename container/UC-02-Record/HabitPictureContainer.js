@@ -7,7 +7,7 @@ import {
     habitImageState,
     samplePictureScreenState,
 } from "../../recoil/UC-02-Record";
-import AWS from "aws-sdk";
+// import AWS from "aws-sdk";
 import { decode as atob, encode as btoa } from "base-64";
 import axios from "axios";
 import { Alert } from "react-native";
@@ -80,20 +80,20 @@ const HabitPictureContainer = (props) => {
         return new File([u8arr], filename, { type: mime });
     };
 
-    const ACCESS_KEY = "AKIAVP55UL5XIVUMDEHU";
-    const SECRET_ACCESS_KEY = "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";
-    const REGION = "ap-northeast-2";
-    const S3_BUCKET = "imagefile9057";
+    // const ACCESS_KEY = "AKIAVP55UL5XIVUMDEHU";
+    // const SECRET_ACCESS_KEY = "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";
+    // const REGION = "ap-northeast-2";
+    // const S3_BUCKET = "imagefile9057";
 
-    AWS.config.update({
-        accessKeyId: ACCESS_KEY,
-        secretAccessKey: SECRET_ACCESS_KEY,
-    });
+    // AWS.config.update({
+    //     accessKeyId: ACCESS_KEY,
+    //     secretAccessKey: SECRET_ACCESS_KEY,
+    // });
 
-    const myBucket = new AWS.S3({
-        params: { Bucket: S3_BUCKET },
-        region: REGION,
-    });
+    // const myBucket = new AWS.S3({
+    //     params: { Bucket: S3_BUCKET },
+    //     region: REGION,
+    // });
 
     const uploadFile = () => {
         // const target = dataURLtoFile(

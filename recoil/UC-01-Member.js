@@ -5,7 +5,9 @@ export const userInfoState = atom({
     default: {
         email: "",
         name: "",
-        id: "",
+        role: "",
+        password: "",
+        memberId: "",
     },
 });
 

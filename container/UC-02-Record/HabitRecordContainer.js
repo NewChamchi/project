@@ -1,3 +1,4 @@
+import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect } from "react";
 import {
     useRecoilState,
@@ -66,25 +67,22 @@ const HabitRecordContainer = ({ navigation }) => {
             })
             .catch((error) => console.log(error.response.data.message));
     };
-    useEffect(() => {
+    useFocusEffect(() => {
         setLoading(true);
 
-        const getHabitList = () => {
+        const getHabitList = async () => {
             console.log(userInfo);
-            // const { data } = memberHabitInquiry(userInfo.memberId) // 테스트용 임시
-            memberHabitInquiry(userInfo.memberId)
-                .then((response) => {
-                    console.log(response["data"]);
 
-                    setHabitRecordList(response["data"]);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            try {
+                const { data } = await memberHabitInquiry(userInfo.memberId); // 테스트용 임시
+                setHabitRecordList(data);
+            } catch (error) {
+                console.log(error.response.data);
+            }
         };
-        getHabitList();
-        // test
-        // setHabitRecordList(testData);
+        // getHabitList();
+        console.log("FoucsEffect");
+        setHabitRecordList(testData);
         setLoading(false);
     }, []);
 

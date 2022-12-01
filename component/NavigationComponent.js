@@ -22,7 +22,6 @@ import HabitRecordDetailContainer from "../container/UC-02-Record/HabitRecordDet
 import BoardContainer from "../container/UC-03-Board/BoardContainer";
 import CreatePostContainer from "../container/UC-03-Board/CreatePostContainer";
 import PostContainer from "../container/UC-03-Board/PostContainer";
-import UpdatePostContainer from "../container/UC-03-Board/UpdatePostContainer";
 import HabitPictureContainer from "../container/UC-02-Record/HabitPictureContainer";
 import UserMainContainer from "../container/UC-01-Member/UserMainContainer";
 import UpdateUserContainer from "../container/UC-01-Member/UpdateUserContainer";
@@ -32,7 +31,6 @@ import LoginContainer from "../container/LoginContainer";
 import SignUpContainer from "../container/SignUpContainer";
 import HabitPictureSampleContainer from "../container/UC-02-Record/HabitPictureSampleContainer";
 import { userInfoState } from "../recoil/UC-01-Member";
-import { ActivityIndicator } from "react-native";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 import { loadingState } from "../recoil/CommonRecoil";
 import GroupMemberDetailContainer from "../container/UC-04-Group/GroupMemberDetailContainer";
@@ -220,9 +218,9 @@ const LoginStack = () => {
 
 const App = () => {
     const userInfo = useRecoilValue(userInfoState);
-
     const loading = useRecoilValue(loadingState);
-    return userInfo.memberId ? (
+
+    return userInfo.role ? (
         <NavigationContainer>
             <Spinner visible={loading} />
             <Tab.Navigator
@@ -237,34 +235,42 @@ const App = () => {
                     ],
                 }}
             >
-                <Tab.Screen
-                    name="습관 관리"
-                    component={RecordStack}
-                    options={{
-                        tabBarLabel: "습관 관리",
-                        tabBarIcon: ({ color, size }) => (
-                            <MaterialCommunityIcons
-                                name="check"
-                                color={color}
-                                size={size}
-                            />
-                        ),
-                    }}
-                />
-                <Tab.Screen
-                    name="통계"
-                    component={StatisticStack}
-                    options={{
-                        tabBarLabel: "통계",
-                        tabBarIcon: ({ color, size }) => (
-                            <MaterialCommunityIcons
-                                name="poll"
-                                color={color}
-                                size={size}
-                            />
-                        ),
-                    }}
-                />
+                {userInfo.role != "ROLE_ADMIN" ? (
+                    <Tab.Screen
+                        name="습관 관리"
+                        component={RecordStack}
+                        options={{
+                            tabBarLabel: "습관 관리",
+                            tabBarIcon: ({ color, size }) => (
+                                <MaterialCommunityIcons
+                                    name="check"
+                                    color={color}
+                                    size={size}
+                                />
+                            ),
+                        }}
+                    />
+                ) : (
+                    false
+                )}
+                {userInfo.role != "ROLE_ADMIN" ? (
+                    <Tab.Screen
+                        name="통계"
+                        component={StatisticStack}
+                        options={{
+                            tabBarLabel: "통계",
+                            tabBarIcon: ({ color, size }) => (
+                                <MaterialCommunityIcons
+                                    name="poll"
+                                    color={color}
+                                    size={size}
+                                />
+                            ),
+                        }}
+                    />
+                ) : (
+                    false
+                )}
                 <Tab.Screen
                     name="게시판"
                     component={BoardStack}

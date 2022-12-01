@@ -17,38 +17,10 @@ const UserMainScreen = (props) => {
         email,
         userInfo,
         setUserInfo,
+        logoutAlert,
+        WithdrawAlert,
     } = props;
-    const LogoutAlert = (sendLogoutApi) => {
-        Alert.alert("로그아웃", "정말 로그아웃 하시겠습니까?", [
-            {
-                text: "예",
-                onPress: () => {
-                    sendLogoutApi();
-                },
-            },
-            {
-                text: "아니오",
-                onPress: () => {},
-                style: "cancel",
-            },
-        ]);
-    };
 
-    const WithdrawAlert = (sendWithdrawApi) => {
-        Alert.alert("회원탈퇴", "정말 회원 탈퇴 하시겠습니까?", [
-            {
-                text: "예",
-                onPress: () => {
-                    sendWithdrawApi();
-                },
-            },
-            {
-                text: "아니오",
-                onPress: () => {},
-                style: "cancel",
-            },
-        ]);
-    };
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View
@@ -103,39 +75,48 @@ const UserMainScreen = (props) => {
                 >
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => LogoutAlert(sendLogoutApi)}
+                        onPress={() => logoutAlert(sendLogoutApi)}
                     >
                         <Text>로그아웃</Text>
                     </TouchableOpacity>
                 </View>
-                <View
-                    style={{
-                        flex: 1,
-                        alignItems: "center",
-                        justifyContent: "flex-end",
-                    }}
-                >
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => WithdrawAlert(sendWithdrawApi)}
+
+                {userInfo.role != "ROLE_ADMIN" ? (
+                    <View
+                        style={{
+                            flex: 1,
+                            alignItems: "center",
+                            justifyContent: "flex-end",
+                        }}
                     >
-                        <Text>회원 탈퇴</Text>
-                    </TouchableOpacity>
-                </View>
-                <View
-                    style={{
-                        flex: 1,
-                        alignItems: "center",
-                        justifyContent: "flex-end",
-                    }}
-                >
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => navigation.navigate("UserAllInfo")}
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => WithdrawAlert(sendWithdrawApi)}
+                        >
+                            <Text>회원 탈퇴</Text>
+                        </TouchableOpacity>
+                    </View>
+                ) : (
+                    false
+                )}
+                {userInfo.role == "ROLE_ADMIN" ? (
+                    <View
+                        style={{
+                            flex: 1,
+                            alignItems: "center",
+                            justifyContent: "flex-end",
+                        }}
                     >
-                        <Text>모든 유저 정보</Text>
-                    </TouchableOpacity>
-                </View>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => navigation.navigate("UserAllInfo")}
+                        >
+                            <Text>모든 유저 정보</Text>
+                        </TouchableOpacity>
+                    </View>
+                ) : (
+                    false
+                )}
             </View>
         </SafeAreaView>
     );

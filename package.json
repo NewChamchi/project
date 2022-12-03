@@ -50,5 +50,5 @@
     "@faker-js/faker": "^7.6.0"
   },
   "private": true,
-  "proxy": "http://localhost:8080"
+  "proxy": "http://192.168.43.144:5000"
 }

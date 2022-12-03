@@ -26,6 +26,7 @@ const PostScreen = (props) => {
         deleteAlert,
         updateScreen,
         setUpdateScreen,
+        userInfo,
     } = props;
     const createdTimeMaker = (createdTime) => {
         return new Date(createdTime);
@@ -40,11 +41,16 @@ const PostScreen = (props) => {
                 <Text style={{ fontSize: 20, marginBottom: 16 }}>
                     제목 : {postNow.title}
                 </Text>
-                <Text style={{ fontSize: 15, marginBottom: 16 }}>
-                    닉네임 {postNow.userName} | 조회수 {postNow.view} |{" "}
-                    {createdTimeMaker(postNow.createdTime).getHours()}:
-                    {createdTimeMaker(postNow.createdTime).getMinutes()}
-                </Text>
+                <View style={{ flexDirection: "row" }}>
+                    <Text style={{ fontSize: 15, marginBottom: 16 }}>
+                        닉네임 {postNow.userName} | 조회수 {postNow.view} |{" "}
+                        {createdTimeMaker(postNow.createdTime).getHours()}:
+                        {createdTimeMaker(postNow.createdTime).getMinutes()}
+                    </Text>
+                    <TouchableOpacity>
+                        <Text>사용자 경고</Text>
+                    </TouchableOpacity>
+                </View>
                 <View
                     style={{
                         height: 2,
@@ -167,6 +173,15 @@ const PostScreen = (props) => {
                                   ).getMinutes()}
                               </Text>
                               <Text>댓글 내용 : {item.body}</Text>
+
+                              <View style={{ flexDirection: "row" }}>
+                                  <TouchableOpacity>
+                                      <Text>수정</Text>
+                                  </TouchableOpacity>
+                                  <TouchableOpacity>
+                                      <Text>삭제</Text>
+                                  </TouchableOpacity>
+                              </View>
                           </View>
                       ))
                     : false}

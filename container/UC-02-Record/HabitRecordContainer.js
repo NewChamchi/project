@@ -71,9 +71,9 @@ const HabitRecordContainer = ({ navigation }) => {
                 console.log(error.response.data);
             }
         };
-        // getHabitList();
+        getHabitList();
         // console.log("FoucsEffect");
-        setHabitRecordList(testData);
+        // setHabitRecordList(testData);
         setLoading(false);
     }, [isFocused]);
 

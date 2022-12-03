@@ -1,3 +1,5 @@
+import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+
 const CategoryEditScreen = (props) => {
     const { categoryList } = props;
     <SafeAreaView style={{ flex: 1 }}>

@@ -90,6 +90,7 @@ const PostContainer = ({ navigation }) => {
         deleteAlert,
         updateScreen,
         setUpdateScreen,
+        userInfo,
     };
     return <PostScreen {...propsData} />;
 };

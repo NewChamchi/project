@@ -1,5 +1,6 @@
 // React Native Bottom Navigation
 // https://aboutreact.com/react-native-bottom-navigation/
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import React from "react";
 import {
@@ -86,7 +87,12 @@ const HabitPictureScreen = (props) => {
                                     style={styles.cameraButton}
                                     onPress={toggleCameraType}
                                 >
-                                    <Text style={styles.text}>flip</Text>
+                                    <Text style={styles.text}>
+                                        <MaterialCommunityIcons
+                                            name="camera-flip"
+                                            size={25}
+                                        />
+                                    </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={styles.cameraButton}
@@ -96,7 +102,12 @@ const HabitPictureScreen = (props) => {
                                         setCaptureVisible(!captureVisible);
                                     }}
                                 >
-                                    <Text style={styles.text}>out</Text>
+                                    <Text style={styles.text}>
+                                        <MaterialCommunityIcons
+                                            name="backspace-outline"
+                                            size={25}
+                                        />
+                                    </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={styles.cameraButton}
@@ -104,7 +115,12 @@ const HabitPictureScreen = (props) => {
                                         snapPicture();
                                     }}
                                 >
-                                    <Text style={styles.text}>snap</Text>
+                                    <Text style={styles.text}>
+                                        <MaterialCommunityIcons
+                                            name="circle"
+                                            size={25}
+                                        />
+                                    </Text>
                                 </TouchableOpacity>
                             </View>
                         </Camera>

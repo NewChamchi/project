@@ -34,6 +34,7 @@ const CreateHabitRecordContainer = ({ navigation }) => {
     const [periodList] = useState([1, 2, 3, 4, 5, 6, 7]);
     const [loading, setLoading] = useRecoilStateLoadable(loadingState);
 
+    const periodMilliToSecond = period * 1000;
     // const addItem = (oldHabitRecordList) => {
     //     setHabitRecordList((oldHabitRecordList) => [
     //         ...oldHabitRecordList,
@@ -70,7 +71,7 @@ const CreateHabitRecordContainer = ({ navigation }) => {
         const body = {
             name: habitName,
             amount: amount,
-            period: period * 24 * 3600 * 1000,
+            period: periodMilliToSecond,
         };
         console.log(body);
         registerHabit(

@@ -42,22 +42,34 @@ const HabitPictureScreen = (props) => {
         setIsSampleCapture,
     } = props;
 
-    // if (!permission) {
-    //     // Camera permissions are still loading
-    //     return <View />;
-    // }
+    if (!permission) {
+        // Camera permissions are still loading
+        return <SafeAreaView />;
+    }
 
-    // if (!permission.granted) {
-    //     // Camera permissions are not granted yet
-    //     return (
-    //         <View style={styles.container}>
-    //             <Text style={{ textAlign: "center" }}>
-    //                 We need your permission to show the camera
-    //             </Text>
-    //             <Button onPress={requestPermission} title="grant permission" />
-    //         </View>
-    //     );
-    // }
+    if (!permission.granted) {
+        // Camera permissions are not granted yet
+        return (
+            <SafeAreaView style={{ flex: 1, margin: 30 }}>
+                <Text
+                    style={{
+                        textAlign: "left",
+                        fontSize: 20,
+                        color: "tomato",
+                        marginBottom: 30,
+                    }}
+                >
+                    카메라 기능을 이용하기 위해서는 접근 허가가 필요합니다.
+                </Text>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={requestPermission}
+                >
+                    <Text>접근 허가</Text>
+                </TouchableOpacity>
+            </SafeAreaView>
+        );
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, margin: 30 }}>
@@ -88,7 +100,9 @@ const HabitPictureScreen = (props) => {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={styles.cameraButton}
-                                    onPress={snapPicture}
+                                    onPress={() => {
+                                        snapPicture();
+                                    }}
                                 >
                                     <Text style={styles.text}>snap</Text>
                                 </TouchableOpacity>
@@ -107,12 +121,12 @@ const HabitPictureScreen = (props) => {
                         >
                             <TouchableOpacity
                                 style={styles.button}
-                                onPress={() => pickImage(isSampleCapture)}
+                                onPress={() => pickImage()}
                             >
                                 <Text>샘플 사진 가져오기</Text>
                             </TouchableOpacity>
                         </View>
-                        {/* <View
+                        <View
                             style={{
                                 alignItems: "center",
                                 justifyContent: "flex-start",
@@ -143,8 +157,8 @@ const HabitPictureScreen = (props) => {
                             >
                                 <Text>인증 사진 찍기</Text>
                             </TouchableOpacity>
-                        </View> */}
-                        <View
+                        </View>
+                        {/* <View
                             style={{
                                 alignItems: "center",
                                 justifyContent: "flex-start",
@@ -156,7 +170,7 @@ const HabitPictureScreen = (props) => {
                             >
                                 <Text>인증 사진 가져오기</Text>
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                         <View
                             style={{
                                 alignItems: "center",

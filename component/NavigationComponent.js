@@ -240,7 +240,7 @@ const App = () => {
     const userInfo = useRecoilValue(userInfoState);
     const loading = useRecoilValue(loadingState);
 
-    return userInfo.role ? (
+    return !userInfo.role ? (
         <NavigationContainer>
             <Spinner visible={loading} />
             <Tab.Navigator

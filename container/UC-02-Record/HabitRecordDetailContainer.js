@@ -62,7 +62,7 @@ const HabitRecordDetailContainer = (props) => {
     useEffect(() => {
         const tmpDate = Date.parse(habitRecordItem.date);
         const countProceedTime = setInterval(() => {
-            const tmpTime = nowDate() - tmpDate;
+            const tmpTime = Date.now() - tmpDate;
             setSecond(parseInt(tmpTime / 1000) % 60);
             setMinute(parseInt(tmpTime / (1000 * 60)) % 60);
             setHour(parseInt(tmpTime / (1000 * 60 * 60)) % 24);

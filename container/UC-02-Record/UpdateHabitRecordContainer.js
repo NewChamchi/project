@@ -32,6 +32,7 @@ const UpdateHabitRecordContianer = (props) => {
     const index = habitRecordList.findIndex((listItem) => listItem === item);
     const [loading, setLoading] = useRecoilStateLoadable(loadingState);
 
+    const periodMilliToSecond = period * 1000;
     // const updateItem = (habitName, reduceUnit, checkPeriod) => {
     //     console.log(item);
     //     console.log(index);
@@ -66,7 +67,7 @@ const UpdateHabitRecordContianer = (props) => {
         const body = {
             name: habitName,
             amount: amount,
-            period: period * 24 * 3600 * 1000,
+            period: periodMilliToSecond,
         };
         console.log(habitRecordItem);
         updateHabit(habitRecordItem.id, body)

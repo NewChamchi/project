@@ -90,24 +90,24 @@ const HabitRecordBoxContainer = (props) => {
                 style: "cancel",
             },
         ]);
-    // useEffect(() => {
-    //     const verifyAmountCheck = setInterval(() => {
-    //         const startTime = Date.parse(item.date);
-    //         const tmpTime = nowDate() - startTime;
-    //         // console.log(tmpTime);
-    //         if (tmpTime >= item.period * (item.count + 1)) {
-    //             judgeCheck(item.id)
-    //                 .then((response) => {
-    //                     console.log("시간 체크");
-    //                     getHabitList();
-    //                 })
-    //                 .catch((error) => {
-    //                     console.log(error);
-    //                 });
-    //         }
-    //     }, 1000);
-    //     return () => clearInterval(verifyAmountCheck);
-    // });
+    useEffect(() => {
+        const verifyAmountCheck = setInterval(() => {
+            const startTime = Date.parse(item.date);
+            const tmpTime = nowDate() - startTime;
+            console.log(tmpTime);
+            // if (tmpTime >= item.period * (item.count + 1)) {
+            //     judgeCheck(item.id)
+            //         .then((response) => {
+            //             console.log("시간 체크");
+            //             getHabitList();
+            //         })
+            //         .catch((error) => {
+            //             console.log(error);
+            //         });
+            // }
+        }, 1000);
+        return () => clearInterval(verifyAmountCheck);
+    });
     const propDatas = {
         navigation,
         id,

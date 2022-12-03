@@ -69,7 +69,7 @@ import { categoryListState, categoryNowState } from "../../recoil/CommonRecoil";
 //     },
 // ];
 const LineChartComponent = (props) => {
-    const { datas } = props;
+    const { datas, myIndex } = props;
 
     return (
         <View>
@@ -78,15 +78,7 @@ const LineChartComponent = (props) => {
                     labels: [],
                     datasets: [
                         {
-                            data: [
-                                1, 5, 5, 9, 15, 18, 10, 6, 5, 4, 1, 5, 5, 9, 15,
-                                18, 10, 6, 5, 4, 1, 5, 5, 9, 15, 18, 10, 6, 5,
-                                4, 1, 5, 5, 9, 15, 18, 10, 6, 5, 4, 1, 5, 5, 9,
-                                15, 18, 10, 6, 5, 4, 1, 5, 5, 9, 15, 18, 10, 6,
-                                5, 4, 1, 5, 5, 9, 15, 18, 10, 6, 5, 4, 1, 5, 5,
-                                9, 15, 18, 10, 6, 5, 4, 1, 5, 5, 9, 15, 18, 10,
-                                6, 5, 4, 1, 5, 5, 9, 15, 18, 10, 6, 5, 4,
-                            ],
+                            data: [1, 5, 5, 9, 15, 18, 10, 6, 5, 4, 1],
                         },
                     ],
                 }}
@@ -113,6 +105,10 @@ const LineChartComponent = (props) => {
                     },
                 }}
                 bezier
+                getDotColor={(dataPoint, dataPointIndex) => {
+                    if (dataPointIndex === 4) return "tomato";
+                    else return "white";
+                }}
                 style={{
                     margin: 10,
                     borderRadius: 16,
@@ -130,6 +126,8 @@ const HabitStatisticsScreen = (props) => {
         setAmountTotalList,
         periodTotalList,
         setPeriodTotalList,
+        amountMyIndex,
+        periodMyIndex,
     } = props;
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -177,32 +175,51 @@ const HabitStatisticsScreen = (props) => {
                 <ScrollView>
                     <View style={styles.container}>
                         <View>
-                            <Text
+                            <View
                                 style={{
-                                    margin: 10,
-                                    fontSize: 20,
+                                    flexDirection: "row",
+                                    alignSelf: "flex-end",
                                 }}
                             >
-                                습관 정량 통계
-                            </Text>
+                                <Text
+                                    style={{
+                                        ...styles.text,
+                                        marginRight: 0,
+                                        fontSize: 15,
+                                    }}
+                                >
+                                    사용자의 현재 위치
+                                </Text>
+                                <View
+                                    style={{
+                                        backgroundColor: "tomato",
+                                        borderRadius: 10,
+                                        margin: 10,
+                                        marginRight: 20,
+                                        width: 20,
+                                        height: 20,
+                                        alignSelf: "center",
+                                    }}
+                                />
+                            </View>
+                            <Text style={styles.text}>습관 정량 통계</Text>
                             {!amountTotalList ? (
-                                <LineChartComponent datas={amountTotalList} />
+                                <LineChartComponent
+                                    datas={amountTotalList}
+                                    myIndex={amountMyIndex}
+                                />
                             ) : (
                                 false
                             )}
-                            {/* <Text
-                                style={{
-                                    margin: 10,
-                                    fontSize: 20,
-                                }}
-                            >
-                                습관 시간 통계
-                            </Text>
-                            {periodTotalList ? (
-                                <LineChartComponent datas={periodTotalList} />
+                            <Text style={styles.text}>습관 시간 통계</Text>
+                            {!periodTotalList ? (
+                                <LineChartComponent
+                                    datas={periodTotalList}
+                                    myIndex={periodMyIndex}
+                                />
                             ) : (
                                 false
-                            )} */}
+                            )}
                             {/* <PieChart
                                 data={data}
                                 width={Dimensions.get("window").width}
@@ -237,6 +254,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
         padding: 16,
         marginTop: 16,
+    },
+    text: {
+        margin: 10,
+        fontSize: 20,
+        alignSelf: "center",
     },
 });
 export default HabitStatisticsScreen;

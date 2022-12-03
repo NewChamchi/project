@@ -27,7 +27,7 @@ const testData = [
         name: "do exercise little",
         categoryName: "운동",
         amount: 20,
-        period: 100000000,
+        period: 1000 * 10,
         count: 0,
         date: "2022-11-25T04:09:20.000+00:00",
         check: false,
@@ -38,7 +38,7 @@ const testData = [
         name: "do exercise little",
         categoryName: "운동",
         amount: 20,
-        period: 100000000,
+        period: 1000 * 10,
         count: 0,
         date: "2022-11-25T06:40:24.000+00:00",
         check: false,
@@ -71,9 +71,9 @@ const HabitRecordContainer = ({ navigation }) => {
                 console.log(error.response.data);
             }
         };
-        getHabitList();
+        // getHabitList();
         // console.log("FoucsEffect");
-        // setHabitRecordList(testData);
+        setHabitRecordList(testData);
         setLoading(false);
     }, [isFocused]);
 

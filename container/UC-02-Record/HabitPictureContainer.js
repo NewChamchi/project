@@ -33,36 +33,41 @@ const HabitPictureContainer = (props) => {
             current === CameraType.back ? CameraType.front : CameraType.back
         );
     };
-    const pickImage = async (isSampleCapture) => {
+    const pickImage = async () => {
         // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: false,
             quality: 1,
-            base64: true,
+            // base64: true,
         });
+        alert(result.uri);
+        const formdata = new FormData();
+        formdata.append("file", result.uri);
+        console.log(result);
 
         // console.log(result);
 
         if (!result.cancelled) {
-            if (isSampleCapture) {
-                setSampleImage(result.uri);
-                setSampleImageBase64(result.base64);
-            } else {
-                setImage(result.uri);
-                setImageBase64(result.base64);
-            }
+            setSampleImage(result.uri);
+            setSampleImageBase64(result.base64);
         }
     };
 
     const snapPicture = async () => {
         // console.log("myCameraRef", myCameraRef);
         if (myCameraRef.current) {
-            const options = { quality: 0.5, base64: true };
-            let photo = await myCameraRef.current.takePictureAsync(options);
-            setImage(photo.uri);
-            setImageBase64(photo.base64);
-            // console.log(photo);
+            try {
+                const options = { quality: 0.5, base64: true };
+                let photo = await myCameraRef.current.takePictureAsync(options);
+                setImage(photo.uri);
+                setImageBase64(photo.base64);
+                // console.log(photo);
+            } catch (err) {
+                console.log(err);
+            } finally {
+                // setCaptureVisible(!captureVisible);
+            }
         }
     };
 

@@ -10,6 +10,8 @@ const HabitStatisticsContainer = () => {
     const [categoryNow, setCategoryNow] = useRecoilState(categoryNowState);
     const [amountTotalList, setAmountTotalList] = useState(null);
     const [periodTotalList, setPeriodTotalList] = useState(null);
+    const [amountMyIndex, setAmountMyIndex] = useState(null);
+    const [periodMyIndex, setPeriodMyIndex] = useState(null);
     const isFocused = useIsFocused();
     useEffect(() => {
         inquiryAmountAll(
@@ -39,6 +41,8 @@ const HabitStatisticsContainer = () => {
         setAmountTotalList,
         periodTotalList,
         setPeriodTotalList,
+        amountMyIndex,
+        periodMyIndex,
     };
     return <HabitStatisticsScreen {...propDatas} />;
 };

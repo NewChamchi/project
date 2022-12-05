@@ -33,14 +33,11 @@ const HabitPictureScreen = (props) => {
         samplePictureScreen,
         setSamplePictureScreen,
         uploadFile,
-        imageBase64,
-        dataURLtoFile,
         sampleImage,
         setSampleImage,
-        sampleImageBase64,
-        setSampleImageBase64,
         isSampleCapture,
         setIsSampleCapture,
+        compareImage,
     } = props;
 
     if (!permission) {
@@ -97,14 +94,12 @@ const HabitPictureScreen = (props) => {
                                 <TouchableOpacity
                                     style={styles.cameraButton}
                                     onPress={() => {
-                                        console.log("test");
-                                        isSampleCapture ? false : uploadFile();
-                                        setCaptureVisible(!captureVisible);
+                                        snapPicture();
                                     }}
                                 >
                                     <Text style={styles.text}>
                                         <MaterialCommunityIcons
-                                            name="backspace-outline"
+                                            name="circle-slice-8"
                                             size={25}
                                         />
                                     </Text>
@@ -112,12 +107,16 @@ const HabitPictureScreen = (props) => {
                                 <TouchableOpacity
                                     style={styles.cameraButton}
                                     onPress={() => {
-                                        snapPicture();
+                                        console.log("test");
+                                        isSampleCapture
+                                            ? false
+                                            : uploadFile(isSampleCapture);
+                                        setCaptureVisible(!captureVisible);
                                     }}
                                 >
                                     <Text style={styles.text}>
                                         <MaterialCommunityIcons
-                                            name="circle"
+                                            name="backspace-outline"
                                             size={25}
                                         />
                                     </Text>
@@ -137,7 +136,10 @@ const HabitPictureScreen = (props) => {
                         >
                             <TouchableOpacity
                                 style={styles.button}
-                                onPress={() => pickImage()}
+                                onPress={() => {
+                                    setIsSampleCapture(true);
+                                    pickImage();
+                                }}
                             >
                                 <Text>샘플 사진 가져오기</Text>
                             </TouchableOpacity>
@@ -196,7 +198,7 @@ const HabitPictureScreen = (props) => {
                             <TouchableOpacity
                                 style={styles.button}
                                 onPress={() => {
-                                    uploadFile();
+                                    compareImage();
                                 }}
                             >
                                 <Text>사진 보내기</Text>

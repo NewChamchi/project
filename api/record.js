@@ -16,7 +16,6 @@ export const checkHabit = (habitId, body) =>
     client.put(`/api/user/check/success/habits/${habitId}`, body);
 
 export const judgeCheck = (habitId) => {
-    console.log("판단 반복중?");
     client.put(`/api/user/check/judge/habits/${habitId}`);
 };
 export const deleteHabit = (habitId) =>
@@ -45,3 +44,9 @@ export const inquiryAmountAll = (habitCategoryId) =>
 
 export const inquiryPeriodAll = (habitCategoryId) =>
     client.get(`/api/user/categories/${habitCategoryId}/total_period`);
+
+export const inquiryMyAmount = (habitId) =>
+    client.get(`api/user/habits/${habitId}/my_amount`);
+
+export const inquiryMyPeriod = (habitId) =>
+    client.get(`api/user/habits/${habitId}/my_period`);

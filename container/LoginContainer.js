@@ -81,11 +81,11 @@ const LoginContainer = ({ navigation }) => {
     const sendLoginApi = async () => {
         setLoading(true);
         const body = {
-            // email: email,
-            // password: password,
+            email: email,
+            password: password,
             // test
-            email: "tofhdnsckacl123@daum.net",
-            password: "asdasd123!",
+            // email: "tofhdnsckacl123@daum.net",
+            // password: "asdasd123!",
         };
         login(body)
             .then((res) => {
@@ -93,25 +93,27 @@ const LoginContainer = ({ navigation }) => {
                 const [cookie] = res.headers["set-cookie"];
                 console.log(cookie);
                 client.defaults.headers.Cookie = cookie;
-                setUserInfo({
-                    email: email,
-                    password: password,
+                setUserInfo((prev) => ({
+                    ...prev,
                     memberId: res.headers.id,
-                });
+                }));
                 userSelfInfo()
                     .then((res) => {
-                        setUserInfo({
-                            ...userInfo,
+                        setUserInfo((prev) => ({
+                            ...prev,
+                            email: res.data.email,
                             name: res.data.name,
-                            role: "ROLE_ADMIN",
+                            role: res.data.role,
                             // role: data.role,
-                        });
+                        }));
+                        console.log("유저 정보 조회");
                     })
                     .catch((err) => console.log(err));
                 inquiryCategoryAll()
                     .then((res) => {
                         setCategoryList(res.data.content);
                         setCategoryNow(res.data.content[0]);
+                        console.log("카테고리 조회");
                     })
                     .catch((err) => console.log(err));
             })

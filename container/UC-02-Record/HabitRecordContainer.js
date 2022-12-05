@@ -65,6 +65,8 @@ const HabitRecordContainer = ({ navigation }) => {
             console.log(userInfo);
 
             try {
+                console.log("멤버 아이디로 조회");
+                console.log(userInfo.memberId);
                 const { data } = await memberHabitInquiry(userInfo.memberId); // 테스트용 임시
                 setHabitRecordList(data);
             } catch (error) {

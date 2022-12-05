@@ -63,8 +63,8 @@ const HabitRecordDetailScreen = (props) => {
                     정량 단위 : {habitRecordItem["amount"]}
                 </Text>
                 <Text style={{ fontSize: 25, paddingBottom: 10 }}>
-                    확인 기간 : {habitRecordItem["period"] / (24 * 3600 * 1000)}
-                    일
+                    확인 기간 :{" "}
+                    {parseInt(habitRecordItem["period"] / (24 * 3600 * 1000))}일
                 </Text>
                 <Text style={{ fontSize: 25, paddingBottom: 10 }}>
                     성공 수 : {habitRecordItem["count"]}

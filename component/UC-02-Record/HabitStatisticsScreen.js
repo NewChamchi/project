@@ -69,28 +69,16 @@ import { categoryListState, categoryNowState } from "../../recoil/CommonRecoil";
 //     },
 // ];
 const LineChartComponent = (props) => {
-    const { datas, myIndex } = props;
+    const { datas, labels, myIndex, tenPercentIndex } = props;
 
     return (
         <View>
             <LineChart
                 data={{
-                    labels: [
-                        "0",
-                        "10",
-                        "20",
-                        "30",
-                        "40",
-                        "50",
-                        "60",
-                        "70",
-                        "80",
-                        "90",
-                        "100",
-                    ],
+                    labels: labels,
                     datasets: [
                         {
-                            data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                            data: datas,
                         },
                     ],
                 }}
@@ -118,7 +106,9 @@ const LineChartComponent = (props) => {
                 }}
                 bezier
                 getDotColor={(dataPoint, dataPointIndex) => {
-                    if (dataPointIndex === 4) return "tomato";
+                    if (dataPointIndex === myIndex) return "tomato";
+                    else if (dataPointIndex === tenPercentIndex)
+                        return "lightgreen";
                     else return "white";
                 }}
                 style={{
@@ -140,6 +130,10 @@ const HabitStatisticsScreen = (props) => {
         setPeriodTotalList,
         amountMyIndex,
         periodMyIndex,
+        amountTenPercentIndex,
+        periodTenPercentIndex,
+        amountLabels,
+        periodLabels,
     } = props;
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -214,20 +208,51 @@ const HabitStatisticsScreen = (props) => {
                                     }}
                                 />
                             </View>
+                            <View
+                                style={{
+                                    flexDirection: "row",
+                                    alignSelf: "flex-end",
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        ...styles.text,
+                                        marginRight: 0,
+                                        fontSize: 15,
+                                    }}
+                                >
+                                    상위 10%의 위치
+                                </Text>
+                                <View
+                                    style={{
+                                        backgroundColor: "lightgreen",
+                                        borderRadius: 10,
+                                        margin: 10,
+                                        marginRight: 20,
+                                        width: 20,
+                                        height: 20,
+                                        alignSelf: "center",
+                                    }}
+                                />
+                            </View>
                             <Text style={styles.text}>습관 정량 통계</Text>
-                            {!amountTotalList ? (
+                            {amountTotalList ? (
                                 <LineChartComponent
-                                    datas={amountTotalList}
+                                    datas={amountTotalList.totalAmountCount}
+                                    labels={amountLabels}
                                     myIndex={amountMyIndex}
+                                    tenPercentIndex={amountTenPercentIndex}
                                 />
                             ) : (
                                 false
                             )}
                             <Text style={styles.text}>습관 시간 통계</Text>
-                            {!periodTotalList ? (
+                            {periodTotalList ? (
                                 <LineChartComponent
-                                    datas={periodTotalList}
+                                    datas={periodTotalList.totalPeriodCount}
+                                    labels={periodLabels}
                                     myIndex={periodMyIndex}
+                                    tenPercentIndex={periodTenPercentIndex}
                                 />
                             ) : (
                                 false

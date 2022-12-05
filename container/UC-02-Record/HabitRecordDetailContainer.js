@@ -30,7 +30,7 @@ const HabitRecordDetailContainer = (props) => {
         console.log("됨1");
         memberHabitInquiry(userInfo.memberId)
             .then((response) => {
-                console.log(response["data"]);
+                // console.log(response["data"]);
 
                 setHabitRecordList(response["data"]);
             })
@@ -39,30 +39,29 @@ const HabitRecordDetailContainer = (props) => {
                 console.log(error);
             });
     };
-    // useEffect(() => {
-    //     const verifyAmountCheck = setInterval(() => {
-    //         const startTime = Date.parse(habitRecordItem.date);
-    //         const tmpTime = nowDate() - startTime;
-    //         if (
-    //             tmpTime >=
-    //             habitRecordItem.period * (habitRecordItem.count + 1)
-    //         ) {
-    //             judgeCheck(habitRecordItem.id)
-    //                 .then((response) => {
-    //                     console.log("시간 체크");
-    //                     getHabitList();
-    //                 })
-    //                 .catch((error) => {
-    //                     console.log(error);
-    //                 });
-    //         }
-    //     }, 1000);
-    //     return () => clearInterval(verifyAmountCheck);
-    // });
+    useEffect(() => {
+        const verifyAmountCheck = setInterval(() => {
+            const startTime = Date.parse(habitRecordItem.date);
+            const tmpTime = nowDate() - startTime;
+            if (
+                tmpTime >=
+                habitRecordItem.period * (habitRecordItem.count + 1)
+            ) {
+                try {
+                    judgeCheck(habitRecordItem.id);
+                    console.log("시간 체크");
+                    getHabitList();
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        }, 100000);
+        return () => clearInterval(verifyAmountCheck);
+    });
     useEffect(() => {
         const tmpDate = Date.parse(habitRecordItem.date);
         const countProceedTime = setInterval(() => {
-            const tmpTime = Date.now() - tmpDate;
+            const tmpTime = nowDate() - tmpDate;
             setSecond(parseInt(tmpTime / 1000) % 60);
             setMinute(parseInt(tmpTime / (1000 * 60)) % 60);
             setHour(parseInt(tmpTime / (1000 * 60 * 60)) % 24);
@@ -70,7 +69,7 @@ const HabitRecordDetailContainer = (props) => {
             setProceedTime(
                 date + "일 " + hour + "시간 " + minute + "분 " + second + "초 "
             );
-        }, 1000);
+        }, 100);
         return () => clearInterval(countProceedTime);
     });
     const propDatas = {

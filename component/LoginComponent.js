@@ -42,9 +42,9 @@ const LoginComponent = (props) => {
                     secureTextEntry={true}
                 />
 
-                <View style={styles.button}>
+                {/* <View style={styles.button}>
                     <Button title="test" onPress={sendTestApi} />
-                </View>
+                </View> */}
             </View>
             <View
                 style={{

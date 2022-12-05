@@ -54,7 +54,7 @@ const HabitRecordBoxContainer = (props) => {
         console.log("됨1");
         memberHabitInquiry(userInfo.memberId)
             .then((response) => {
-                console.log(response["data"]);
+                // console.log(response["data"]);
 
                 setHabitRecordList(response["data"]);
             })
@@ -95,17 +95,16 @@ const HabitRecordBoxContainer = (props) => {
             const startTime = Date.parse(item.date);
             const tmpTime = nowDate() - startTime;
             console.log(tmpTime);
-            // if (tmpTime >= item.period * (item.count + 1)) {
-            //     judgeCheck(item.id)
-            //         .then((response) => {
-            //             console.log("시간 체크");
-            //             getHabitList();
-            //         })
-            //         .catch((error) => {
-            //             console.log(error);
-            //         });
-            // }
-        }, 1000);
+            if (tmpTime >= item.period * (item.count + 1)) {
+                try {
+                    judgeCheck(item.id);
+                    console.log("시간 체크");
+                    getHabitList();
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        }, 100000);
         return () => clearInterval(verifyAmountCheck);
     });
     const propDatas = {
